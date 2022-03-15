@@ -1,11 +1,15 @@
-import React from "react";
-import Card from './Components/Card'
+import React from "react"
+import { Route, Routes } from "react-router"
+import ListPage from './ListPage'
+import Home from './Home'
 
 const App = () => {
   return (
     <>
-      Hello baby
-      <Card />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="list" element={<ListPage />} />
+      </Routes>
     </>
   );
 }
