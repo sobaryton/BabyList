@@ -1,6 +1,6 @@
 import React from "react"
 import { createUseStyles } from 'react-jss'
-import WarningIcon from '@mui/icons-material/Warning';
+import WarningIcon from '@mui/icons-material/Warning'
 import BigHeader from './Components/BigHeader'
 import Footer from './Components/Footer'
 import StartInfo from './Components/StartInfo'
@@ -28,7 +28,7 @@ const Home = () => {
     <main className={classes.main}>
       <BigHeader />
       <div className={classes.info}>
-        <WarningIcon sx={{ fontSize: 37, color: '#FF5A5F', marginRight: '1rem' }} />
+        <WarningIcon sx={{ fontSize: 37, color: '#FF5A5F', marginRight: '1rem', marginBottom: '0.3rem' }} />
         <StartInfo />
       </div>
       <Footer />
