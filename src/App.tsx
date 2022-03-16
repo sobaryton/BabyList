@@ -1,5 +1,5 @@
-import React from "react"
-import { Route, Routes } from "react-router"
+import React from 'react'
+import { Route, Routes } from 'react-router'
 import ListPage from './ListPage'
 import Home from './Home'
 

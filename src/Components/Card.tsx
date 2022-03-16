@@ -1,38 +1,49 @@
-import * as React from 'react';
-import { default as BasicCard } from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import CardMedia from '@mui/material/CardMedia/CardMedia';
+import * as React from 'react'
+import { default as BasicCard } from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import CardMedia from '@mui/material/CardMedia/CardMedia'
+import ChildFriendlyIcon from '@mui/icons-material/ChildFriendly'
 
-const Card = () => {
+type CardType = {
+  imageUrl: string
+  title: string
+  description: string
+  price: string
+  provider: string
+}
+
+const Card = ({ imageUrl, title, description, price, provider }: CardType) => {
   return (
     <BasicCard sx={{ minWidth: 275, maxWidth: 345 }} variant="outlined">
       <CardMedia
         component="img"
         height="140"
-        image="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&w=350&dpr=2"
+        image={`${imageUrl}`}
         alt="item"
       />
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
+          {price}
         </Typography>
-        <Typography variant="h5" component="div">
-          blabla
+        <Typography variant="h5" component="h5">
+          {title}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
+          {provider}
         </Typography>
         <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+          {description}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button variant="outlined" size="small">Voir</Button>
+        <Button variant="contained" size="medium">
+          <ChildFriendlyIcon />
+          Offrir
+        </Button>
       </CardActions>
     </BasicCard>
   )
