@@ -5,7 +5,7 @@ const headerStyles = createUseStyles({
   header: {
     width: '100%',
     height: '30vh',
-    backgroundImage: 'url("blue-watercolour.jpg")',
+    backgroundImage: 'url("laine.jpg")',
     backgroundSize: 'cover',
     display: 'flex',
     justifyContent: 'center',
@@ -16,9 +16,9 @@ const headerStyles = createUseStyles({
     borderRadius: '20%',
   },
   title: {
-    padding: '1rem 5rem',
+    padding: '0rem 3rem',
     fontFamily: '"Lobster Two", cursive',
-    color: '#4F5165',
+    color: '#0E2F43',
     fontSize: '4rem'
   }
 })

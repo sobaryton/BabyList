@@ -33,7 +33,7 @@ const headerStyles = createUseStyles({
     border: 'none',
     background: '#BCDDF1',
     fontSize: '2rem',
-    color: '#4F5165',
+    color: '#0E2F43',
     fontWeight: '600',
     transition: '500ms all ease',
     display: 'flex',
@@ -42,9 +42,6 @@ const headerStyles = createUseStyles({
     '&:hover': {
       background: '#3597D4',
       color: 'white',
-      '& svg': {
-        marginLeft: '1.5rem'
-      }
     }
   },
   arrow: {

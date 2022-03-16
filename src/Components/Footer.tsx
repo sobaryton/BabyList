@@ -1,7 +1,7 @@
 import React from "react"
 import { createUseStyles } from 'react-jss'
 
-const appStyles = createUseStyles({
+const footerStyles = createUseStyles({
   footer: {
     display: 'flex',
     flexDirection: 'column',
@@ -14,7 +14,7 @@ const appStyles = createUseStyles({
 })
 
 const Footer = () => {
-  const classes = appStyles()
+  const classes = footerStyles()
   return (
     <footer className={classes.footer}>
       <p className={classes.copyright}>Made with &hearts; to welcome our little bubba</p>

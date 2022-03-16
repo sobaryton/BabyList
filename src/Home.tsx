@@ -5,7 +5,7 @@ import BigHeader from './Components/BigHeader'
 import Footer from './Components/Footer'
 import StartInfo from './Components/StartInfo'
 
-const appStyles = createUseStyles({
+const homeStyles = createUseStyles({
   main: {
     height: '100vh',
     display: 'flex',
@@ -23,7 +23,7 @@ const appStyles = createUseStyles({
 })
 
 const Home = () => {
-  const classes = appStyles()
+  const classes = homeStyles()
   return (
     <main className={classes.main}>
       <BigHeader />

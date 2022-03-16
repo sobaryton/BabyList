@@ -1,7 +1,7 @@
 import React from "react"
 import { createUseStyles } from 'react-jss'
 
-const appStyles = createUseStyles({
+const startInfoStyles = createUseStyles({
   welcomeText: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -13,7 +13,7 @@ const appStyles = createUseStyles({
 })
 
 const StartInfo = () => {
-  const classes = appStyles()
+  const classes = startInfoStyles()
   return (
     <article className={classes.welcomeText}>
       <p>Welcome!!</p>
