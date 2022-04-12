@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
-import Card2 from './Components/Card2'
+import Card from './Components/Card'
 import Header from './Components/Header'
 import Navigation from './Components/Navigation'
 
@@ -26,12 +26,13 @@ const ListPage = () => {
       <main className={classes.main}>
         <Navigation />
         <article className={classes.list}>
-          <Card2
+          <Card
             imageUrl={`${process.env.PUBLIC_URL + '/images/bebe.jpg'}`}
             title='Article name'
             description='This is the description of the article'
             price='£5'
             provider='Amazon'
+            label='offert'
           />
         </article>
       </main>
