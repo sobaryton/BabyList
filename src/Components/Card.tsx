@@ -12,13 +12,15 @@ type CardType = {
   price: string
   provider: string
   label: string
+  link: string
+  onToggleModal: () => void
 }
 
 const cardStyles = createUseStyles({
   card: {
     maxWidth: '20rem',
     position: 'relative',
-    boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75);'
+    boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)'
   },
   image: {
     width: '100%',
@@ -146,7 +148,7 @@ const cardStyles = createUseStyles({
   }
 })
 
-const Card = ({ imageUrl, title, description, price, provider, label }: CardType) => {
+const Card = ({ imageUrl, title, description, price, provider, label, link, onToggleModal }: CardType) => {
 
   const labelClass = () => {
     switch (label) {
@@ -175,11 +177,11 @@ const Card = ({ imageUrl, title, description, price, provider, label }: CardType
         <p>{description}</p>
       </div>
       <div className={classes.buttonWrap}>
-        <button className={classes.btn}>
+        <button className={classes.btn} onClick={() => window.open(link)}>
           <SearchIcon className={classes.btnIcon} />
           Détails
         </button>
-        <button className={classNames(classes.btn, classes.offrirBtn)}>
+        <button className={classNames(classes.btn, classes.offrirBtn)} onClick={onToggleModal}>
           <CardGiftcardIcon className={classes.btnIcon} />
           Offrir
         </button>

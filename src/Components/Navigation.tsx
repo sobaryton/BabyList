@@ -3,16 +3,19 @@ import { createUseStyles } from 'react-jss'
 import { Link } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import { darkBlue } from './constants'
+import classNames from 'classnames'
 
 const navStyles = createUseStyles({
   link: {
     textDecoration: 'none',
     cursor: 'pointer',
-    marginBottom: '-2rem',
-    zIndex: 10
+    width: '9rem',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   button: {
-    width: '22rem',
+    width: '9rem',
     height: '4rem',
     cursor: 'pointer',
     border: 'none',
@@ -20,9 +23,6 @@ const navStyles = createUseStyles({
     color: darkBlue,
     fontWeight: '600',
     transition: '500ms all ease',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     background: 'none',
     '&:hover': {
       color: darkBlue,
@@ -34,15 +34,15 @@ const navStyles = createUseStyles({
   }
 })
 
-const Navigation = () => {
+const Navigation = ({ className }: { className?: string }) => {
   const classes = navStyles()
   return (
-    <Link to="/" className={classes.link}>
-      <button className={classes.button}>
+    <button className={classNames(classes.button, className)}>
+      <Link to="/" className={classes.link}>
         <ArrowBackIcon className={classes.arrow} />
         Retour
-      </button>
-    </Link>
+      </Link>
+    </button>
   )
 }
 

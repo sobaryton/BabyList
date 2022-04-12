@@ -4,7 +4,7 @@ import WarningIcon from '@mui/icons-material/Warning'
 import BigHeader from './Components/BigHeader'
 import Footer from './Components/Footer'
 import StartInfo from './Components/StartInfo'
-import { font32, red, sansSerif } from './Components/constants'
+import { font48, red, sansSerif } from './Components/constants'
 
 const homeStyles = createUseStyles({
   main: {
@@ -29,7 +29,7 @@ const Home = () => {
     <main className={classes.main}>
       <BigHeader />
       <div className={classes.info}>
-        <WarningIcon sx={{ fontSize: font32, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
+        <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
         <StartInfo />
       </div>
       <Footer />
