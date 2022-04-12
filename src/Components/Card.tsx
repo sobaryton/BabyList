@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { createUseStyles } from 'react-jss'
 import { default as BasicCard } from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
 import CardContent from '@mui/material/CardContent'
@@ -15,7 +16,14 @@ type CardType = {
   provider: string
 }
 
+const cardStyles = createUseStyles({
+  price: {
+    position: 'absolute'
+  }
+})
+
 const Card = ({ imageUrl, title, description, price, provider }: CardType) => {
+  const classes = cardStyles()
   return (
     <BasicCard sx={{ minWidth: 275, maxWidth: 345 }} variant="outlined">
       <CardMedia
@@ -24,10 +32,10 @@ const Card = ({ imageUrl, title, description, price, provider }: CardType) => {
         image={`${imageUrl}`}
         alt="item"
       />
+      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom className={classes.price}>
+        {price}
+      </Typography>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {price}
-        </Typography>
         <Typography variant="h5" component="h5">
           {title}
         </Typography>

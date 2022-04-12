@@ -4,6 +4,7 @@ import WarningIcon from '@mui/icons-material/Warning'
 import BigHeader from './Components/BigHeader'
 import Footer from './Components/Footer'
 import StartInfo from './Components/StartInfo'
+import { sansSerif } from './Components/constants'
 
 const homeStyles = createUseStyles({
   main: {
@@ -12,7 +13,7 @@ const homeStyles = createUseStyles({
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'column',
-    fontFamily: '"Roboto", sans-serif',
+    fontFamily: sansSerif,
   },
   info: {
     width: '80%',

@@ -1,25 +1,26 @@
 import * as React from 'react'
 import { createUseStyles } from 'react-jss'
+import { blue, cursive, font64, white } from './constants'
 
 const headerStyles = createUseStyles({
   header: {
     width: '100%',
     height: '30vh',
-    backgroundImage: 'url("laine.jpg")',
+    backgroundImage: `url('${process.env.PUBLIC_URL + '/images/plaid.jpg'}')`,
     backgroundSize: 'cover',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
   },
   titleContainer: {
-    background: 'white',
+    background: white,
     borderRadius: '20%',
   },
   title: {
     padding: '0rem 3rem',
-    fontFamily: '"Lobster Two", cursive',
-    color: '#0E2F43',
-    fontSize: '4rem'
+    fontFamily: cursive,
+    color: blue,
+    fontSize: font64
   }
 })
 

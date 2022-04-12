@@ -2,6 +2,7 @@ import * as React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Link } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { blue, darkBlue } from './constants'
 
 const navStyles = createUseStyles({
   link: {
@@ -16,7 +17,7 @@ const navStyles = createUseStyles({
     cursor: 'pointer',
     border: 'none',
     fontSize: '1rem',
-    color: '#0E2F43',
+    color: blue,
     fontWeight: '600',
     transition: '500ms all ease',
     display: 'flex',
@@ -24,7 +25,7 @@ const navStyles = createUseStyles({
     alignItems: 'center',
     background: 'none',
     '&:hover': {
-      color: '#3597D4',
+      color: darkBlue,
     }
   },
   arrow: {

@@ -1,5 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
+import { font10 } from './constants'
 
 const footerStyles = createUseStyles({
   footer: {
@@ -8,7 +9,7 @@ const footerStyles = createUseStyles({
     alignItems: 'center'
   },
   copyright: {
-    fontSize: '0.6rem',
+    fontSize: font10,
     fontStyle: 'italic',
   }
 })

@@ -2,12 +2,13 @@ import * as React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Link } from 'react-router-dom'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { blue, darkBlue, font32, lightBlue, white } from './constants'
 
 const headerStyles = createUseStyles({
   header: {
     width: '100%',
     height: '50vh',
-    backgroundImage: 'url("bebe.jpg")',
+    backgroundImage: `url('${process.env.PUBLIC_URL + '/images/bebe.jpg'}')`,
     backgroundSize: 'cover',
     display: 'flex',
     justifyContent: 'center',
@@ -31,17 +32,17 @@ const headerStyles = createUseStyles({
     height: '4rem',
     cursor: 'pointer',
     border: 'none',
-    background: '#BCDDF1',
-    fontSize: '2rem',
-    color: '#0E2F43',
+    background: lightBlue,
+    fontSize: font32,
+    color: blue,
     fontWeight: '600',
     transition: '500ms all ease',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     '&:hover': {
-      background: '#3597D4',
-      color: 'white',
+      background: darkBlue,
+      color: white,
     }
   },
   arrow: {
