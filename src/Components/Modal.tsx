@@ -33,9 +33,10 @@ const modalStyles = createUseStyles({
     width: '50rem',
     height: 'auto',
     background: white,
-    padding: '1.5rem',
+    padding: '3rem 1.5rem 1.5rem 1.5rem',
     boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)',
-    position: 'absolute'
+    position: 'absolute',
+    top: '8vh'
   },
   overflow: {
     width: '100%',
@@ -47,12 +48,12 @@ const modalStyles = createUseStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-
+    width: '100%'
   },
   closeBtn: {
     position: 'absolute',
-    top: 3,
-    right: 5,
+    top: 10,
+    right: 10,
     '& button': {
       cursor: 'pointer',
       background: 'transparent',
@@ -67,12 +68,13 @@ const modalStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    width: '100%'
   },
   btn: {
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '7.5rem',
+    width: '50%',
     minHeight: '2rem',
     marginRight: '0.5rem',
     background: lightBlue,

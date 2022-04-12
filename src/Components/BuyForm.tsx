@@ -21,7 +21,7 @@ const BuyForm = () => {
     <div>
       <BuyInformation className={classes.info} />
       <form className={classes.form}>
-        <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou! (et aussi vous recontacter)</p>
+        <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! &hearts; (et aussi vous recontacter)</p>
         <label>
           * Votre nom
           <input type='text' required placeholder='Votre nom' />
