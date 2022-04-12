@@ -52,7 +52,7 @@ const ListPage = () => {
             description='This is the description of the article'
             price='£5'
             provider='Amazon'
-            label='offert'
+            label='offrir'
             link='https://www.cosatto.com/collections/bundles/products/giggle-quad-car-seat-and-i-size-base-bundle-charcoal-mister-fox'
             onToggleModal={() => dispatch({ type: 'toggleModal' })}
           />

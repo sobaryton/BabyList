@@ -1,8 +1,10 @@
 import classNames from 'classnames'
-import React from 'react'
+import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
-import { darkBlue, red, white } from './constants'
+import { darkBlue, font20, lightBlue, red, white } from './constants'
 import CloseIcon from '@mui/icons-material/Close'
+import BuyForm from './BuyForm'
+import ParticipationForm from './ParticipationForm'
 
 type ModalType = {
   open: boolean
@@ -28,19 +30,23 @@ const modalStyles = createUseStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '15rem',
+    width: '50rem',
     height: 'auto',
     background: white,
-    padding: '1rem',
+    padding: '1.5rem',
     boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)',
     position: 'absolute'
   },
   overflow: {
     width: '100%',
     height: '100%',
-    background: 'rgba(0, 0, 0, 0.2)'
+    background: 'rgba(0,0,0,0.75)'
   },
   main: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
 
   },
   closeBtn: {
@@ -56,20 +62,63 @@ const modalStyles = createUseStyles({
         color: red
       }
     }
-  }
+  },
+  btnWrap: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  btn: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '7.5rem',
+    minHeight: '2rem',
+    marginRight: '0.5rem',
+    background: lightBlue,
+    color: darkBlue,
+    border: 'none',
+    cursor: 'pointer',
+    transition: '500ms all ease',
+    fontWeight: 600,
+    fontSize: font20,
+    padding: '0.5rem',
+    '&:hover': {
+      background: darkBlue,
+      color: lightBlue
+    },
+    '&:last-child': {
+      marginRight: 0
+    }
+  },
+  btnIcon: {
+    marginRight: '0.7rem'
+  },
+  activeBtn: {
+    background: darkBlue,
+    color: lightBlue
+  },
 })
 
 const Modal = ({ open, onClose }: ModalType) => {
   const classes = modalStyles()
+
+  const [type, setType] = useState('')
+
   return (
     <div className={classNames(classes.modal, open ? classes.open : '')}>
       <div className={classes.overflow} onClick={onClose} />
       <div className={classes.modalContent}>
-        <header>
-          Modal
-        </header>
         <main className={classes.main}>
-          content
+          <div className={classes.btnWrap}>
+            <button onClick={() => setType('buy')} className={classNames(classes.btn, type === 'buy' ? classes.activeBtn : '')}>Offir</button>
+            <button onClick={() => setType('participate')} className={classNames(classes.btn, type === 'participate' ? classes.activeBtn : '')}>Participer</button>
+          </div>
+          {
+            type === '' ? '' : type === 'buy'
+              ? <BuyForm />
+              : <ParticipationForm />
+          }
         </main>
         <div className={classes.closeBtn}>
           <button onClick={onClose}>
