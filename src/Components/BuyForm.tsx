@@ -10,7 +10,7 @@ const buyFormStyles = createUseStyles({
     marginTop: '1rem'
   },
   info: {
-    marginBottom: '2rem'
+    marginBottom: '1rem'
   },
 })
 

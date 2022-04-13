@@ -64,7 +64,7 @@ const defaultValues = {
   name: '',
   email: '',
   message: '',
-  anonymous: true,
+  anonymous: false,
   montant: 0,
   currency: 'euros'
 }
