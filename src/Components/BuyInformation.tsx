@@ -12,7 +12,7 @@ const buyInfoStyles = createUseStyles({
     flexDirection: 'column'
   },
   address: {
-    margin: '2rem auto',
+    margin: '0 auto',
   },
   redHighlight: {
     color: white,

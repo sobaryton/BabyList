@@ -30,17 +30,19 @@ const modalStyles = createUseStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '50rem',
+    width: '65rem',
     height: 'auto',
+    maxHeight: '86vh',
+    overflow: 'scroll',
     background: white,
     padding: '3rem 1.5rem 1.5rem 1.5rem',
     boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)',
     position: 'absolute',
-    top: '8vh'
+    top: '6vh'
   },
   overflow: {
     width: '100%',
-    height: '100%',
+    height: '106%',
     background: 'rgba(0,0,0,0.75)'
   },
   main: {
