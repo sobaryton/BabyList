@@ -49,7 +49,7 @@ const modalStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     width: '100%'
   },
   closeBtn: {
@@ -70,7 +70,8 @@ const modalStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
+    marginBottom: '2rem'
   },
   btn: {
     display: 'flex',

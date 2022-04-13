@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import CelebrationIcon from '@mui/icons-material/Celebration'
-import { TextField, FormControlLabel, Checkbox, FormGroup } from '@mui/material'
+import { TextField, FormControlLabel, Checkbox, FormGroup, FormControl, FormLabel, Radio, RadioGroup, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { darkBlue, font20, lightBlue } from './constants'
 
 const formStyles = createUseStyles({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: '1rem',
+    margin: '1rem auto 0 auto',
     width: '95%'
   },
   submitBtn: {
@@ -43,8 +43,16 @@ const formStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  participationWrapper: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
   checkbox: {
     marginTop: '-2rem'
+  },
+  participation: {
+    marginBottom: '1rem'
   }
 })
 
@@ -56,8 +64,10 @@ const defaultValues = {
   name: '',
   email: '',
   message: '',
-  anonymous: true
-};
+  anonymous: true,
+  montant: 0,
+  currency: 'euros'
+}
 
 const Form = ({ submitText }: FormProps) => {
   const classes = formStyles()
@@ -78,6 +88,13 @@ const Form = ({ submitText }: FormProps) => {
     })
   }
 
+  const handleChange = (event: SelectChangeEvent) => {
+    setFormValues({
+      ...formValues,
+      currency: event.target.value,
+    })
+  }
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
     console.log(formValues)
@@ -85,6 +102,37 @@ const Form = ({ submitText }: FormProps) => {
 
   return (
     <form onSubmit={handleSubmit} className={classes.form}>
+      {
+        submitText !== 'OFFRIR' &&
+        <div className={classes.participation}>
+          <div className={classes.participationWrapper}>
+            <FormControl>
+              <InputLabel id="demo-simple-select-label">Monnaie</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formValues.currency}
+                label="currency"
+                required
+                onChange={handleChange}
+              >
+                <MenuItem value="euros">€ (Euros)</MenuItem>
+                <MenuItem value="pounds">£ (Pounds)</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              id="outlined-helperText"
+              label="Montant"
+              name="montant"
+              type="number"
+              required
+              onChange={handleInputChange}
+              className={classes.textInput}
+            />
+          </div>
+          <p>Ce qui fait %</p>
+        </div>
+      }
       <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! &hearts; (et aussi vous recontacter)</p>
       <div className={classes.inputWrapper}>
         <TextField
