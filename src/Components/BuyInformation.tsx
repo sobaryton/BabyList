@@ -9,7 +9,8 @@ import { font24, green, red, white } from './constants'
 const buyInfoStyles = createUseStyles({
   information: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    flexWrap: 'wrap'
   },
   address: {
     margin: '0 auto',

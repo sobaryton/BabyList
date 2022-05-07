@@ -30,7 +30,9 @@ const modalStyles = createUseStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '65rem',
+    maxWidth: '65rem',
+    minWidth: '250px',
+    width: 'auto',
     height: 'auto',
     maxHeight: '86vh',
     overflow: 'scroll',
@@ -54,12 +56,19 @@ const modalStyles = createUseStyles({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    width: '100%'
+    width: '100%',
+    padding: '1rem 0 0 0'
   },
   closeBtn: {
     position: 'absolute',
-    top: 10,
-    right: 10,
+    top: '1rem',
+    right: '1rem',
+    width: '2.625rem',
+    height: '2.625rem',
+    background: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     '& button': {
       cursor: 'pointer',
       background: 'transparent',
@@ -131,7 +140,7 @@ const Modal = ({ open, onClose }: ModalType) => {
         </main>
         <div className={classes.closeBtn}>
           <button onClick={onClose}>
-            <CloseIcon />
+            <CloseIcon sx={{ fontSize: '2rem' }} />
           </button>
         </div>
       </div>

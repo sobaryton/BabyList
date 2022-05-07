@@ -10,7 +10,8 @@ const formStyles = createUseStyles({
     display: 'flex',
     flexDirection: 'column',
     margin: '1rem auto 0 auto',
-    width: '95%'
+    width: '95%',
+    flexWrap: 'wrap'
   },
   submitBtn: {
     marginTop: '0.8rem',
@@ -18,7 +19,7 @@ const formStyles = createUseStyles({
     justifyContent: 'center',
     alignItems: 'center',
     height: 45,
-    width: '50%',
+    width: '90%',
     alignSelf: 'center',
     background: lightBlue,
     color: darkBlue,
@@ -28,6 +29,9 @@ const formStyles = createUseStyles({
     fontWeight: 600,
     fontSize: font20,
     padding: '0.5rem',
+    '@media (min-width: 1024px)': {
+      width: '50%',
+    },
     '&:hover': {
       background: darkBlue,
       color: lightBlue
@@ -37,22 +41,35 @@ const formStyles = createUseStyles({
     }
   },
   textInput: {
-    width: '49%'
+    width: '100%',
+    minWidth: '20rem !important',
+    '@media (min-width: 1024px)': {
+      width: '49%',
+    }
   },
   inputWrapper: {
     display: 'flex',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    flexDirection: 'row'
   },
   participationWrapper: {
     display: 'flex',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap'
   },
   checkbox: {
-    marginTop: '-2rem'
+    marginTop: 0,
+    '@media (min-width: 1024px)': {
+      marginTop: '-2rem',
+    }
   },
   participation: {
     marginBottom: '1rem'
+  },
+  currency: {
+    margin: '0.5rem 0.5rem 0.5rem 0'
   }
 })
 
@@ -109,12 +126,13 @@ const Form = ({ submitText }: FormProps) => {
             <FormControl>
               <InputLabel id="demo-simple-select-label">Monnaie</InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={formValues.currency}
-                label="currency"
-                required
-                onChange={handleChange}
+                  className={classes.currency}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formValues.currency}
+                  label="currency"
+                  required
+                  onChange={handleChange}
               >
                 <MenuItem value="euros">€ (Euros)</MenuItem>
                 <MenuItem value="pounds">£ (Pounds)</MenuItem>
