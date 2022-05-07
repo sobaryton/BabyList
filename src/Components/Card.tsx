@@ -6,7 +6,7 @@ import { darkBlue, darkYellow, font14, font16, font20, orange, lightBlue, lightY
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 
-type CardType = {
+export type CardType = {
   id: string
   imageUrl: string
   title: string
@@ -14,7 +14,6 @@ type CardType = {
   price: string
   provider: string
   label: string
-  link: string
   onToggleModal: () => void
 }
 
@@ -159,7 +158,7 @@ const cardStyles = createUseStyles({
   },
 })
 
-const Card = ({ imageUrl, title, description, price, provider, label, link, onToggleModal, id }: CardType) => {
+const Card = ({ imageUrl, title, description, price, provider, label, onToggleModal, id }: CardType) => {
 
   const labelClass = () => {
     switch (label) {

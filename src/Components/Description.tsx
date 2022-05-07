@@ -1,9 +1,26 @@
-import * as React from 'react'
+import React, { useReducer } from 'react'
+import { useParams } from 'react-router-dom'
 import { createUseStyles } from 'react-jss'
-import { lightBlue, darkBlue, font20 } from './constants'
-import SearchIcon from '@mui/icons-material/Search'
+import classNames from 'classnames'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
+import { lightBlue, darkBlue, font20, darkYellow, lightYellow } from './constants'
 import Navigation from './Navigation'
 import Header from './Header'
+import { cards } from '../fakeData'
+import Modal from './Modal'
+import FormContent from './FormContent'
+import { closeModalReducer } from '../reducers/closeModal'
+
+type CardType = {
+  id: string
+  imageUrl: string
+  title: string
+  description: string
+  price: string
+  provider: string
+  label: string
+}
 
 const cardStyles = createUseStyles({
   page: {
@@ -41,23 +58,75 @@ const cardStyles = createUseStyles({
   btnIcon: {
     marginRight: '0.7rem'
   },
+  image: {
+    width: '40%',
+    height: '25rem',
+    backgroundSize: 'cover',
+  },
+  offrirBtn: {
+    background: lightYellow,
+    color: darkYellow,
+    '&:hover': {
+      background: darkYellow,
+      color: lightYellow
+    },
+  },
+  articleDetails: {
+    display: 'flex'
+  },
+  buttonWrap: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '0.5rem',
+    marginTop: '0.5rem'
+  },
 })
 
-const Description = () => {
+const initialState = { openModal: false }
 
+const Description = () => {
   const classes = cardStyles()
+  const [state, dispatch] = useReducer(closeModalReducer, initialState)
+  // get info from Api
+  const id = useParams<{ id: string }>().id || ''
+  const { imageUrl, link, title, provider, description, price, label } = cards.filter((card: CardType) => card.id === id)[0]
+
   return (
     <div className={classes.page}>
       <header>
-        <Header />
+        <Header text={title} background="/images/blue-watercolour.jpg" />
       </header>
       <main className={classes.main}>
         <Navigation className={classes.navigation} link='/list' />
-        <button className={classes.btn} onClick={() => window.open('')}>
-          <SearchIcon className={classes.btnIcon} />
-          Lien
-        </button>
+        <div>
+          <div className={classes.articleDetails}>
+            <div className={classes.image} style={{ backgroundImage: `url(${imageUrl})` }}></div>
+            <div>
+              <h3>{title}</h3>
+              <p>{provider}</p>
+              <p>{description}</p>
+              <p>{price}</p>
+              <p>{label}</p>
+            </div>
+          </div>
+          <div className={classes.buttonWrap}>
+            <button className={classes.btn} onClick={() => window.open(link)}>
+              <OpenInNewIcon className={classes.btnIcon} />
+              Lien
+            </button>
+            <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch({ type: 'toggleModal' })}>
+              <CardGiftcardIcon className={classes.btnIcon} />
+              Offrir
+            </button>
+          </div>
+        </div>
       </main>
+      <Modal
+        open={state.openModal}
+        onClose={() => dispatch({ type: 'toggleModal' })}
+        children={<FormContent />}
+      />
     </div>
   )
 }
