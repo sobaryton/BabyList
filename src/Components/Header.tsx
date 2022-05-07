@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createUseStyles } from 'react-jss'
-import { darkBlue, cursive, font64, white } from './constants'
+import { darkBlue, cursive, font64, white, font48 } from './constants'
 
 const headerStyles = createUseStyles({
   header: {
@@ -13,14 +13,17 @@ const headerStyles = createUseStyles({
     alignItems: 'center'
   },
   titleContainer: {
-    background: white,
     borderRadius: '20%',
   },
   title: {
     padding: '0rem 3rem',
     fontFamily: cursive,
     color: darkBlue,
-    fontSize: font64
+    fontSize: font48,
+    background: white,
+    '@media (min-width: 1024px)': {
+      fontSize: font64,
+    }
   }
 })
 

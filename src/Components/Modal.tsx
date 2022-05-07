@@ -37,12 +37,16 @@ const modalStyles = createUseStyles({
     background: white,
     padding: '3rem 1.5rem 1.5rem 1.5rem',
     boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)',
-    position: 'absolute',
+    zIndex: 100,
+    position: 'fixed',
     top: '6vh'
   },
   overflow: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
     width: '100%',
-    height: '106%',
+    height: '100%',
     background: 'rgba(0,0,0,0.75)'
   },
   main: {

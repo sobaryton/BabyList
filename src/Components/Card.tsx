@@ -20,7 +20,8 @@ const cardStyles = createUseStyles({
   card: {
     maxWidth: '20rem',
     position: 'relative',
-    boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)'
+    boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)',
+    margin: '1rem 0.5rem'
   },
   image: {
     width: '100%',
