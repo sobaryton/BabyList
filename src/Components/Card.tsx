@@ -4,8 +4,10 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import SearchIcon from '@mui/icons-material/Search'
 import { darkBlue, darkYellow, font14, font16, font20, orange, lightBlue, lightYellow, white, green, red, blue } from './constants'
 import classNames from 'classnames'
+import { Link } from 'react-router-dom'
 
 type CardType = {
+  id: string
   imageUrl: string
   title: string
   description: string
@@ -18,9 +20,9 @@ type CardType = {
 
 const cardStyles = createUseStyles({
   card: {
-    maxWidth: '20rem',
+    width: '20rem',
     position: 'relative',
-    boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)',
+    boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.15)',
     margin: '1rem 0.5rem'
   },
   image: {
@@ -146,10 +148,18 @@ const cardStyles = createUseStyles({
       background: darkYellow,
       color: lightYellow
     },
-  }
+  },
+  link: {
+    textDecoration: 'none',
+    cursor: 'pointer',
+    width: '9rem',
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
 })
 
-const Card = ({ imageUrl, title, description, price, provider, label, link, onToggleModal }: CardType) => {
+const Card = ({ imageUrl, title, description, price, provider, label, link, onToggleModal, id }: CardType) => {
 
   const labelClass = () => {
     switch (label) {
@@ -175,13 +185,15 @@ const Card = ({ imageUrl, title, description, price, provider, label, link, onTo
       <div className={classes.desc}>
         <h3>{title}</h3>
         <p className={classes.provider}>{provider}</p>
-        <p>{description}</p>
+        <p>{description.length > 40 ? `${description.substring(0, 40)}...` : description}</p>
       </div>
       <div className={classes.buttonWrap}>
-        <button className={classes.btn} onClick={() => window.open(link)}>
-          <SearchIcon className={classes.btnIcon} />
-          Détails
-        </button>
+        <Link to={`/description/${id}`} className={classes.link}>
+          <button className={classes.btn}>
+            <SearchIcon className={classes.btnIcon} />
+            Détails
+          </button>
+        </Link>
         <button className={classNames(classes.btn, classes.offrirBtn)} onClick={onToggleModal}>
           <CardGiftcardIcon className={classes.btnIcon} />
           Offrir

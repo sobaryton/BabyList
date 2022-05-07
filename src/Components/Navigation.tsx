@@ -34,11 +34,11 @@ const navStyles = createUseStyles({
   }
 })
 
-const Navigation = ({ className }: { className?: string }) => {
+const Navigation = ({ className, link }: { className?: string, link?: string }) => {
   const classes = navStyles()
   return (
     <button className={classNames(classes.button, className)}>
-      <Link to="/" className={classes.link}>
+      <Link to={link ? link : "/"} className={classes.link}>
         <ArrowBackIcon className={classes.arrow} />
         Retour
       </Link>

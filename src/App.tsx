@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss'
 import ListPage from './ListPage'
 import Home from './Home'
 import { sansSerif } from './Components/constants'
+import Description from './Components/Description'
 
 const appStyles = createUseStyles({
   "@global": {
@@ -27,6 +28,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="list" element={<ListPage />} />
+        <Route path="description/:id" element={<Description />} />
       </Routes>
     </>
   );
