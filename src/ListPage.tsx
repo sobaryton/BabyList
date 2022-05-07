@@ -1,10 +1,12 @@
 import React, { useReducer, useState } from 'react'
 import { createUseStyles } from 'react-jss'
+import SearchBar from 'material-ui-search-bar'
 import Card from './Components/Card'
 import Header from './Components/Header'
 import Navigation from './Components/Navigation'
 import Modal from './Components/Modal'
-import SearchBar from 'material-ui-search-bar'
+import FormContent from './Components/FormContent'
+import { closeModalReducer } from './reducers/closeModal'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -28,19 +30,10 @@ const listPageStyles = createUseStyles({
   searchBar: {
     width: '25rem',
     margin: 'auto',
-  }
+  },
 })
 
 const initialState = { openModal: false }
-
-const reducer = (state: { openModal: any }, action: { type: any }) => {
-  switch (action.type) {
-    case 'toggleModal':
-      return { openModal: !state.openModal }
-    default:
-      throw new Error();
-  }
-}
 
 const cards = [
   {
@@ -110,7 +103,7 @@ const cards = [
 
 const ListPage = () => {
   const classes = listPageStyles()
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(closeModalReducer, initialState)
   const [searched, setSearched] = useState("")
   const [rows, setRows] = useState(cards)
 
@@ -158,7 +151,11 @@ const ListPage = () => {
           }
         </article>
       </main>
-      <Modal open={state.openModal} onClose={() => dispatch({ type: 'toggleModal' })} />
+      <Modal
+        open={state.openModal}
+        onClose={() => dispatch({ type: 'toggleModal' })}
+        children={<FormContent onClose={() => dispatch({ type: 'toggleModal' })} />}
+      />
     </div>
   );
 }

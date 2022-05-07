@@ -1,14 +1,13 @@
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { ReactNode } from 'react'
 import { createUseStyles } from 'react-jss'
-import { darkBlue, font20, lightBlue, red, white } from './constants'
+import { darkBlue, red, white } from './constants'
 import CloseIcon from '@mui/icons-material/Close'
-import BuyForm from './BuyForm'
-import ParticipationForm from './ParticipationForm'
 
 type ModalType = {
   open: boolean
   onClose: () => void
+  children: ReactNode
 }
 
 const modalStyles = createUseStyles({
@@ -78,65 +77,18 @@ const modalStyles = createUseStyles({
         color: red
       }
     }
-  },
-  btnWrap: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '100%',
-    marginBottom: '2rem'
-  },
-  btn: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    width: '50%',
-    minHeight: '2rem',
-    marginRight: '0.5rem',
-    background: lightBlue,
-    color: darkBlue,
-    border: 'none',
-    cursor: 'pointer',
-    transition: '500ms all ease',
-    fontWeight: 600,
-    fontSize: font20,
-    padding: '0.5rem',
-    '&:hover': {
-      background: darkBlue,
-      color: lightBlue
-    },
-    '&:last-child': {
-      marginRight: 0
-    }
-  },
-  btnIcon: {
-    marginRight: '0.7rem'
-  },
-  activeBtn: {
-    background: darkBlue,
-    color: lightBlue
-  },
+  }
 })
 
-const Modal = ({ open, onClose }: ModalType) => {
+const Modal = ({ open, onClose, children }: ModalType) => {
   const classes = modalStyles()
-
-  const [type, setType] = useState('buy')
 
   return (
     <div className={classNames(classes.modal, open ? classes.open : '')}>
       <div className={classes.overflow} onClick={onClose} />
       <div className={classes.modalContent}>
         <main className={classes.main}>
-          <div className={classes.btnWrap}>
-            <button onClick={() => setType('buy')} className={classNames(classes.btn, type === 'buy' ? classes.activeBtn : '')}>Offir</button>
-            <button onClick={() => setType('participate')} className={classNames(classes.btn, type === 'participate' ? classes.activeBtn : '')}>Participer</button>
-          </div>
-          {
-            type === '' ? '' : type === 'buy'
-              ? <BuyForm />
-              : <ParticipationForm />
-          }
+          {children}
         </main>
         <div className={classes.closeBtn}>
           <button onClick={onClose}>

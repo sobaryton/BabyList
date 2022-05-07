@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import CelebrationIcon from '@mui/icons-material/Celebration'
-import { TextField, FormControlLabel, Checkbox, FormGroup, FormControl, FormLabel, Radio, RadioGroup, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { TextField, FormControlLabel, Checkbox, FormGroup, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { darkBlue, font20, lightBlue } from './constants'
 
 const formStyles = createUseStyles({
@@ -75,6 +75,7 @@ const formStyles = createUseStyles({
 
 type FormProps = {
   submitText: string
+  onClose: () => void
 }
 
 const defaultValues = {
@@ -86,7 +87,7 @@ const defaultValues = {
   currency: 'euros'
 }
 
-const Form = ({ submitText }: FormProps) => {
+const Form = ({ submitText, onClose }: FormProps) => {
   const classes = formStyles()
   const [formValues, setFormValues] = useState(defaultValues)
 
@@ -115,6 +116,7 @@ const Form = ({ submitText }: FormProps) => {
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
     console.log(formValues)
+    onClose()
   }
 
   return (
