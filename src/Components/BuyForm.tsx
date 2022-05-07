@@ -14,16 +14,12 @@ const buyFormStyles = createUseStyles({
   },
 })
 
-type Props = {
-  onClose: () => void
-}
-
-const BuyForm = ({ onClose }: Props) => {
+const BuyForm = () => {
   const classes = buyFormStyles()
   return (
     <>
       <BuyInformation className={classes.info} />
-      <Form submitText="OFFRIR" onClose={onClose} />
+      <Form submitText="OFFRIR" />
     </>
   )
 }

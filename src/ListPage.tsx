@@ -52,7 +52,7 @@ const cards = [
     price: '£25',
     provider: 'Amazon',
     label: 'offert',
-    link: 'https://www.cosatto.com/collections/bundles/products/giggle-quad-car-seat-and-i-size-base-bundle-charcoal-mister-fox'
+    link: 'https://www.laredoute.co.uk/ppdp/prod-350164157.aspx#shoppingtool=treestructureflyout'
   },
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/plaid.jpg'}`,
@@ -61,7 +61,7 @@ const cards = [
     price: '£125',
     provider: 'Amazon',
     label: 'recu',
-    link: 'https://www.cosatto.com/collections/bundles/products/giggle-quad-car-seat-and-i-size-base-bundle-charcoal-mister-fox'
+    link: 'https://www.laredoute.co.uk/ppdp/prod-350185799.aspx#shoppingtool=treestructureflyout'
   },
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/laine.jpg'}`,
@@ -70,7 +70,7 @@ const cards = [
     price: '£25',
     provider: 'Amazon',
     label: 'offert',
-    link: 'https://www.cosatto.com/collections/bundles/products/giggle-quad-car-seat-and-i-size-base-bundle-charcoal-mister-fox'
+    link: 'https://www.laredoute.co.uk/ppdp/prod-350231322.aspx#shoppingtool=treestructureflyout'
   },
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/plaid.jpg'}`,
@@ -79,7 +79,7 @@ const cards = [
     price: '£125',
     provider: 'Amazon',
     label: 'recu',
-    link: 'https://www.cosatto.com/collections/bundles/products/giggle-quad-car-seat-and-i-size-base-bundle-charcoal-mister-fox'
+    link: 'https://www.laredoute.co.uk/ppdp/prod-350203317.aspx#shoppingtool=treestructureflyout'
   },
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/laine.jpg'}`,
@@ -88,7 +88,7 @@ const cards = [
     price: '£25',
     provider: 'Amazon',
     label: 'offert',
-    link: 'https://www.cosatto.com/collections/bundles/products/giggle-quad-car-seat-and-i-size-base-bundle-charcoal-mister-fox'
+    link: 'https://www.laredoute.co.uk/ppdp/prod-350224712.aspx#shoppingtool=treestructureflyout'
   },
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/plaid.jpg'}`,
@@ -97,7 +97,7 @@ const cards = [
     price: '£125',
     provider: 'Amazon',
     label: 'recu',
-    link: 'https://www.cosatto.com/collections/bundles/products/giggle-quad-car-seat-and-i-size-base-bundle-charcoal-mister-fox'
+    link: 'https://www.laredoute.co.uk/ppdp/prod-350224703.aspx#shoppingtool=treestructureflyout'
   }
 ]
 
@@ -137,6 +137,7 @@ const ListPage = () => {
             rows.map((card) => {
               return (
                 <Card
+                  key={card.link}
                   imageUrl={card.imageUrl}
                   title={card.title}
                   description={card.description}
@@ -154,7 +155,7 @@ const ListPage = () => {
       <Modal
         open={state.openModal}
         onClose={() => dispatch({ type: 'toggleModal' })}
-        children={<FormContent onClose={() => dispatch({ type: 'toggleModal' })} />}
+        children={<FormContent />}
       />
     </div>
   );

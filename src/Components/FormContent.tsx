@@ -45,11 +45,7 @@ const listPageStyles = createUseStyles({
   },
 })
 
-type Props = {
-  onClose: () => void
-}
-
-const FormContent = ({ onClose }: Props) => {
+const FormContent = () => {
   const classes = listPageStyles()
   const [type, setType] = useState('buy')
 
@@ -61,8 +57,8 @@ const FormContent = ({ onClose }: Props) => {
       </div>
       {
         type === '' ? '' : type === 'buy'
-          ? <BuyForm onClose={onClose} />
-          : <ParticipationForm onClose={onClose} />
+          ? <BuyForm />
+          : <ParticipationForm />
       }
     </>
   );
