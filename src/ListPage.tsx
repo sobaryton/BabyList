@@ -1,9 +1,10 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import Card from './Components/Card'
 import Header from './Components/Header'
 import Navigation from './Components/Navigation'
 import Modal from './Components/Modal'
+import SearchBar from 'material-ui-search-bar'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -23,6 +24,10 @@ const listPageStyles = createUseStyles({
     flexWrap: 'wrap',
     maxWidth: '75rem',
     margin: 'auto'
+  },
+  searchBar: {
+    width: '25rem',
+    margin: 'auto',
   }
 })
 
@@ -40,7 +45,7 @@ const reducer = (state: { openModal: any }, action: { type: any }) => {
 const cards = [
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/bebe.jpg'}`,
-    title: 'Article name',
+    title: 'Body',
     description: 'This is the description of the article',
     price: '£5',
     provider: 'Amazon',
@@ -49,7 +54,7 @@ const cards = [
   },
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/laine.jpg'}`,
-    title: 'Article name 2',
+    title: 'Pyjama',
     description: 'This is the description of the article',
     price: '£25',
     provider: 'Amazon',
@@ -58,7 +63,7 @@ const cards = [
   },
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/plaid.jpg'}`,
-    title: 'Article name 3',
+    title: 'Jouet',
     description: 'This is the description of the article',
     price: '£125',
     provider: 'Amazon',
@@ -67,7 +72,7 @@ const cards = [
   },
   {
     imageUrl: `${process.env.PUBLIC_URL + '/images/laine.jpg'}`,
-    title: 'Article name 23',
+    title: 'T-shirt',
     description: 'This is the description of the article',
     price: '£25',
     provider: 'Amazon',
@@ -106,6 +111,20 @@ const cards = [
 const ListPage = () => {
   const classes = listPageStyles()
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [searched, setSearched] = useState("")
+  const [rows, setRows] = useState(cards)
+
+  const requestSearch = (searchedVal: string) => {
+    const filteredRows = cards.filter((card) => {
+      return card.title.toLowerCase().includes(searchedVal.toLowerCase())
+    })
+    setRows(filteredRows)
+  }
+
+  const cancelSearch = () => {
+    setSearched("")
+    requestSearch(searched)
+  }
 
   return (
     <div className={classes.page}>
@@ -114,9 +133,15 @@ const ListPage = () => {
       </header>
       <main className={classes.main}>
         <Navigation className={classes.navigation} />
+        <SearchBar
+          value={searched}
+          onChange={(searchVal) => requestSearch(searchVal)}
+          onCancelSearch={() => cancelSearch()}
+          className={classes.searchBar}
+        />
         <article className={classes.list}>
           {
-            cards.map((card) => {
+            rows.map((card) => {
               return (
                 <Card
                   imageUrl={card.imageUrl}

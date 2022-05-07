@@ -121,7 +121,7 @@ const modalStyles = createUseStyles({
 const Modal = ({ open, onClose }: ModalType) => {
   const classes = modalStyles()
 
-  const [type, setType] = useState('')
+  const [type, setType] = useState('buy')
 
   return (
     <div className={classNames(classes.modal, open ? classes.open : '')}>
