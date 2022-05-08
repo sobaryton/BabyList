@@ -82,7 +82,7 @@ const defaultValues = {
   email: '',
   message: '',
   anonymous: false,
-  montant: 0,
+  amount: 0,
   currency: 'euros'
 }
 
@@ -145,14 +145,14 @@ const Form = ({ submitText }: FormProps) => {
                 <TextField
                   id="outlined-helperText"
                   label="Montant"
-                  name="montant"
+                    name="amount"
                   type="number"
                   required
                   onChange={handleInputChange}
                   className={classes.textInput}
                 />
               </div>
-              <p>Ce qui fait %</p>
+                {/* {formValues.amount && `Ce qui fait ${formValues.amount / totalAmount}%`} */}
             </div>
           }
           <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! &hearts; (et aussi vous recontacter)</p>

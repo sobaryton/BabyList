@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import { createUseStyles } from 'react-jss'
 import classNames from 'classnames'
@@ -8,10 +8,9 @@ import { lightBlue, darkBlue, font20, darkYellow, lightYellow } from './constant
 import Navigation from './Navigation'
 import Header from './Header'
 import { cards } from '../fakeData'
-import Modal from './Modal'
-import FormContent from './FormContent'
-import { closeModalReducer } from '../reducers/closeModal'
 import { CardType } from '../fakeData'
+import { useAppDispatch, useAppSelector } from '../hooks'
+import Modal from './Modal'
 
 const cardStyles = createUseStyles({
   page: {
@@ -74,11 +73,10 @@ const cardStyles = createUseStyles({
   },
 })
 
-const initialState = { openModal: false }
-
 const Description = () => {
   const classes = cardStyles()
-  const [state, dispatch] = useReducer(closeModalReducer, initialState)
+  const dispatch = useAppDispatch()
+  const showModal = useAppSelector((state) => state.modal.isOpen)
   // get info from Api
   const id = useParams<{ id: string }>().id || ''
   const { image, url, title, store, description, amount, status, currency } = cards.filter((card: CardType) => card.id === id)[0]
@@ -113,11 +111,7 @@ const Description = () => {
           </div>
         </div>
       </main>
-      <Modal
-        open={state.openModal}
-        onClose={() => dispatch({ type: 'toggleModal' })}
-        children={<FormContent />}
-      />
+      {showModal && <Modal />}
     </div>
   )
 }
