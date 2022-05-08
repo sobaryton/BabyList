@@ -11,16 +11,7 @@ import { cards } from '../fakeData'
 import Modal from './Modal'
 import FormContent from './FormContent'
 import { closeModalReducer } from '../reducers/closeModal'
-
-type CardType = {
-  id: string
-  imageUrl: string
-  title: string
-  description: string
-  price: string
-  provider: string
-  label: string
-}
+import { CardType } from '../fakeData'
 
 const cardStyles = createUseStyles({
   page: {
@@ -90,7 +81,7 @@ const Description = () => {
   const [state, dispatch] = useReducer(closeModalReducer, initialState)
   // get info from Api
   const id = useParams<{ id: string }>().id || ''
-  const { imageUrl, link, title, provider, description, price, label } = cards.filter((card: CardType) => card.id === id)[0]
+  const { image, url, title, store, description, amount, status, currency } = cards.filter((card: CardType) => card.id === id)[0]
 
   return (
     <div className={classes.page}>
@@ -101,17 +92,17 @@ const Description = () => {
         <Navigation className={classes.navigation} link='/list' />
         <div>
           <div className={classes.articleDetails}>
-            <div className={classes.image} style={{ backgroundImage: `url(${imageUrl})` }}></div>
+            <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
             <div>
               <h3>{title}</h3>
-              <p>{provider}</p>
+              <p>{store}</p>
               <p>{description}</p>
-              <p>{price}</p>
-              <p>{label}</p>
+              <p>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</p>
+              <p>{status}</p>
             </div>
           </div>
           <div className={classes.buttonWrap}>
-            <button className={classes.btn} onClick={() => window.open(link)}>
+            <button className={classes.btn} onClick={() => window.open(url)}>
               <OpenInNewIcon className={classes.btnIcon} />
               Lien
             </button>

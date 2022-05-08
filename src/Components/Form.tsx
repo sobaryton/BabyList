@@ -138,8 +138,8 @@ const Form = ({ submitText }: FormProps) => {
                     required
                     onChange={handleChange}
                   >
-                    <MenuItem value="euros">€ (Euros)</MenuItem>
-                    <MenuItem value="pounds">£ (Pounds)</MenuItem>
+                      <MenuItem value="euros">€ (Euros)</MenuItem>
+                      <MenuItem disabled={true} value="pounds">£ (Pounds)</MenuItem>
                   </Select>
                 </FormControl>
                 <TextField

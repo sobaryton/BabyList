@@ -73,14 +73,19 @@ const ListPage = () => {
             rows.map((card) => {
               return (
                 <Card
-                  key={card.link}
+                  key={card.url}
                   id={card.id}
-                  imageUrl={card.imageUrl}
+                  image={card.image}
                   title={card.title}
                   description={card.description}
-                  price={card.price}
-                  provider={card.provider}
-                  label={card.label}
+                  amount={card.amount}
+                  currency={card.currency}
+                  store={card.store}
+                  wishlistId={card.wishlistId}
+                  status={card.status}
+                  createdAt={card.createdAt}
+                  category={card.category}
+                  url={card.url}
                   onToggleModal={() => dispatch({ type: 'toggleModal' })}
                 />
               )

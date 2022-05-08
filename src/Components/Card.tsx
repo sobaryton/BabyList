@@ -5,17 +5,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { darkBlue, darkYellow, font14, font16, font20, orange, lightBlue, lightYellow, white, green, red, blue } from './constants'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
-
-export type CardType = {
-  id: string
-  imageUrl: string
-  title: string
-  description: string
-  price: string
-  provider: string
-  label: string
-  onToggleModal: () => void
-}
+import { CardType } from '../fakeData'
 
 const cardStyles = createUseStyles({
   card: {
@@ -158,32 +148,40 @@ const cardStyles = createUseStyles({
   },
 })
 
-const Card = ({ imageUrl, title, description, price, provider, label, onToggleModal, id }: CardType) => {
+type CardElement = CardType & { onToggleModal: () => void }
+
+const Card = ({ image, title, description, amount, currency, store, status, onToggleModal, id }: CardElement) => {
 
   const labelClass = () => {
-    switch (label) {
-      case 'offert':
+    switch (status) {
+      case 'OFFERED':
         return 'blueLabel'
-      case 'offrir':
+      case 'TO_OFFER':
         return 'redLabel'
-      case 'recu':
+      case 'RECEIVED':
         return 'greenLabel'
       default:
         return 'orangeLabel'
     }
   }
 
+  const statusLabel = {
+    OFFERED: 'Offert',
+    TO_OFFER: 'À offrir',
+    RECEIVED: 'Reçu'
+  }
+
   const classes = cardStyles()
   return (
     <div className={classes.card}>
-      <div className={classes.image} style={{ backgroundImage: `url(${imageUrl})` }}></div>
-      <div className={classes.price}><p>{price}</p></div>
+      <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
+      <div className={classes.price}><p>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</p></div>
       <div className={classNames(classes.label, classes[labelClass()])}>
-        <p>{label}</p>
+        <p>{statusLabel[status]}</p>
       </div>
       <div className={classes.desc}>
         <h3>{title}</h3>
-        <p className={classes.provider}>{provider}</p>
+        <p className={classes.provider}>{store}</p>
         <p>{description.length > 40 ? `${description.substring(0, 40)}...` : description}</p>
       </div>
       <div className={classes.buttonWrap}>
