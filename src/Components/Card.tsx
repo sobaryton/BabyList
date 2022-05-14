@@ -155,11 +155,11 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
   const labelClass = () => {
     switch (status) {
       case 'OFFERED':
-        return 'blueLabel'
+        return 'greenLabel'
       case 'TO_OFFER':
         return 'redLabel'
-      case 'RECEIVED':
-        return 'greenLabel'
+      case 'PARTLY_FUNDED':
+        return 'orangeLabel'
       default:
         return 'orangeLabel'
     }
@@ -168,7 +168,7 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
   const statusLabel = {
     OFFERED: 'Offert',
     TO_OFFER: 'À offrir',
-    RECEIVED: 'Reçu'
+    PARTLY_FUNDED: 'À participer'
   }
 
   const classes = cardStyles()
@@ -191,10 +191,14 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
             Détails
           </button>
         </Link>
-        <button className={classNames(classes.btn, classes.offrirBtn)} onClick={onToggleModal}>
-          <CardGiftcardIcon className={classes.btnIcon} />
-          Offrir
-        </button>
+        {
+          status === "TO_OFFER" &&
+          <button className={classNames(classes.btn, classes.offrirBtn)} onClick={onToggleModal}>
+            <CardGiftcardIcon className={classes.btnIcon} />
+            Offrir
+          </button>
+        }
+
       </div>
     </div>
   )

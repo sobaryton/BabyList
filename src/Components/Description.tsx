@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss'
 import classNames from 'classnames'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
-import { lightBlue, darkBlue, font20, darkYellow, lightYellow } from './constants'
+import { lightBlue, darkBlue, font20, darkYellow, lightYellow, red, white, green, orange } from './constants'
 import Navigation from './Navigation'
 import Header from './Header'
 import { cards } from '../fakeData'
@@ -54,6 +54,7 @@ const cardStyles = createUseStyles({
     width: '40%',
     height: '25rem',
     backgroundSize: 'cover',
+    marginRight: '1rem'
   },
   offrirBtn: {
     background: lightYellow,
@@ -64,14 +65,62 @@ const cardStyles = createUseStyles({
     },
   },
   articleDetails: {
-    display: 'flex'
+    display: 'flex',
+    flexDirection: 'column'
   },
   buttonWrap: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0.5rem',
-    marginTop: '0.5rem'
+    padding: '0.5rem 0',
+    marginTop: '3rem',
+    maxWidth: '20rem'
+  },
+  article: {
+    display: 'flex',
+    '& p': {
+      margin: '0.5rem 0'
+    }
+  },
+  provider: {
+    color: darkBlue,
+    background: lightBlue,
+    marginBottom: '1rem',
+    fontWeight: 'bold',
+    padding: '0.3rem 0.4rem',
+    textDecoration: 'none'
+  },
+  header: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+  },
+  title: {
+    color: darkBlue
+  },
+  label: {
+    width: '15%',
+    height: '2rem',
+    display: 'flex',
+    marginLeft: '2rem',
+    alignItems: 'center',
+    justifyContent: 'center',
+    '& p': {
+      fontWeight: 700,
+      textTransform: 'uppercase'
+    }
+  },
+  redLabel: {
+    background: red,
+    color: white
+  },
+  greenLabel: {
+    background: green,
+    color: white
+  },
+  orangeLabel: {
+    background: orange,
+    color: white
   },
 })
 
@@ -83,33 +132,69 @@ const Description = () => {
   const id = useParams<{ id: string }>().id || ''
   const { image, url, title, store, description, amount, status, currency } = cards.filter((card: CardType) => card.id === id)[0]
 
+  const frenchStatus = {
+    OFFERED: 'a déjà été offert',
+    TO_OFFER: 'est à offrir',
+    RECEIVED: 'a été reçu',
+    PARTLY_FUNDED: 'a besoin de participation'
+  }
+
+  const labelClass = () => {
+    switch (status) {
+      case 'OFFERED':
+        return 'greenLabel'
+      case 'TO_OFFER':
+        return 'redLabel'
+      case 'PARTLY_FUNDED':
+        return 'orangeLabel'
+      default:
+        return 'orangeLabel'
+    }
+  }
+
+  const statusLabel = {
+    OFFERED: 'Offert',
+    TO_OFFER: 'À offrir',
+    PARTLY_FUNDED: 'À participer'
+  }
+
   return (
     <div className={classes.page}>
       <header>
-        <Header text={title} background="/images/blue-watercolour.jpg" />
+        <Header text={title} background="/images/plaid.jpg" />
       </header>
       <main className={classes.main}>
         <Navigation className={classes.navigation} link='/list' />
         <div>
           <div className={classes.articleDetails}>
-            <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
-            <div>
-              <h3>{title}</h3>
-              <p>{store}</p>
-              <p>{description}</p>
-              <p>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</p>
-              <p>{status}</p>
+            <div className={classes.header}>
+              <h1 className={classes.title}>{title}</h1>
+              <div className={classNames(classes.label, classes[labelClass()])}>
+                <p>{statusLabel[status]}</p>
+              </div>
             </div>
-          </div>
-          <div className={classes.buttonWrap}>
-            <button className={classes.btn} onClick={() => window.open(url)}>
-              <OpenInNewIcon className={classes.btnIcon} />
-              Lien
-            </button>
-            <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal(amount))}>
-              <CardGiftcardIcon className={classes.btnIcon} />
-              Offrir
-            </button>
+            <div className={classes.article}>
+              <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
+              <div>
+                <p>{description}</p>
+                <p>Son prix est de <b>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</b>.</p>
+                <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a></p>
+                <p>Ce cadeau {frenchStatus[status]}.</p>
+                <div className={classes.buttonWrap}>
+                  <button className={classes.btn} onClick={() => window.open(url)}>
+                    <OpenInNewIcon className={classes.btnIcon} />
+                    Lien
+                  </button>
+                  {
+                    status === "TO_OFFER" &&
+                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal(amount))}>
+                      <CardGiftcardIcon className={classes.btnIcon} />
+                      Offrir
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </main>
