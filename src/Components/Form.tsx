@@ -156,7 +156,7 @@ const Form = ({ submitText }: FormProps) => {
               </div>
               {
                 (!!formValues.amount && totalAmount !== 0) 
-                && <p>Ce qui fait {(formValues.amount / totalAmount) * 100}%</p>
+                  && <p>Ce qui fait {Math.floor((formValues.amount / totalAmount) * 100)}%</p>
               }
             </div>
           }
