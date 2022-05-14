@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { createUseStyles } from 'react-jss'
 import SearchBar from 'material-ui-search-bar'
 import Card from './Components/Card'
 import Header from './Components/Header'
 import Navigation from './Components/Navigation'
-import { cards } from './fakeData'
+import { cards, CardType } from './fakeData'
 import { useAppDispatch, useAppSelector } from './hooks'
 import Modal from './Components/Modal'
 import {toggleModal} from './reducers/closeModal'
 import FormContent from './Components/FormContent'
+import axios from 'axios'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -39,9 +40,14 @@ const listPageStyles = createUseStyles({
 const ListPage = () => {
   const classes = listPageStyles()
   const [searched, setSearched] = useState("")
-  const [rows, setRows] = useState(cards)
+  const [rows, setRows] = useState([] as CardType[])
   const showModal = useAppSelector((state) => state.modal.isOpen)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    axios.get('https://baby-wishlist.herokuapp.com/wishlists/cf30c26b-f287-4541-9340-58cd672d72b2/gifts')
+      .then((res) => setRows(res.data))
+  }, [])
 
   const requestSearch = (searchedVal: string) => {
     const filteredRows = cards.filter((card) => {
