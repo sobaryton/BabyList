@@ -11,6 +11,7 @@ import { cards } from '../fakeData'
 import { CardType } from '../fakeData'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import Modal from './Modal'
+import FormContent from './FormContent'
 
 const cardStyles = createUseStyles({
   page: {
@@ -111,7 +112,7 @@ const Description = () => {
           </div>
         </div>
       </main>
-      {showModal && <Modal />}
+      {showModal && <Modal><FormContent /></Modal>}
     </div>
   )
 }

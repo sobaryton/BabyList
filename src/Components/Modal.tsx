@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { createUseStyles } from 'react-jss'
 import { darkBlue, red, white } from './constants'
 import CloseIcon from '@mui/icons-material/Close'
@@ -79,17 +79,20 @@ const modalStyles = createUseStyles({
   }
 })
 
-const Modal = () => {
+type Props = {
+  children: ReactNode
+}
+
+const Modal = ({children}: Props) => {
   const classes = modalStyles()
   const dispatch = useAppDispatch()
-  // const children = useAppSelector((state) => state.modal.modal.children)
 
   return (
     <div className={classNames(classes.modal)}>
       <div className={classes.overflow} onClick={() => dispatch(toggleModal())} />
       <div className={classes.modalContent}>
         <main className={classes.main}>
-          {/* {children} */}
+          {children}
         </main>
         <div className={classes.closeBtn}>
           <button onClick={() => dispatch(toggleModal())}>

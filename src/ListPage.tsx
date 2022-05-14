@@ -8,6 +8,7 @@ import { cards } from './fakeData'
 import { useAppDispatch, useAppSelector } from './hooks'
 import Modal from './Components/Modal'
 import {toggleModal} from './reducers/closeModal'
+import FormContent from './Components/FormContent'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -93,7 +94,7 @@ const ListPage = () => {
           }
         </article>
       </main>
-      {showModal && <Modal />}
+      {showModal && <Modal><FormContent /></Modal>}
     </div>
   );
 }
