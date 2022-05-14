@@ -7,22 +7,23 @@
 //   }
 // }
 
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type InitialState = {
   isOpen: boolean
+  amount: number
 }
 
 export const modalSlice = createSlice({
   name: 'modal',
   initialState: {
     isOpen: false,
-    // card: {}
+    amount: 0
   } as InitialState,
   reducers: {
-    toggleModal: (state) => {
+    toggleModal: (state, action: PayloadAction<number>) => {
       state.isOpen = !state.isOpen
-      // state.card = action.payload.card
+      state.amount = action.payload
     }
   }
 })

@@ -12,6 +12,7 @@ import { CardType } from '../fakeData'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import Modal from './Modal'
 import FormContent from './FormContent'
+import { toggleModal } from '../reducers/closeModal'
 
 const cardStyles = createUseStyles({
   page: {
@@ -105,7 +106,7 @@ const Description = () => {
               <OpenInNewIcon className={classes.btnIcon} />
               Lien
             </button>
-            <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch({ type: 'toggleModal' })}>
+            <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal(amount))}>
               <CardGiftcardIcon className={classes.btnIcon} />
               Offrir
             </button>
