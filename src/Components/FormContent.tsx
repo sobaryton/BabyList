@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import BuyForm from './BuyForm'
 import { darkBlue, font20, lightBlue } from './constants'
 import ParticipationForm from './ParticipationForm'
+import { useAppSelector } from '../hooks'
 
 const listPageStyles = createUseStyles({
   btnWrap: {
@@ -47,21 +48,26 @@ const listPageStyles = createUseStyles({
 
 const FormContent = () => {
   const classes = listPageStyles()
-  const [type, setType] = useState('buy')
+  const status = useAppSelector((state) => state.modal.data.status)
+  const [type, setType] = useState('')
 
   return (
     <>
-      <div className={classes.btnWrap}>
-        <button onClick={() => setType('buy')} className={classNames(classes.btn, type === 'buy' ? classes.activeBtn : '')}>Offir</button>
-        <button onClick={() => setType('participate')} className={classNames(classes.btn, type === 'participate' ? classes.activeBtn : '')}>Participer</button>
-      </div>
       {
-        type === '' ? '' : type === 'buy'
+        status === 'PARTLY_FUNDED'
+          ? <><h1>Participer</h1><ParticipationForm /></>
+          : <div className={classes.btnWrap}>
+            <button onClick={() => setType('TO_OFFER')} className={classNames(classes.btn, type === 'TO_OFFER' ? classes.activeBtn : '')}>Offir</button>
+            <button onClick={() => setType('PARTLY_FUNDED')} className={classNames(classes.btn, type === 'PARTLY_FUNDED' ? classes.activeBtn : '')}>Participer</button>
+      </div>
+      }
+      {
+        type === '' ? '' : type === 'TO_OFFER'
           ? <BuyForm />
           : <ParticipationForm />
       }
     </>
-  );
+  )
 }
 
 export default FormContent

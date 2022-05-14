@@ -81,7 +81,7 @@ const cardStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '7.5rem',
+    width: '9rem',
     minHeight: '2rem',
     marginRight: '0.5rem',
     background: lightBlue,
@@ -198,7 +198,13 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
             Offrir
           </button>
         }
-
+        {
+          status === "PARTLY_FUNDED" &&
+          <button className={classNames(classes.btn, classes.offrirBtn)} onClick={onToggleModal}>
+            <CardGiftcardIcon className={classes.btnIcon} />
+            Participer
+          </button>
+        }
       </div>
     </div>
   )

@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom'
 import { createUseStyles } from 'react-jss'
 import classNames from 'classnames'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import WarningIcon from '@mui/icons-material/Warning'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
-import { lightBlue, darkBlue, font20, darkYellow, lightYellow, red, white, green, orange } from './constants'
+import { lightBlue, darkBlue, font20, darkYellow, lightYellow, red, white, green, orange, font48 } from './constants'
 import Navigation from './Navigation'
 import Header from './Header'
 import { cards } from '../fakeData'
@@ -122,6 +123,11 @@ const cardStyles = createUseStyles({
     background: orange,
     color: white
   },
+  textIcon: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  }
 })
 
 const Description = () => {
@@ -130,7 +136,7 @@ const Description = () => {
   const showModal = useAppSelector((state) => state.modal.isOpen)
   // get info from Api
   const id = useParams<{ id: string }>().id || ''
-  const { image, url, title, store, description, amount, status, currency } = cards.filter((card: CardType) => card.id === id)[0]
+  const { image, url, title, store, description, amount, status, currency, remainingAmount } = cards.filter((card: CardType) => card.id === id)[0]
 
   const frenchStatus = {
     OFFERED: 'a déjà été offert',
@@ -177,9 +183,15 @@ const Description = () => {
               <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
               <div>
                 <p>{description}</p>
-                <p>Son prix est de <b>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</b>.</p>
-                <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a></p>
                 <p>Ce cadeau {frenchStatus[status]}.</p>
+                <p>Son prix total est de <b>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</b>.</p>
+                {
+                  remainingAmount && <div className={classes.textIcon}>
+                    <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
+                    <p>Certaines personnes ont déjà contribué à l'achat de ce cadeau. Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
+                  </div>
+                }
+                <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a></p>
                 <div className={classes.buttonWrap}>
                   <button className={classes.btn} onClick={() => window.open(url)}>
                     <OpenInNewIcon className={classes.btnIcon} />
@@ -187,7 +199,7 @@ const Description = () => {
                   </button>
                   {
                     status === "TO_OFFER" &&
-                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal(amount))}>
+                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal({ amount, status, remainingAmount }))}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Offrir
                     </button>
