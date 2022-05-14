@@ -3,12 +3,8 @@ import React, { ReactNode } from 'react'
 import { createUseStyles } from 'react-jss'
 import { darkBlue, red, white } from './constants'
 import CloseIcon from '@mui/icons-material/Close'
-
-type ModalType = {
-  open: boolean
-  onClose: () => void
-  children: ReactNode
-}
+import { useAppDispatch, useAppSelector } from '../hooks'
+import {toggleModal} from '../reducers/closeModal'
 
 const modalStyles = createUseStyles({
   modal: {
@@ -16,7 +12,7 @@ const modalStyles = createUseStyles({
     zIndex: 10,
     width: '100%',
     height: '100%',
-    display: 'none',
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     top: 0
@@ -31,7 +27,7 @@ const modalStyles = createUseStyles({
     alignItems: 'center',
     maxWidth: '65rem',
     minWidth: '250px',
-    width: 'auto',
+    width: '98%',
     height: 'auto',
     maxHeight: '86vh',
     overflow: 'scroll',
@@ -40,7 +36,10 @@ const modalStyles = createUseStyles({
     boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.75)',
     zIndex: 100,
     position: 'fixed',
-    top: '6vh'
+    top: '6vh',
+    '@media (min-width: 1024px)': {
+      width: '60%',
+    },
   },
   overflow: {
     position: 'absolute',
@@ -80,18 +79,23 @@ const modalStyles = createUseStyles({
   }
 })
 
-const Modal = ({ open, onClose, children }: ModalType) => {
+type Props = {
+  children: ReactNode
+}
+
+const Modal = ({children}: Props) => {
   const classes = modalStyles()
+  const dispatch = useAppDispatch()
 
   return (
-    <div className={classNames(classes.modal, open ? classes.open : '')}>
-      <div className={classes.overflow} onClick={onClose} />
+    <div className={classNames(classes.modal)}>
+      <div className={classes.overflow} onClick={() => dispatch(toggleModal(0))} />
       <div className={classes.modalContent}>
         <main className={classes.main}>
           {children}
         </main>
         <div className={classes.closeBtn}>
-          <button onClick={onClose}>
+          <button onClick={() => dispatch(toggleModal(0))}>
             <CloseIcon sx={{ fontSize: '2rem' }} />
           </button>
         </div>

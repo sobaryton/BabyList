@@ -24,9 +24,13 @@ const homeStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'flex-end',
     flexDirection: 'column',
+    marginTop: '2rem',
     '& p': {
       margin: '0.3rem 0'
-    }
+    },
+    '@media (min-width: 1024px)': {
+      marginTop: '0',
+    },
   },
   red: {
     color: red

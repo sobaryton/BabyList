@@ -23,6 +23,7 @@ const appStyles = createUseStyles({
 
 const App = () => {
   appStyles()
+
   return (
     <>
       <Routes>
@@ -31,7 +32,7 @@ const App = () => {
         <Route path="description/:id" element={<Description />} />
       </Routes>
     </>
-  );
+  )
 }
 
 export default App;

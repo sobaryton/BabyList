@@ -43,7 +43,7 @@ const BuyInformation = ({ className }: { className?: string }) => {
       </div>
       <p className={classes.iconPara}>
         <CloseIcon sx={{ fontSize: font24, color: red, marginRight: '0.5rem', marginLeft: '0.5rem' }} />
-        Si cela ne vous arrange pas, mais que vous voulez tout de même gâter bébé, merci de choisir "Participer" en haut de la page et de faire un don dans la monnaie de votre choix.
+        Si cela ne vous arrange pas, mais que vous voulez tout de même gâter bébé, merci de choisir "Participer" en haut de la page et de faire un don. Comme cela vous pourrez faire un don à 100% en Euros, et nous nous occuperons de la livraison si nécessaire.
       </p>
       <p className={classes.iconPara}>
         <CheckIcon sx={{ fontSize: font24, color: green, marginRight: '0.5rem', marginLeft: '0.5rem' }} />

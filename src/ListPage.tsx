@@ -1,13 +1,14 @@
-import React, { useReducer, useState } from 'react'
+import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import SearchBar from 'material-ui-search-bar'
 import Card from './Components/Card'
 import Header from './Components/Header'
 import Navigation from './Components/Navigation'
-import Modal from './Components/Modal'
-import FormContent from './Components/FormContent'
-import { closeModalReducer } from './reducers/closeModal'
 import { cards } from './fakeData'
+import { useAppDispatch, useAppSelector } from './hooks'
+import Modal from './Components/Modal'
+import {toggleModal} from './reducers/closeModal'
+import FormContent from './Components/FormContent'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -29,18 +30,18 @@ const listPageStyles = createUseStyles({
     margin: 'auto'
   },
   searchBar: {
-    width: '25rem',
+    maxWidth: '25rem',
+    width: '85%',
     margin: 'auto',
   },
 })
 
-const initialState = { openModal: false }
-
 const ListPage = () => {
   const classes = listPageStyles()
-  const [state, dispatch] = useReducer(closeModalReducer, initialState)
   const [searched, setSearched] = useState("")
   const [rows, setRows] = useState(cards)
+  const showModal = useAppSelector((state) => state.modal.isOpen)
+  const dispatch = useAppDispatch()
 
   const requestSearch = (searchedVal: string) => {
     const filteredRows = cards.filter((card) => {
@@ -86,18 +87,14 @@ const ListPage = () => {
                   createdAt={card.createdAt}
                   category={card.category}
                   url={card.url}
-                  onToggleModal={() => dispatch({ type: 'toggleModal' })}
+                  onToggleModal={() => dispatch(toggleModal(card.amount))}
                 />
               )
             })
           }
         </article>
       </main>
-      <Modal
-        open={state.openModal}
-        onClose={() => dispatch({ type: 'toggleModal' })}
-        children={<FormContent />}
-      />
+      {showModal && <Modal><FormContent /></Modal>}
     </div>
   );
 }
