@@ -29,7 +29,7 @@ const cardStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '7.5rem',
+    width: '9rem',
     minHeight: '2rem',
     marginRight: '0.5rem',
     background: lightBlue,
@@ -198,7 +198,7 @@ const Description = () => {
                     <p>Certaines personnes ont déjà contribué à l'achat de ce cadeau. Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
                   </div>
                 }
-                <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a></p>
+                <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a>.</p>
                 <div className={classes.buttonWrap}>
                   <button className={classes.btn} onClick={() => window.open(url)}>
                     <OpenInNewIcon className={classes.btnIcon} />
@@ -209,6 +209,13 @@ const Description = () => {
                     <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal({ amount, status, remainingAmount }))}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Offrir
+                    </button>
+                  }
+                  {
+                    status === "PARTLY_FUNDED" &&
+                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal({ amount, status, remainingAmount }))}>
+                      <CardGiftcardIcon className={classes.btnIcon} />
+                      Participer
                     </button>
                   }
                 </div>
