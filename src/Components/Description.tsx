@@ -53,6 +53,8 @@ const cardStyles = createUseStyles({
   },
   image: {
     width: '40%',
+    minWidth: '25rem',
+    maxWidth: '40rem',
     height: '25rem',
     backgroundSize: 'cover',
     marginRight: '1rem'
@@ -79,6 +81,8 @@ const cardStyles = createUseStyles({
   },
   article: {
     display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     '& p': {
       margin: '0.5rem 0'
     }
@@ -127,6 +131,9 @@ const cardStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center'
+  },
+  articleText: {
+    width: '50%'
   }
 })
 
@@ -181,7 +188,7 @@ const Description = () => {
             </div>
             <div className={classes.article}>
               <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
-              <div>
+              <div className={classes.articleText}>
                 <p>{description}</p>
                 <p>Ce cadeau {frenchStatus[status]}.</p>
                 <p>Son prix total est de <b>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</b>.</p>
