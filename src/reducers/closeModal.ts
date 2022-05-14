@@ -9,14 +9,18 @@
 
 import { createSlice } from '@reduxjs/toolkit'
 
+type InitialState = {
+  isOpen: boolean
+}
+
 export const modalSlice = createSlice({
   name: 'modal',
   initialState: {
-    isOpen: true,
+    isOpen: false,
     // card: {}
-  },
+  } as InitialState,
   reducers: {
-    toggleModal: (state, action) => {
+    toggleModal: (state) => {
       state.isOpen = !state.isOpen
       // state.card = action.payload.card
     }

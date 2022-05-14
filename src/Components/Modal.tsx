@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss'
 import { darkBlue, red, white } from './constants'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAppDispatch, useAppSelector } from '../hooks'
+import {toggleModal} from '../reducers/closeModal'
 
 const modalStyles = createUseStyles({
   modal: {
@@ -85,13 +86,13 @@ const Modal = () => {
 
   return (
     <div className={classNames(classes.modal)}>
-      <div className={classes.overflow} onClick={() => dispatch({ type: 'toggleModal' })} />
+      <div className={classes.overflow} onClick={() => dispatch(toggleModal())} />
       <div className={classes.modalContent}>
         <main className={classes.main}>
           {/* {children} */}
         </main>
         <div className={classes.closeBtn}>
-          <button onClick={() => dispatch({ type: 'toggleModal' })}>
+          <button onClick={() => dispatch(toggleModal())}>
             <CloseIcon sx={{ fontSize: '2rem' }} />
           </button>
         </div>

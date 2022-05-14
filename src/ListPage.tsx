@@ -7,6 +7,7 @@ import Navigation from './Components/Navigation'
 import { cards } from './fakeData'
 import { useAppDispatch, useAppSelector } from './hooks'
 import Modal from './Components/Modal'
+import {toggleModal} from './reducers/closeModal'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -85,7 +86,7 @@ const ListPage = () => {
                   createdAt={card.createdAt}
                   category={card.category}
                   url={card.url}
-                  onToggleModal={() => dispatch({ type: 'toggleModal', payload: { data: { totalAmount: card.amount } } })}
+                  onToggleModal={() => dispatch(toggleModal())}
                 />
               )
             })
