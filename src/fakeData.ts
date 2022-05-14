@@ -7,9 +7,10 @@ export type CardType = {
   description: string
   category: string
   amount: number
+  remainingAmount?: number | undefined
   currency: string
   store: string
-  status: 'TO_OFFER' | 'OFFERED' | 'RECEIVED'
+  status: 'TO_OFFER' | 'OFFERED' | 'PARTLY_FUNDED'
   createdAt: Date
   updatedAt?: Date
   deletedAt?: Date
@@ -54,9 +55,10 @@ export const cards: CardType[] = [
     amount: 10.99,
     currency: '€',
     store: 'Amazon',
-    status: 'RECEIVED',
+    status: 'PARTLY_FUNDED',
     url: 'https://www.laredoute.co.uk/ppdp/prod-350185799.aspx#shoppingtool=treestructureflyout',
-    createdAt: new Date('08/05/2022')
+    createdAt: new Date('08/05/2022'),
+    remainingAmount: 5.99
   },
   {
     id: '09',
@@ -82,9 +84,10 @@ export const cards: CardType[] = [
     amount: 65.77,
     currency: '£',
     store: 'Amazon',
-    status: 'RECEIVED',
+    status: 'PARTLY_FUNDED',
     url: 'https://www.laredoute.co.uk/ppdp/prod-350203317.aspx#shoppingtool=treestructureflyout',
-    createdAt: new Date('08/05/2022')
+    createdAt: new Date('08/05/2022'),
+    remainingAmount: 10
   },
   {
     id: '11',
@@ -110,8 +113,9 @@ export const cards: CardType[] = [
     amount: 125,
     currency: '€',
     store: 'Amazon',
-    status: 'RECEIVED',
+    status: 'PARTLY_FUNDED',
     url: 'https://www.laredoute.co.uk/ppdp/prod-350224703.aspx#shoppingtool=treestructureflyout',
-    createdAt: new Date('08/05/2022')
+    createdAt: new Date('08/05/2022'),
+    remainingAmount: 25
   }
 ]

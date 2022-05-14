@@ -91,7 +91,7 @@ const Form = ({ submitText }: FormProps) => {
   const classes = formStyles()
   const [formValues, setFormValues] = useState(defaultValues)
   const [content, setContent] = useState('form')
-  const totalAmount = useAppSelector((state) => state.modal.amount)
+  const totalAmount = useAppSelector((state) => state.modal.data.amount)
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
@@ -156,7 +156,7 @@ const Form = ({ submitText }: FormProps) => {
               </div>
               {
                 (!!formValues.amount && totalAmount !== 0) 
-                && <p>Ce qui fait {(formValues.amount / totalAmount) * 100}%</p>
+                  && <p>Ce qui fait {Math.floor((formValues.amount / totalAmount) * 100)}%</p>
               }
             </div>
           }

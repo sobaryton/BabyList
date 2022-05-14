@@ -87,7 +87,7 @@ const ListPage = () => {
                   createdAt={card.createdAt}
                   category={card.category}
                   url={card.url}
-                  onToggleModal={() => dispatch(toggleModal(card.amount))}
+                  onToggleModal={() => dispatch(toggleModal({ amount: card.amount, status: card.status, remainingAmount: card.remainingAmount }))}
                 />
               )
             })

@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 import { createUseStyles } from 'react-jss'
 import { darkBlue, red, white } from './constants'
 import CloseIcon from '@mui/icons-material/Close'
-import { useAppDispatch, useAppSelector } from '../hooks'
+import { useAppDispatch } from '../hooks'
 import {toggleModal} from '../reducers/closeModal'
 
 const modalStyles = createUseStyles({
@@ -89,13 +89,13 @@ const Modal = ({children}: Props) => {
 
   return (
     <div className={classNames(classes.modal)}>
-      <div className={classes.overflow} onClick={() => dispatch(toggleModal(0))} />
+      <div className={classes.overflow} onClick={() => dispatch(toggleModal({ amount: 0, status: '', remainingAmount: undefined }))} />
       <div className={classes.modalContent}>
         <main className={classes.main}>
           {children}
         </main>
         <div className={classes.closeBtn}>
-          <button onClick={() => dispatch(toggleModal(0))}>
+          <button onClick={() => dispatch(toggleModal({ amount: 0, status: '', remainingAmount: undefined }))}>
             <CloseIcon sx={{ fontSize: '2rem' }} />
           </button>
         </div>

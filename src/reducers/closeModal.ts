@@ -1,29 +1,31 @@
-// export const closeModalReducer = (state: { openModal: any, data?: Record<string, any> }, action: { type: any, payload?: any }) => {
-//   switch (action.type) {
-//     case 'toggleModal':
-//       return { openModal: !state.openModal, data: state.data }
-//     default:
-//       throw new Error();
-//   }
-// }
-
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type InitialState = {
-  isOpen: boolean
-  amount: number
+  isOpen: boolean,
+  data:
+  {
+    amount: number
+    status: string
+    remainingAmount?: number | undefined
+  }
 }
 
 export const modalSlice = createSlice({
   name: 'modal',
   initialState: {
     isOpen: false,
-    amount: 0
+    data: {
+      amount: 0,
+      status: '',
+      remainingAmount: 0
+    }
   } as InitialState,
   reducers: {
-    toggleModal: (state, action: PayloadAction<number>) => {
+    toggleModal: (state, action: PayloadAction<{ amount: number, status: string, remainingAmount: number | undefined }>) => {
       state.isOpen = !state.isOpen
-      state.amount = action.payload
+      state.data.amount = action.payload.amount
+      state.data.status = action.payload.status
+      state.data.remainingAmount = action.payload.remainingAmount ? action.payload.remainingAmount : 0
     }
   }
 })
