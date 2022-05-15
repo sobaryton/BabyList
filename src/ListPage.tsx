@@ -4,13 +4,12 @@ import SearchBar from 'material-ui-search-bar'
 import Card from './Components/Card'
 import Header from './Components/Header'
 import Navigation from './Components/Navigation'
-import { cards, CardType } from './fakeData'
 import { useAppDispatch, useAppSelector } from './hooks'
 import Modal from './Components/Modal'
 import { toggleModal } from './reducers/modal'
 import FormContent from './Components/FormContent'
-import axios from 'axios'
-import { getList } from './reducers/giftList'
+import { getList, GiftType } from './reducers/giftList'
+import { getGifts } from './api/getGifts'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -41,20 +40,32 @@ const listPageStyles = createUseStyles({
 const ListPage = () => {
   const classes = listPageStyles()
   const [searched, setSearched] = useState("")
-  const [rows, setRows] = useState([] as CardType[])
+  const [rows, setRows] = useState([] as GiftType[])
   const showModal = useAppSelector((state) => state.modal.isOpen)
   const dispatch = useAppDispatch()
 
+  const fetchGifts = async () => {
+    const result = await getGifts()
+    return result
+  }
+
   useEffect(() => {
-    axios.get('https://baby-wishlist.herokuapp.com/wishlists/cf30c26b-f287-4541-9340-58cd672d72b2/gifts')
-      .then((res) => {
-        setRows(res.data)
-        dispatch(getList(res.data))
+    fetchGifts()
+      .then((gifts) => {
+        setRows(gifts)
+        dispatch(getList(gifts))
       })
   }, [dispatch])
 
   const requestSearch = (searchedVal: string) => {
-    const filteredRows = cards.filter((card) => {
+    if (searchedVal === '') {
+      fetchGifts()
+        .then((gifts) => {
+          setRows(gifts)
+          dispatch(getList(gifts))
+        })
+    }
+    const filteredRows = rows.filter((card) => {
       return card.title.toLowerCase().includes(searchedVal.toLowerCase())
     })
     setRows(filteredRows)

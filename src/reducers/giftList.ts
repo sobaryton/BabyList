@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type InitialState = {
-  gifts: [] | Gift[]
+  gifts: [] | GiftType[]
 }
 
-type Gift = {
+export type GiftType = {
   id: string
   wishlistId: string
   url: string
@@ -28,7 +28,7 @@ export const giftListSlice = createSlice({
     gifts: []
   } as InitialState,
   reducers: {
-    getList: (state, action: PayloadAction<Gift[]>) => {
+    getList: (state, action: PayloadAction<GiftType[]>) => {
       state.gifts = action.payload
     }
   }
