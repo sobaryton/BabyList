@@ -44,7 +44,7 @@ const formStyles = createUseStyles({
   textInput: {
     width: '100%',
     minWidth: '20rem !important',
-    '@media (min-width: 1024px)': {
+    '@media (min-width: 1200px)': {
       width: '49%',
     }
   },
@@ -62,7 +62,7 @@ const formStyles = createUseStyles({
   },
   checkbox: {
     marginTop: 0,
-    '@media (min-width: 1024px)': {
+    '@media (min-width: 1200px)': {
       marginTop: '-2rem',
     }
   },

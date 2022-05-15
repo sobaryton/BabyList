@@ -8,12 +8,11 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import { lightBlue, darkBlue, font20, darkYellow, lightYellow, red, white, green, orange, font48 } from './constants'
 import Navigation from './Navigation'
 import Header from './Header'
-import { cards } from '../fakeData'
 import { CardType } from '../fakeData'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import Modal from './Modal'
 import FormContent from './FormContent'
-import { toggleModal } from '../reducers/closeModal'
+import { toggleModal } from '../reducers/modal'
 
 const cardStyles = createUseStyles({
   page: {
@@ -141,9 +140,11 @@ const Description = () => {
   const classes = cardStyles()
   const dispatch = useAppDispatch()
   const showModal = useAppSelector((state) => state.modal.isOpen)
-  // get info from Api
+  const giftList = useAppSelector((state) => state.giftList.gifts)
   const id = useParams<{ id: string }>().id || ''
-  const { image, url, title, store, description, amount, status, currency, remainingAmount } = cards.filter((card: CardType) => card.id === id)[0]
+  const { image, url, title, store, description, amount, status, currency, remainingAmount } = giftList.filter((card: CardType) => card.id === id)[0]
+
+  const replaceWithBr = () => description.replace(/\n/g, "<br />")
 
   const frenchStatus = {
     OFFERED: 'a déjà été offert',
@@ -189,11 +190,11 @@ const Description = () => {
             <div className={classes.article}>
               <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
               <div className={classes.articleText}>
-                <p>{description}</p>
+                <p dangerouslySetInnerHTML={{ __html: replaceWithBr() }}></p>
                 <p>Ce cadeau {frenchStatus[status]}.</p>
                 <p>Son prix total est de <b>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</b>.</p>
                 {
-                  remainingAmount && <div className={classes.textIcon}>
+                  remainingAmount !== amount && <div className={classes.textIcon}>
                     <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
                     <p>Certaines personnes ont déjà contribué à l'achat de ce cadeau. Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
                   </div>

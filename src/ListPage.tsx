@@ -7,9 +7,10 @@ import Navigation from './Components/Navigation'
 import { cards, CardType } from './fakeData'
 import { useAppDispatch, useAppSelector } from './hooks'
 import Modal from './Components/Modal'
-import {toggleModal} from './reducers/closeModal'
+import { toggleModal } from './reducers/modal'
 import FormContent from './Components/FormContent'
 import axios from 'axios'
+import { getList } from './reducers/giftList'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -46,8 +47,11 @@ const ListPage = () => {
 
   useEffect(() => {
     axios.get('https://baby-wishlist.herokuapp.com/wishlists/cf30c26b-f287-4541-9340-58cd672d72b2/gifts')
-      .then((res) => setRows(res.data))
-  }, [])
+      .then((res) => {
+        setRows(res.data)
+        dispatch(getList(res.data))
+      })
+  }, [dispatch])
 
   const requestSearch = (searchedVal: string) => {
     const filteredRows = cards.filter((card) => {

@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss'
 import { darkBlue, red, white } from './constants'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAppDispatch } from '../hooks'
-import {toggleModal} from '../reducers/closeModal'
+import { toggleModal } from '../reducers/modal'
 
 const modalStyles = createUseStyles({
   modal: {
