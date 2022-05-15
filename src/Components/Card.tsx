@@ -18,6 +18,8 @@ const cardStyles = createUseStyles({
     width: '100%',
     height: '16rem',
     backgroundSize: 'cover',
+    backgroundOrigin: 'border-box',
+    backgroundPosition: 'center',
   },
   price: {
     position: 'absolute',
@@ -180,9 +182,9 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
         <p>{statusLabel[status]}</p>
       </div>
       <div className={classes.desc}>
-        <h3>{title}</h3>
+        <h3>{title.length > 30 ? `${title.substring(0, 30)}...` : title}</h3>
         <p className={classes.provider}>{store}</p>
-        <p>{description.length > 40 ? `${description.substring(0, 40)}...` : description}</p>
+        <p>{description.length > 35 ? `${description.substring(0, 35)}...` : description}</p>
       </div>
       <div className={classes.buttonWrap}>
         <Link to={`/description/${id}`} className={classes.link}>

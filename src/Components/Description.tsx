@@ -56,7 +56,9 @@ const cardStyles = createUseStyles({
     maxWidth: '40rem',
     height: '25rem',
     backgroundSize: 'cover',
-    marginRight: '1rem'
+    marginRight: '1rem',
+    backgroundOrigin: 'border-box',
+    backgroundPosition: 'center',
   },
   offrirBtn: {
     background: lightYellow,
@@ -68,7 +70,9 @@ const cardStyles = createUseStyles({
   },
   articleDetails: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonWrap: {
     display: 'flex',
@@ -97,34 +101,33 @@ const cardStyles = createUseStyles({
   header: {
     display: 'flex',
     width: '100%',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+    marginBottom: '3rem'
   },
   title: {
     color: darkBlue
   },
   label: {
-    width: '15%',
+    width: '10rem',
     height: '2rem',
     display: 'flex',
-    marginLeft: '2rem',
     alignItems: 'center',
     justifyContent: 'center',
     '& p': {
       fontWeight: 700,
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      color: white
     }
   },
   redLabel: {
-    background: red,
-    color: white
+    background: red
   },
   greenLabel: {
-    background: green,
-    color: white
+    background: green
   },
   orangeLabel: {
-    background: orange,
-    color: white
+    background: orange
   },
   textIcon: {
     display: 'flex',
@@ -175,7 +178,7 @@ const Description = () => {
   return (
     <div className={classes.page}>
       <header>
-        <Header text={title} background="/images/plaid.jpg" />
+        <Header text={title} background="/images/pieds-bebe.jpg" backgroundPosition="center" />
       </header>
       <main className={classes.main}>
         <Navigation className={classes.navigation} link='/list' />
@@ -192,7 +195,7 @@ const Description = () => {
               <div className={classes.articleText}>
                 <p dangerouslySetInnerHTML={{ __html: replaceWithBr() }}></p>
                 <p>Ce cadeau {frenchStatus[status]}.</p>
-                <p>Son prix total est de <b>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</b>.</p>
+                <p>Son prix total est de <b>{currency === '£' ? `£${amount}` : `${amount}€`}</b>.</p>
                 {
                   remainingAmount !== amount && <div className={classes.textIcon}>
                     <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />

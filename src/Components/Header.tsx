@@ -29,13 +29,14 @@ const headerStyles = createUseStyles({
 type HeaderType = {
   text?: string
   background?: string
+  backgroundPosition?: string
 }
 
-const Header = ({ text, background }: HeaderType) => {
+const Header = ({ text, background, backgroundPosition }: HeaderType) => {
   const classes = headerStyles()
   return (
     <>
-      <div className={classes.header} style={{ backgroundImage: `url('${process.env.PUBLIC_URL}${background ? background : '/images/plaid.jpg'}')` }}>
+      <div className={classes.header} style={{ backgroundImage: `url('${process.env.PUBLIC_URL}${background ? background : '/images/plaid.jpg'}')`, backgroundPosition }}>
         <div className={classes.titleContainer}>
           <h1 className={classes.title}>
             {text ? text : 'Hello Bubba!'}
