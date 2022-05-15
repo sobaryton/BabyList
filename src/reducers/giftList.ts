@@ -1,25 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { GiftType } from './selectedGift'
 
 type InitialState = {
   gifts: [] | GiftType[]
-}
-
-export type GiftType = {
-  id: string
-  wishlistId: string
-  url: string
-  image: string
-  title: string
-  description: string
-  category: string
-  amount: number
-  remainingAmount?: number | undefined
-  currency: string
-  store: string
-  status: 'TO_OFFER' | 'OFFERED' | 'PARTLY_FUNDED'
-  createdAt: Date
-  updatedAt?: Date
-  deletedAt?: Date
 }
 
 export const giftListSlice = createSlice({

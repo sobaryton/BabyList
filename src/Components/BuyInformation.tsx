@@ -47,7 +47,7 @@ const BuyInformation = ({ className }: { className?: string }) => {
       </p>
       <p className={classes.iconPara}>
         <CheckIcon sx={{ fontSize: font24, color: green, marginRight: '0.5rem', marginLeft: '0.5rem' }} />
-        Si vous voulez procéder avec l'achat direct, veuillez mettre l'adresse suivante sur le site pour la livraison:
+        Si vous voulez procéder avec l'achat direct, veuillez mettre l'adresse suivante sur le site pour la livraison :
       </p>
       <div className={classes.address}>
         <h3>Adresse de livraison</h3>

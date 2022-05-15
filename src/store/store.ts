@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import modalReducer from '../reducers/modal'
 import giftListReducer from '../reducers/giftList'
+import seslectedGiftReducer from '../reducers/selectedGift'
 
 export const store = configureStore({
   reducer: {
     modal: modalReducer,
-    giftList: giftListReducer
+    giftList: giftListReducer,
+    selectedGift: seslectedGiftReducer
   }
 })
 

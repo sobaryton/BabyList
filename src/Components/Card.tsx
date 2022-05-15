@@ -5,7 +5,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import { darkBlue, darkYellow, font14, font16, font20, orange, lightBlue, lightYellow, white, green, red, blue } from './constants'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
-import { CardType } from '../fakeData'
+import { GiftType, selectGift } from '../reducers/selectedGift'
+import { useAppDispatch } from '../hooks'
 
 const cardStyles = createUseStyles({
   card: {
@@ -150,9 +151,10 @@ const cardStyles = createUseStyles({
   },
 })
 
-type CardElement = CardType & { onToggleModal: () => void }
+type CardElement = GiftType & { onToggleModal: () => void }
 
-const Card = ({ image, title, description, amount, currency, store, status, onToggleModal, id }: CardElement) => {
+const Card = ({ image, title, description, amount, currency, store, status, onToggleModal, id, version, wishlistId, url, category, createdAt }: CardElement) => {
+  const dispatch = useAppDispatch()
 
   const labelClass = () => {
     switch (status) {
@@ -171,6 +173,11 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
     OFFERED: 'Offert',
     TO_OFFER: 'À offrir',
     PARTLY_FUNDED: 'À participer'
+  }
+
+  const openTransationModal = () => {
+    onToggleModal()
+    dispatch(selectGift({ image, title, description, amount, currency, store, status, id, version, wishlistId, url, category, createdAt }))
   }
 
   const classes = cardStyles()
@@ -195,14 +202,14 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
         </Link>
         {
           status === "TO_OFFER" &&
-          <button className={classNames(classes.btn, classes.offrirBtn)} onClick={onToggleModal}>
+          <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Offrir
           </button>
         }
         {
           status === "PARTLY_FUNDED" &&
-          <button className={classNames(classes.btn, classes.offrirBtn)} onClick={onToggleModal}>
+          <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Participer
           </button>

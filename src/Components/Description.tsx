@@ -143,9 +143,7 @@ const Description = () => {
   const classes = cardStyles()
   const dispatch = useAppDispatch()
   const showModal = useAppSelector((state) => state.modal.isOpen)
-  const giftList = useAppSelector((state) => state.giftList.gifts)
-  const id = useParams<{ id: string }>().id || ''
-  const { image, url, title, store, description, amount, status, currency, remainingAmount } = giftList.filter((card: CardType) => card.id === id)[0]
+  const { image, url, title, store, description, amount, status, currency, remainingAmount } = useAppSelector((state) => state.selectedGift.selectedGift)
 
   const replaceWithBr = () => description.replace(/\n/g, "<br />")
 
@@ -173,6 +171,10 @@ const Description = () => {
     OFFERED: 'Offert',
     TO_OFFER: 'À offrir',
     PARTLY_FUNDED: 'À participer'
+  }
+
+  const openTransactionModal = () => {
+    dispatch(toggleModal({ amount, status, remainingAmount }))
   }
 
   return (
@@ -210,14 +212,14 @@ const Description = () => {
                   </button>
                   {
                     status === "TO_OFFER" &&
-                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal({ amount, status, remainingAmount }))}>
+                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Offrir
                     </button>
                   }
                   {
                     status === "PARTLY_FUNDED" &&
-                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={() => dispatch(toggleModal({ amount, status, remainingAmount }))}>
+                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Participer
                     </button>

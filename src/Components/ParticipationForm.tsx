@@ -17,7 +17,7 @@ const ParticipationForm = () => {
 
         </>
       }
-      <p>Merci de nous contacter afin d'obtenir nos coordonnées bancaires pour faire votre don!</p>
+      <p>Merci de nous contacter à l'adresse email suivante afin d'obtenir nos coordonnées bancaires pour faire votre don : <a target="_blank" href="mailto:team.nico.soso@gmail.com" rel="noreferrer">team.nico.soso@gmail.com</a>.</p>
       <Form submitText="PARTICIPER" />
     </>
   )

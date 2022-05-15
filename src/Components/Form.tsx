@@ -3,14 +3,17 @@ import { createUseStyles } from 'react-jss'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import CelebrationIcon from '@mui/icons-material/Celebration'
 import { TextField, FormControlLabel, Checkbox, FormGroup, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import { darkBlue, font20, lightBlue } from './constants'
+import { darkBlue, font20, font32, green, lightBlue } from './constants'
 import { useAppSelector } from '../hooks'
+import { sendOffer } from '../api/sendOffer'
+import { participate } from '../api/participate'
+import { randomizeGif } from '../utils/gifRandomizer'
 
 const formStyles = createUseStyles({
   form: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '1rem auto 0 auto',
+    margin: '2rem auto 0 auto',
     width: '95%',
     flexWrap: 'wrap'
   },
@@ -71,7 +74,23 @@ const formStyles = createUseStyles({
   },
   currency: {
     margin: '0.5rem 0.5rem 0.5rem 0'
-  }
+  },
+  gif: {
+    width: '28.125rem',
+    height: 0,
+    paddingBottom: '86%',
+    position: 'relative',
+  },
+  thanksBox: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  textIcon: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
 })
 
 type FormProps = {
@@ -92,6 +111,7 @@ const Form = ({ submitText }: FormProps) => {
   const [formValues, setFormValues] = useState(defaultValues)
   const [content, setContent] = useState('form')
   const totalAmount = useAppSelector((state) => state.modal.data.amount)
+  const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift)
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
@@ -117,7 +137,22 @@ const Form = ({ submitText }: FormProps) => {
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
-    console.log(formValues)
+    !!formValues.amount
+      ? participate(
+        {
+          ...formValues,
+          amount: formValues.amount,
+          giftId: selectedGift.id,
+          giftVersion: selectedGift.version
+        }
+      )
+      : sendOffer({
+        ...formValues,
+        amount: totalAmount,
+        giftId: selectedGift.id,
+        giftVersion: selectedGift.version
+      })
+
     setContent('thanks')
   }
 
@@ -202,10 +237,16 @@ const Form = ({ submitText }: FormProps) => {
             {submitText}
           </button>
         </form>
-        : <h1>Thanks!</h1>
+        : <div className={classes.thanksBox}>
+          <div className={classes.textIcon}>
+            <CelebrationIcon sx={{ color: green, marginRight: '1.5rem', fontSize: font32 }} />
+            <p>
+              Merci beaucoup! On essaye de vous recontacter dans les 3 jours. Si vous n'avez pas de nouvelles de nous, merci de nous envoyer un email à l'adresse suivante : <a target="_blank" href="mailto:team.nico.soso@gmail.com" rel="noreferrer">team.nico.soso@gmail.com</a>.
+            </p>
+          </div>
+          <div dangerouslySetInnerHTML={{ __html: randomizeGif() }} />
+        </div>
       }
-
-
     </>
   )
 }

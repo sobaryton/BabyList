@@ -8,7 +8,8 @@ import { useAppDispatch, useAppSelector } from './hooks'
 import Modal from './Components/Modal'
 import { toggleModal } from './reducers/modal'
 import FormContent from './Components/FormContent'
-import { getList, GiftType } from './reducers/giftList'
+import { getList } from './reducers/giftList'
+import { GiftType } from './reducers/selectedGift'
 import { getGifts } from './api/getGifts'
 
 const listPageStyles = createUseStyles({
@@ -108,6 +109,7 @@ const ListPage = () => {
                   createdAt={card.createdAt}
                   category={card.category}
                   url={card.url}
+                  version={card.version}
                   onToggleModal={() => dispatch(toggleModal({ amount: card.amount, status: card.status, remainingAmount: card.remainingAmount }))}
                 />
               )
