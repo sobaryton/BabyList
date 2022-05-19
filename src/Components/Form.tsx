@@ -4,11 +4,13 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import CelebrationIcon from '@mui/icons-material/Celebration'
 import { TextField, FormControlLabel, Checkbox, FormGroup, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { darkBlue, font20, font32, green, lightBlue } from './constants'
-import { useAppSelector } from '../hooks'
+import { useAppDispatch, useAppSelector } from '../hooks'
 import { sendOffer } from '../api/sendOffer'
 import { participate } from '../api/participate'
 import { randomizeGif } from '../utils/gifRandomizer'
 import { GiftType } from '../reducers/selectedGift'
+import { setGiftList } from '../reducers/giftList'
+import { getGift } from '../api/getGift'
 
 const formStyles = createUseStyles({
   form: {
@@ -108,11 +110,13 @@ const defaultValues = {
 }
 
 const Form = ({ submitText }: FormProps) => {
+  const dispatch = useAppDispatch()
   const classes = formStyles()
   const [formValues, setFormValues] = useState(defaultValues)
   const [content, setContent] = useState('form')
   const totalAmount = useAppSelector((state) => state.modal.data.amount)
   const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift) as GiftType
+  const gifts = useAppSelector((state) => state.giftList.gifts)
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
@@ -136,23 +140,32 @@ const Form = ({ submitText }: FormProps) => {
     })
   }
 
+  const refreshGift = async () => {
+    const refreshedGift = await getGift(selectedGift.id)
+    dispatch(setGiftList(gifts.map(gift => gift.id === selectedGift.id ? refreshedGift : gift)))
+  }
+
+  const buyOrParticipate = () => !!formValues.amount
+  ? participate(
+    {
+      ...formValues,
+      amount: formValues.amount,
+      giftId: selectedGift.id,
+      giftVersion: selectedGift.version
+    }
+  )
+  : sendOffer({
+    ...formValues,
+    amount: totalAmount,
+    giftId: selectedGift.id,
+    giftVersion: selectedGift.version
+  })
+
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
-    !!formValues.amount
-      ? participate(
-        {
-          ...formValues,
-          amount: formValues.amount,
-          giftId: selectedGift.id,
-          giftVersion: selectedGift.version
-        }
-      )
-      : sendOffer({
-        ...formValues,
-        amount: totalAmount,
-        giftId: selectedGift.id,
-        giftVersion: selectedGift.version
-      })
+
+    buyOrParticipate()
+      .then(refreshGift)
 
     setContent('thanks')
   }

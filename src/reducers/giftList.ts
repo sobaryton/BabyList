@@ -5,18 +5,18 @@ type InitialState = {
   gifts: [] | GiftType[]
 }
 
-export const giftListSlice = createSlice({
+const giftListSlice = createSlice({
   name: 'modal',
   initialState: {
     gifts: []
   } as InitialState,
   reducers: {
-    getList: (state, action: PayloadAction<GiftType[]>) => {
+    setGiftList: (state, action: PayloadAction<GiftType[]>) => {
       state.gifts = action.payload
     }
   }
 })
 
-export const { getList } = giftListSlice.actions
+export const { setGiftList } = giftListSlice.actions
 
 export default giftListSlice.reducer

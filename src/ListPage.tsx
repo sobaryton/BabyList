@@ -8,9 +8,9 @@ import { useAppDispatch, useAppSelector } from './hooks'
 import Modal from './Components/Modal'
 import { toggleModal } from './reducers/modal'
 import FormContent from './Components/FormContent'
-import { getList } from './reducers/giftList'
-import { GiftType } from './reducers/selectedGift'
+import { setGiftList } from './reducers/giftList'
 import { getGifts } from './api/getGifts'
+import { GiftType } from './reducers/selectedGift'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -39,42 +39,38 @@ const listPageStyles = createUseStyles({
 })
 
 const ListPage = () => {
+  const dispatch = useAppDispatch()
   const classes = listPageStyles()
   const [searched, setSearched] = useState("")
-  const [rows, setRows] = useState([] as GiftType[])
+  const giftList = useAppSelector((state) => state.giftList.gifts)
+  const [rows, setRows] = useState(giftList)
   const showModal = useAppSelector((state) => state.modal.isOpen)
-  const dispatch = useAppDispatch()
 
-  const fetchGifts = async () => {
-    const result = await getGifts()
-    return result
-  }
+  const fetchGifts = async () => await getGifts()
 
   useEffect(() => {
     fetchGifts()
       .then((gifts) => {
-        setRows(gifts)
-        dispatch(getList(gifts))
+        dispatch(setGiftList(gifts))
       })
   }, [dispatch])
 
-  const requestSearch = (searchedVal: string) => {
+  useEffect(() => {
+    requestSearch(giftList, searched)
+  }, [giftList])
+
+  const requestSearch = (rows: GiftType[], searchedVal: string) => {
     if (searchedVal === '') {
-      fetchGifts()
-        .then((gifts) => {
-          setRows(gifts)
-          dispatch(getList(gifts))
-        })
+      setRows(rows)
+    } else {
+      const filteredRows = rows.filter((card) => card.title.toLowerCase().includes(searchedVal.toLowerCase()))
+      setRows(filteredRows)
     }
-    const filteredRows = rows.filter((card) => {
-      return card.title.toLowerCase().includes(searchedVal.toLowerCase())
-    })
-    setRows(filteredRows)
   }
 
   const cancelSearch = () => {
     setSearched("")
-    requestSearch(searched)
+    requestSearch(rows, searched)
   }
 
   return (
@@ -87,7 +83,7 @@ const ListPage = () => {
         <SearchBar
           value={searched}
           placeholder="Rechercher"
-          onChange={(searchVal) => requestSearch(searchVal)}
+          onChange={(searchVal) => requestSearch(rows, searchVal)}
           onCancelSearch={() => cancelSearch()}
           className={classes.searchBar}
         />
