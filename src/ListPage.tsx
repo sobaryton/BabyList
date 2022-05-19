@@ -42,8 +42,8 @@ const ListPage = () => {
   const dispatch = useAppDispatch()
   const classes = listPageStyles()
   const [searched, setSearched] = useState("")
+  const [rows, setRows] = useState([] as GiftType[])
   const giftList = useAppSelector((state) => state.giftList.gifts)
-  const [rows, setRows] = useState(giftList)
   const showModal = useAppSelector((state) => state.modal.isOpen)
 
   const fetchGifts = async () => await getGifts()
@@ -59,18 +59,14 @@ const ListPage = () => {
     requestSearch(giftList, searched)
   }, [giftList])
 
-  const requestSearch = (rows: GiftType[], searchedVal: string) => {
+  const requestSearch = (giftsToFilter: GiftType[], searchedVal: string) => {
+    setSearched(searchedVal)
     if (searchedVal === '') {
-      setRows(rows)
+      setRows(giftsToFilter)
     } else {
-      const filteredRows = rows.filter((card) => card.title.toLowerCase().includes(searchedVal.toLowerCase()))
+      const filteredRows = giftsToFilter.filter((card) => card.title.toLowerCase().includes(searchedVal.toLowerCase()))
       setRows(filteredRows)
     }
-  }
-
-  const cancelSearch = () => {
-    setSearched("")
-    requestSearch(rows, searched)
   }
 
   return (
@@ -83,8 +79,8 @@ const ListPage = () => {
         <SearchBar
           value={searched}
           placeholder="Rechercher"
-          onChange={(searchVal) => requestSearch(rows, searchVal)}
-          onCancelSearch={() => cancelSearch()}
+          onChange={(searchVal) => requestSearch(giftList, searchVal)}
+          onCancelSearch={() => requestSearch(giftList, "")}
           className={classes.searchBar}
         />
         <article className={classes.list}>
