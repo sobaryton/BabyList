@@ -3,10 +3,10 @@ import { useAppSelector } from '../hooks'
 import Form from './Form'
 
 const ParticipationForm = () => {
-  const remainingAmount = useAppSelector((state) => state.modal.data.remainingAmount)
+  const { remainingAmount, amount } = useAppSelector((state) => state.modal.data)
   return (
     <>
-      {remainingAmount
+      {!!remainingAmount && remainingAmount < amount
         ? <>
           <p>Cet article a déjà eu des contributeurs.</p>
           <p>Il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
