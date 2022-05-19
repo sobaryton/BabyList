@@ -175,9 +175,11 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
     PARTLY_FUNDED: 'À participer'
   }
 
+  const setSelectedGift = () => dispatch(selectGift({ image, title, description, amount, currency, store, status, id, version, wishlistId, url, category, createdAt }))
+
   const openTransationModal = () => {
     onToggleModal()
-    dispatch(selectGift({ image, title, description, amount, currency, store, status, id, version, wishlistId, url, category, createdAt }))
+    setSelectedGift()
   }
 
   const classes = cardStyles()
@@ -194,7 +196,7 @@ const Card = ({ image, title, description, amount, currency, store, status, onTo
         <p>{description.length > 35 ? `${description.substring(0, 35)}...` : description}</p>
       </div>
       <div className={classes.buttonWrap}>
-        <Link to={`/description/${id}`} className={classes.link}>
+        <Link to={`/description/${id}`} className={classes.link} onClick={setSelectedGift}>
           <button className={classes.btn}>
             <SearchIcon className={classes.btnIcon} />
             Détails

@@ -8,6 +8,7 @@ import { useAppSelector } from '../hooks'
 import { sendOffer } from '../api/sendOffer'
 import { participate } from '../api/participate'
 import { randomizeGif } from '../utils/gifRandomizer'
+import { GiftType } from '../reducers/selectedGift'
 
 const formStyles = createUseStyles({
   form: {
@@ -111,7 +112,7 @@ const Form = ({ submitText }: FormProps) => {
   const [formValues, setFormValues] = useState(defaultValues)
   const [content, setContent] = useState('form')
   const totalAmount = useAppSelector((state) => state.modal.data.amount)
-  const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift)
+  const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift) as GiftType
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target

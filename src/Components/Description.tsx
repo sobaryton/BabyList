@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { createUseStyles } from 'react-jss'
 import classNames from 'classnames'
@@ -13,6 +13,8 @@ import { useAppDispatch, useAppSelector } from '../hooks'
 import Modal from './Modal'
 import FormContent from './FormContent'
 import { toggleModal } from '../reducers/modal'
+import { getGift } from '../api/getGift'
+import { GiftType, selectGift } from '../reducers/selectedGift'
 
 const cardStyles = createUseStyles({
   page: {
@@ -143,9 +145,20 @@ const Description = () => {
   const classes = cardStyles()
   const dispatch = useAppDispatch()
   const showModal = useAppSelector((state) => state.modal.isOpen)
-  const { image, url, title, store, description, amount, status, currency, remainingAmount } = useAppSelector((state) => state.selectedGift.selectedGift)
+  const { id } = useParams()
+  const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift)
+  const { image, url, title, store, description, amount, status, currency, remainingAmount } = selectedGift || {} as GiftType
 
-  const replaceWithBr = () => description.replace(/\n/g, "<br />")
+  const fetchSelectedGift = async () => await getGift(id ?? '')
+
+  useEffect(() => {
+    if (!selectedGift && !!id) {
+      fetchSelectedGift()
+        .then(gift => dispatch(selectGift(gift)))
+    }
+  }, [dispatch, id, selectedGift])
+
+  const replaceWithBr = () => description?.replace(/\n/g, "<br />")
 
   const frenchStatus = {
     OFFERED: 'a déjà été offert',
@@ -177,7 +190,7 @@ const Description = () => {
     dispatch(toggleModal({ amount, status, remainingAmount }))
   }
 
-  return (
+  return selectedGift ? (
     <div className={classes.page}>
       <header>
         <Header text={title} background="/images/pieds-bebe.jpg" backgroundPosition="center" />
@@ -232,7 +245,7 @@ const Description = () => {
       </main>
       {showModal && <Modal><FormContent /></Modal>}
     </div>
-  )
+  ) : <h1>Something went wrong!</h1>
 }
 
 export default Description
