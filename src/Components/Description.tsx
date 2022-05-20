@@ -155,7 +155,7 @@ const Description = () => {
       fetchSelectedGift()
         .then(gift => dispatch(selectGift(gift)))
     }
-  }, [dispatch, id, selectedGift])
+  }, [dispatch, id, selectedGift]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const replaceWithBr = () => description?.replace(/\n/g, "<br />")
 

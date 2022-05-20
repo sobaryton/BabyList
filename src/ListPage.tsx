@@ -57,7 +57,7 @@ const ListPage = () => {
 
   useEffect(() => {
     requestSearch(giftList, searched)
-  }, [giftList])
+  }, [giftList]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const requestSearch = (giftsToFilter: GiftType[], searchedVal: string) => {
     setSearched(searchedVal)
