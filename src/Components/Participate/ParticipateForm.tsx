@@ -110,7 +110,7 @@ const ParticipateForm = () => {
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
-    const transformedValues = name === 'amount' ? parseFloat(value) : value
+    const transformedValues = name === 'amount' ? parseFloat(value.replace(',', '.')) : value
     setFormValues({
       ...formValues,
       [name]: transformedValues,
