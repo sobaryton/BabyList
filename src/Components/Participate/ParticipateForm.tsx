@@ -145,7 +145,7 @@ const ParticipateForm = () => {
     }
   )
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault()
     onParticipate()
       .then(refreshGift)
@@ -221,6 +221,7 @@ const ParticipateForm = () => {
               name="message"
               multiline
               rows={3}
+              required
               onChange={handleInputChange}
             />
             <button type='submit' className={classes.submitBtn}>
