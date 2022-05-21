@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import CelebrationIcon from '@mui/icons-material/Celebration'
 import { TextField, FormControlLabel, Checkbox, FormGroup, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import { darkBlue, font20, font32, green, lightBlue } from '../../utils/constants'
+import { darkBlue, font20, font32, green, lightBlue, red } from '../../utils/constants'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { participate } from '../../api/participate'
 import { randomizeGif } from '../../utils/gifRandomizer'
-import { GiftType } from '../../reducers/selectedGift'
+import { GiftType, selectGift } from '../../reducers/selectedGift'
 import { setGiftList } from '../../reducers/giftList'
 import { getGift } from '../../api/getGift'
 import ParticipateInformation from './ParticipateInformation'
@@ -88,6 +88,9 @@ const formStyles = createUseStyles({
     alignItems: 'center',
     marginBottom: '4rem'
   },
+  red: {
+    color: red
+  }
 })
 
 const defaultValues = {
@@ -134,6 +137,7 @@ const ParticipateForm = () => {
   const refreshGift = async () => {
     const refreshedGift = await getGift(selectedGift.id)
     dispatch(setGiftList(gifts.map(gift => gift.id === selectedGift.id ? refreshedGift : gift)))
+    dispatch(selectGift(refreshedGift))
   }
 
   const onParticipate = () => participate(
@@ -190,7 +194,7 @@ const ParticipateForm = () => {
                 && <p>Ce qui fait {Math.floor((formValues.amount / totalAmount) * 100)}%</p>
               }
             </div>
-            <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! &hearts; (et aussi vous recontacter)</p>
+            <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! <span className={classes.red}>&hearts;</span> (et aussi vous recontacter)</p>
             <div className={classes.inputWrapper}>
               <TextField
                 id="outlined-helperText"

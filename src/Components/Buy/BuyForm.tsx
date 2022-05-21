@@ -3,13 +3,14 @@ import { createUseStyles } from 'react-jss'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import CelebrationIcon from '@mui/icons-material/Celebration'
 import { TextField, FormControlLabel, Checkbox, FormGroup } from '@mui/material'
-import { darkBlue, font20, font32, green, lightBlue } from '../../utils/constants'
+import { darkBlue, font20, font32, green, lightBlue, red } from '../../utils/constants'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { sendOffer } from '../../api/sendOffer'
 import { randomizeGif } from '../../utils/gifRandomizer'
-import { GiftType } from '../../reducers/selectedGift'
+import { GiftType, selectGift } from '../../reducers/selectedGift'
 import { setGiftList } from '../../reducers/giftList'
 import { getGift } from '../../api/getGift'
+import BuyInformation from './BuyInformation'
 
 const formStyles = createUseStyles({
   form: {
@@ -76,6 +77,9 @@ const formStyles = createUseStyles({
     alignItems: 'center',
     marginBottom: '4rem'
   },
+  red: {
+    color: red
+  }
 })
 
 const defaultValues = {
@@ -112,6 +116,7 @@ const BuyForm = () => {
   const refreshGift = async () => {
     const refreshedGift = await getGift(selectedGift.id)
     dispatch(setGiftList(gifts.map(gift => gift.id === selectedGift.id ? refreshedGift : gift)))
+    dispatch(selectGift(refreshedGift))
   }
 
   const onBuy = () => sendOffer({
@@ -131,46 +136,49 @@ const BuyForm = () => {
   return (
     <>
       {content === 'form'
-        ? <form onSubmit={handleSubmit} className={classes.form}>
-          <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! &hearts; (et aussi vous recontacter)</p>
-          <div className={classes.inputWrapper}>
+        ? <>
+          <BuyInformation />
+          <form onSubmit={handleSubmit} className={classes.form}>
+            <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! <span className={classes.red}>&hearts;</span> (et aussi vous recontacter)</p>
+            <div className={classes.inputWrapper}>
+              <TextField
+                id="outlined-helperText"
+                label="Votre nom"
+                name="name"
+                required
+                onChange={handleInputChange}
+                className={classes.textInput}
+                margin="normal"
+              />
+              <TextField
+                id="outlined-helperText2"
+                type="email"
+                label="Votre email"
+                helperText="Nous n'afficherons pas votre email."
+                required
+                name="email"
+                onChange={handleInputChange}
+                className={classes.textInput}
+                margin="normal"
+              />
+            </div>
+            <FormGroup className={classes.checkbox}>
+              <FormControlLabel control={<Checkbox onChange={handleCheckBoxChange} />} label="Rester anonyme sur le site" />
+            </FormGroup>
             <TextField
-              id="outlined-helperText"
-              label="Votre nom"
-              name="name"
+              placeholder="Laissez-nous un message !"
+              name="message"
+              multiline
+              rows={3}
               required
               onChange={handleInputChange}
-              className={classes.textInput}
-              margin="normal"
             />
-            <TextField
-              id="outlined-helperText2"
-              type="email"
-              label="Votre email"
-              helperText="Nous n'afficherons pas votre email."
-              required
-              name="email"
-              onChange={handleInputChange}
-              className={classes.textInput}
-              margin="normal"
-            />
-          </div>
-          <FormGroup className={classes.checkbox}>
-            <FormControlLabel control={<Checkbox onChange={handleCheckBoxChange} />} label="Rester anonyme sur le site" />
-          </FormGroup>
-          <TextField
-            placeholder="Laissez-nous un message !"
-            name="message"
-            multiline
-            rows={3}
-            required
-            onChange={handleInputChange}
-          />
-          <button type='submit' className={classes.submitBtn}>
-            <CardGiftcardIcon />
-            OFFRIR
-          </button>
-        </form>
+            <button type='submit' className={classes.submitBtn}>
+              <CardGiftcardIcon />
+              OFFRIR
+            </button>
+          </form>
+        </>
         : <div className={classes.thanksBox}>
           <div className={classes.textIcon}>
             <CelebrationIcon sx={{ color: green, marginRight: '1.5rem', fontSize: font32 }} />

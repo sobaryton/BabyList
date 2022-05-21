@@ -52,16 +52,6 @@ const cardStyles = createUseStyles({
   btnIcon: {
     marginRight: '0.7rem'
   },
-  image: {
-    width: '40%',
-    minWidth: '25rem',
-    maxWidth: '40rem',
-    height: '25rem',
-    backgroundSize: 'cover',
-    marginRight: '1rem',
-    backgroundOrigin: 'border-box',
-    backgroundPosition: 'center',
-  },
   offrirBtn: {
     background: lightYellow,
     color: darkYellow,
@@ -86,10 +76,37 @@ const cardStyles = createUseStyles({
   },
   article: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    alignContent: 'center',
+    justifyContent: 'center',
     flexWrap: 'wrap',
     '& p': {
       margin: '0.5rem 0'
+    },
+    '@media (min-width: 1024px)': {
+      flexDirection: 'row',
+      alignContent: 'flex-start',
+      justifyContent: 'flex-start',
+    }
+  },
+  image: {
+    width: '100%',
+    minWidth: '15rem',
+    maxWidth: '40rem',
+    height: '25rem',
+    backgroundSize: 'cover',
+    marginRight: 0,
+    backgroundOrigin: 'border-box',
+    backgroundPosition: 'center',
+    '@media (min-width: 1024px)': {
+      width: '40%',
+      marginRight: '1rem',
+    }
+  },
+  articleText: {
+    width: '100%',
+    '@media (min-width: 1024px)': {
+      width: 'calc(60% - 1rem)',
     }
   },
   provider: {
@@ -110,12 +127,24 @@ const cardStyles = createUseStyles({
   title: {
     color: darkBlue
   },
+  labels: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  categorylabel: {
+    background: lightBlue,
+    color: darkBlue,
+    '& p': {
+      color: darkBlue,
+    }
+  },
   label: {
     width: '10rem',
     height: '2rem',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    margin: '1rem 1rem 1rem 0',
     '& p': {
       fontWeight: 700,
       textTransform: 'uppercase',
@@ -136,22 +165,8 @@ const cardStyles = createUseStyles({
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
-  articleText: {
-    width: '50%'
-  },
   headerImage: {
     opacity: 0.75
-  },
-  labels: {
-    display: 'flex'
-  },
-  categorylabel: {
-    background: lightBlue,
-    color: darkBlue,
-    marginLeft: '1rem',
-    '& p': {
-      color: darkBlue,
-    }
   }
 })
 

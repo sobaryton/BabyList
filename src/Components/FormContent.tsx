@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import classNames from 'classnames'
-import BuyModalContent from './Buy/BuyModalContent'
 import { darkBlue, font20, lightBlue } from '../utils/constants'
 import ParticipateForm from './Participate/ParticipateForm'
 import { useAppSelector } from '../utils/hooks'
+import BuyForm from './Buy/BuyForm'
 
 const listPageStyles = createUseStyles({
   btnWrap: {
@@ -63,7 +63,7 @@ const FormContent = () => {
       }
       {
         type === '' ? '' : type === 'TO_OFFER'
-          ? <BuyModalContent />
+          ? <BuyForm />
           : <ParticipateForm />
       }
     </>
