@@ -9,6 +9,7 @@ import { randomizeGif } from '../../utils/gifRandomizer'
 import { GiftType } from '../../reducers/selectedGift'
 import { setGiftList } from '../../reducers/giftList'
 import { getGift } from '../../api/getGift'
+import ParticipateInformation from './ParticipateInformation'
 
 const formStyles = createUseStyles({
   form: {
@@ -154,77 +155,80 @@ const ParticipateForm = () => {
   return (
     <>
       {content === 'form'
-        ? <form onSubmit={handleSubmit} className={classes.form}>
-          <div className={classes.participation}>
-            <div className={classes.participationWrapper}>
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">Monnaie</InputLabel>
-                <Select
-                  className={classes.currency}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={formValues.currency}
-                  label="currency"
+        ? <>
+          <ParticipateInformation />
+          <form onSubmit={handleSubmit} className={classes.form}>
+            <div className={classes.participation}>
+              <div className={classes.participationWrapper}>
+                <FormControl>
+                  <InputLabel id="demo-simple-select-label">Monnaie</InputLabel>
+                  <Select
+                    className={classes.currency}
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={formValues.currency}
+                    label="currency"
+                    required
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="euros">€ (Euros)</MenuItem>
+                    <MenuItem disabled={true} value="pounds">£ (Pounds)</MenuItem>
+                  </Select>
+                </FormControl>
+                <TextField
+                  id="outlined-helperText"
+                  label="Montant"
+                  name="amount"
+                  type="number"
                   required
-                  onChange={handleChange}
-                >
-                  <MenuItem value="euros">€ (Euros)</MenuItem>
-                  <MenuItem disabled={true} value="pounds">£ (Pounds)</MenuItem>
-                </Select>
-              </FormControl>
+                  onChange={handleInputChange}
+                  className={classes.textInput}
+                />
+              </div>
+              {
+                (!!formValues.amount && totalAmount !== 0)
+                && <p>Ce qui fait {Math.floor((formValues.amount / totalAmount) * 100)}%</p>
+              }
+            </div>
+            <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! &hearts; (et aussi vous recontacter)</p>
+            <div className={classes.inputWrapper}>
               <TextField
                 id="outlined-helperText"
-                label="Montant"
-                name="amount"
-                type="number"
+                label="Votre nom"
+                name="name"
                 required
                 onChange={handleInputChange}
                 className={classes.textInput}
+                margin="normal"
+              />
+              <TextField
+                id="outlined-helperText2"
+                type="email"
+                label="Votre email"
+                helperText="Nous n'afficherons pas votre email."
+                required
+                name="email"
+                onChange={handleInputChange}
+                className={classes.textInput}
+                margin="normal"
               />
             </div>
-            {
-              (!!formValues.amount && totalAmount !== 0)
-              && <p>Ce qui fait {Math.floor((formValues.amount / totalAmount) * 100)}%</p>
-            }
-          </div>
-          <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! &hearts; (et aussi vous recontacter)</p>
-          <div className={classes.inputWrapper}>
+            <FormGroup className={classes.checkbox}>
+              <FormControlLabel control={<Checkbox onChange={handleCheckBoxChange} />} label="Rester anonyme sur le site" />
+            </FormGroup>
             <TextField
-              id="outlined-helperText"
-              label="Votre nom"
-              name="name"
-              required
+              placeholder="Laissez-nous un message !"
+              name="message"
+              multiline
+              rows={3}
               onChange={handleInputChange}
-              className={classes.textInput}
-              margin="normal"
             />
-            <TextField
-              id="outlined-helperText2"
-              type="email"
-              label="Votre email"
-              helperText="Nous n'afficherons pas votre email."
-              required
-              name="email"
-              onChange={handleInputChange}
-              className={classes.textInput}
-              margin="normal"
-            />
-          </div>
-          <FormGroup className={classes.checkbox}>
-            <FormControlLabel control={<Checkbox onChange={handleCheckBoxChange} />} label="Rester anonyme sur le site" />
-          </FormGroup>
-          <TextField
-            placeholder="Laissez-nous un message !"
-            name="message"
-            multiline
-            rows={3}
-            onChange={handleInputChange}
-          />
-          <button type='submit' className={classes.submitBtn}>
-            <CelebrationIcon />
-            PARTICIPER
-          </button>
-        </form>
+            <button type='submit' className={classes.submitBtn}>
+              <CelebrationIcon />
+              PARTICIPER
+            </button>
+          </form>
+        </>
         : <div className={classes.thanksBox}>
           <div className={classes.textIcon}>
             <CelebrationIcon sx={{ color: green, marginRight: '1.5rem', fontSize: font32 }} />
