@@ -21,7 +21,7 @@ const Footer = () => {
       <p className={classes.copyright}>Made with &hearts; to welcome our little bubba</p>
       <p className={classes.copyright}>&copy; BARY Solene & SEVERIN Nicolas</p>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer

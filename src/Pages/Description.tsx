@@ -14,6 +14,7 @@ import FormContent from '../Components/FormContent'
 import { toggleModal } from '../reducers/modal'
 import { getGift } from '../api/getGift'
 import { GiftType, selectGift } from '../reducers/selectedGift'
+import Loading from '../Components/Loading'
 
 const cardStyles = createUseStyles({
   page: {
@@ -160,9 +161,21 @@ const Description = () => {
   const showModal = useAppSelector((state) => state.modal.isOpen)
   const { id } = useParams()
   const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift)
-  const { image, url, title, store, description, amount, status, currency, remainingAmount, category } = selectedGift || {} as GiftType
+  const {
+    image,
+    url,
+    title,
+    store, description,
+    amount,
+    status,
+    currency,
+    remainingAmount,
+    category,
+    transactions
+  } = selectedGift || {} as GiftType
 
   const fetchSelectedGift = async () => await getGift(id ?? '')
+  const nonAnonymousParticipants = transactions ? transactions.filter(transactions => !transactions.anonymous) : undefined
 
   useEffect(() => {
     if (!selectedGift && !!id) {
@@ -203,6 +216,19 @@ const Description = () => {
     dispatch(toggleModal({ amount, status, remainingAmount }))
   }
 
+  const getParticipants = () => {
+    if (!nonAnonymousParticipants) return ''
+    const nonAnonymousParticipantNames = nonAnonymousParticipants.map(transaction => transaction.name)
+    const uniqParticipants = Array.from(new Set(nonAnonymousParticipantNames))
+
+    if (uniqParticipants.length === 1) return uniqParticipants.toString()
+    if (uniqParticipants.length === 2) return uniqParticipants.join(' et ')
+
+    const firstPartOfArray = uniqParticipants.slice(0, uniqParticipants.length - 2).join(', ')
+    const secondPartArray = `${uniqParticipants[uniqParticipants.length - 2]} et ${uniqParticipants[uniqParticipants.length - 1]}`
+    return `${firstPartOfArray}, ${secondPartArray}`
+  }
+
   return selectedGift ? (
     <div className={classes.page}>
       <header>
@@ -232,7 +258,7 @@ const Description = () => {
                 {
                   !!remainingAmount && remainingAmount !== amount && <div className={classes.textIcon}>
                     <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
-                    <p>Certaines personnes ont déjà contribué à l'achat de ce cadeau. Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
+                    <p>{nonAnonymousParticipants ? getParticipants() : 'Certaines personnes'} {nonAnonymousParticipants && nonAnonymousParticipants.length === 1 ? 'a' : 'ont'} déjà contribué à l'achat de ce cadeau. Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
                   </div>
                 }
                 <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a>.</p>
@@ -263,7 +289,7 @@ const Description = () => {
       </main>
       {showModal && <Modal><FormContent /></Modal>}
     </div>
-  ) : <div style={{ width: "100%", height: 0, paddingBottom: "100%", position: "relative" }}><iframe src="https://giphy.com/embed/3o85xscgnCWS8Xxqik" width="100%" height="100%" style={{ position: 'absolute' }} frameBorder="0" title="loading gif"></iframe></div>
+  ) : <Loading />
 }
 
 export default Description

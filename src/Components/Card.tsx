@@ -155,7 +155,16 @@ type CardElement = { card: GiftType } & { onToggleModal: () => void }
 
 const Card = ({ card, onToggleModal }: CardElement) => {
   const dispatch = useAppDispatch()
-  const { image, title, description, amount, currency, store, status, id, version, wishlistId, url, category, createdAt, remainingAmount } = card
+  const {
+    image,
+    title,
+    description,
+    amount,
+    currency,
+    store,
+    status,
+    id
+  } = card
 
   const labelClass = () => {
     switch (status) {
@@ -176,7 +185,7 @@ const Card = ({ card, onToggleModal }: CardElement) => {
     PARTLY_FUNDED: 'À participer'
   }
 
-  const setSelectedGift = () => dispatch(selectGift({ image, title, description, amount, currency, store, status, id, version, wishlistId, url, category, createdAt, remainingAmount }))
+  const setSelectedGift = () => dispatch(selectGift(card))
 
   const openTransationModal = () => {
     onToggleModal()

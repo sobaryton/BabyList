@@ -4,6 +4,22 @@ type InitialState = {
   selectedGift: GiftType | undefined
 }
 
+export type Transaction = {
+  id: string
+  giftId: string
+  type: "ORDER" | "PARTICIPATE"
+  name: string
+  email: string
+  message: string
+  amount: number
+  currency: string
+  anonymous?: boolean
+  createdAt?: Date
+  updatedAt?: Date
+  canceledAt?: Date
+  giftVersion: string
+}
+
 export type GiftType = {
   id: string
   wishlistId: string
@@ -21,6 +37,7 @@ export type GiftType = {
   updatedAt?: Date
   deletedAt?: Date
   version: number
+  transactions?: Transaction[]
 }
 
 const selectedGiftSlice = createSlice({

@@ -11,6 +11,7 @@ import FormContent from '../Components/FormContent'
 import { setGiftList } from '../reducers/giftList'
 import { getGifts } from '../api/getGifts'
 import { GiftType } from '../reducers/selectedGift'
+import Loading from '../Components/Loading'
 
 const listPageStyles = createUseStyles({
   page: {
@@ -71,7 +72,7 @@ const ListPage = () => {
 
   return (
     !rows.length
-      ? <div style={{ width: "100%", height: 0, paddingBottom: "100%", position: "relative" }}><iframe src="https://giphy.com/embed/3o85xscgnCWS8Xxqik" width="100%" height="100%" style={{ position: 'absolute' }} frameBorder="0" title="loading gif"></iframe></div>
+      ? <Loading />
       : <div className={classes.page}>
       <header>
           <Header text="Hello Bubba !" />
@@ -101,7 +102,7 @@ const ListPage = () => {
       </main>
       {showModal && <Modal><FormContent /></Modal>}
     </div>
-  );
+  )
 }
 
 export default ListPage
