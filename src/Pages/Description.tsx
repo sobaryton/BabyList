@@ -244,7 +244,7 @@ const Description = () => {
       </main>
       {showModal && <Modal><FormContent /></Modal>}
     </div>
-  ) : <h1>Something went wrong!</h1>
+  ) : <div style={{ width: "100%", height: 0, paddingBottom: "100%", position: "relative" }}><iframe src="https://giphy.com/embed/3o85xscgnCWS8Xxqik" width="100%" height="100%" style={{ position: 'absolute' }} frameBorder="0" title="loading gif"></iframe></div>
 }
 
 export default Description

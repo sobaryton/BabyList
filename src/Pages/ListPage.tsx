@@ -70,7 +70,9 @@ const ListPage = () => {
   }
 
   return (
-    <div className={classes.page}>
+    !rows.length
+      ? <div style={{ width: "100%", height: 0, paddingBottom: "100%", position: "relative" }}><iframe src="https://giphy.com/embed/3o85xscgnCWS8Xxqik" width="100%" height="100%" style={{ position: 'absolute' }} frameBorder="0" title="loading gif"></iframe></div>
+      : <div className={classes.page}>
       <header>
         <Header />
       </header>
