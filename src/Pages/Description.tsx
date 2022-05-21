@@ -79,6 +79,7 @@ const cardStyles = createUseStyles({
     flexDirection: 'column',
     alignContent: 'center',
     justifyContent: 'center',
+    width: '100%',
     flexWrap: 'wrap',
     '& p': {
       margin: '0.5rem 0'
@@ -193,7 +194,7 @@ const Description = () => {
   const nonAnonymousParticipants = transactions ? transactions.filter(transactions => !transactions.anonymous) : undefined
 
   useEffect(() => {
-    if (!selectedGift && !!id || !transactions) {
+    if ((!selectedGift && !!id) || !transactions) {
       fetchSelectedGift()
         .then(gift => dispatch(selectGift(gift)))
     }
