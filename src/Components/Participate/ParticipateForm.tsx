@@ -109,9 +109,10 @@ const ParticipateForm = () => {
 
   const handleInputChange = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target
+    const transformedValues = name === 'amount' ? parseFloat(value) : value
     setFormValues({
       ...formValues,
-      [name]: value,
+      [name]: transformedValues,
     })
   }
 
@@ -179,7 +180,7 @@ const ParticipateForm = () => {
                   id="outlined-helperText"
                   label="Montant"
                   name="amount"
-                  type="number"
+                  inputProps={{ inputMode: 'numeric', pattern: '^[0-9]+(?:[.,][0-9]{1,2})?$' }}
                   required
                   onChange={handleInputChange}
                   className={classes.textInput}
