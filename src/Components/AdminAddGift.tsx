@@ -17,7 +17,7 @@ export type AddGiftData = {
     title: string,
     description: string,
     category: string,
-    image: string,
+    image: string | File,
     store: string,
     url: string,
     amount: number,
@@ -40,10 +40,21 @@ const AdminAddGift = () => {
     const [error, setError] = useState<string|undefined>(undefined);
     const classes = useStyle();
 
+    const fileToBase64 = (file: File) => new Promise<string>((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = () => resolve(fileReader.result?.toString() || "");
+        fileReader.onerror = error => reject(error);
+    });
+
     const onFormSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        adminAddGift(formData)
+        fileToBase64(formData.image as File)
+            .then(image => adminAddGift({
+                ...formData,
+                image
+            }))
             .then(() => {setFormData(defaultFormData)})
             .catch((exception) => setError(exception))
     };
@@ -51,7 +62,22 @@ const AdminAddGift = () => {
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const onFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        // const file = e.target.files?.item(0);
+        // if (!!file) {
+        //     fileToBase64(file)
+        //         .then(image => setFormData({
+        //             ...formData,
+        //             image,
+        //         }));
+        // }
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.files?.item(0),
         })
     };
 
@@ -79,11 +105,13 @@ const AdminAddGift = () => {
                 onChange={onInputChange}
             />
             <TextField
-                label="Image (base64-encoded)"
-                value={formData.image}
+                // Not a controlled input on purpose.
+                label="Image"
                 name="image"
                 required
-                onChange={onInputChange}
+                onChange={onFileInputChange}
+                type="file"
+                focused
             />
             <TextField
                 label="Store name"
