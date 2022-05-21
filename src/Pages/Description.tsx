@@ -193,11 +193,11 @@ const Description = () => {
   const nonAnonymousParticipants = transactions ? transactions.filter(transactions => !transactions.anonymous) : undefined
 
   useEffect(() => {
-    if (!selectedGift && !!id) {
+    if (!selectedGift && !!id || !transactions) {
       fetchSelectedGift()
         .then(gift => dispatch(selectGift(gift)))
     }
-  }, [dispatch, id, selectedGift]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch, id, selectedGift, transactions]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const replaceWithBr = () => description?.replace(/\n/g, "<br />")
 

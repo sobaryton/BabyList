@@ -5,7 +5,7 @@ import ListPage from './Pages/ListPage'
 import Home from './Pages/Home'
 import { sansSerif } from './utils/constants'
 import Description from './Pages/Description'
-import AdminAddGift from './Components/AdminAddGift'
+import AdminAddGift from './Pages/AdminAddGift'
 
 const appStyles = createUseStyles({
   "@global": {
