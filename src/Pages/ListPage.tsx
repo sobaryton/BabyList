@@ -74,7 +74,7 @@ const ListPage = () => {
       ? <div style={{ width: "100%", height: 0, paddingBottom: "100%", position: "relative" }}><iframe src="https://giphy.com/embed/3o85xscgnCWS8Xxqik" width="100%" height="100%" style={{ position: 'absolute' }} frameBorder="0" title="loading gif"></iframe></div>
       : <div className={classes.page}>
       <header>
-        <Header />
+          <Header text="Hello Bubba !" />
       </header>
       <main className={classes.main}>
         <Navigation className={classes.navigation} />
@@ -91,19 +91,7 @@ const ListPage = () => {
               return (
                 <Card
                   key={card.url}
-                  id={card.id}
-                  image={card.image}
-                  title={card.title}
-                  description={card.description}
-                  amount={card.amount}
-                  currency={card.currency}
-                  store={card.store}
-                  wishlistId={card.wishlistId}
-                  status={card.status}
-                  createdAt={card.createdAt}
-                  category={card.category}
-                  url={card.url}
-                  version={card.version}
+                  card={card}
                   onToggleModal={() => dispatch(toggleModal({ amount: card.amount, status: card.status, remainingAmount: card.remainingAmount }))}
                 />
               )

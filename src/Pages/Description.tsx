@@ -137,6 +137,20 @@ const cardStyles = createUseStyles({
   },
   articleText: {
     width: '50%'
+  },
+  headerImage: {
+    opacity: 0.75
+  },
+  labels: {
+    display: 'flex'
+  },
+  categorylabel: {
+    background: lightBlue,
+    color: darkBlue,
+    marginLeft: '1rem',
+    '& p': {
+      color: darkBlue,
+    }
   }
 })
 
@@ -146,7 +160,7 @@ const Description = () => {
   const showModal = useAppSelector((state) => state.modal.isOpen)
   const { id } = useParams()
   const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift)
-  const { image, url, title, store, description, amount, status, currency, remainingAmount } = selectedGift || {} as GiftType
+  const { image, url, title, store, description, amount, status, currency, remainingAmount, category } = selectedGift || {} as GiftType
 
   const fetchSelectedGift = async () => await getGift(id ?? '')
 
@@ -192,7 +206,7 @@ const Description = () => {
   return selectedGift ? (
     <div className={classes.page}>
       <header>
-        <Header text={title} background="/images/pieds-bebe.jpg" backgroundPosition="center" />
+        <Header background="/images/pieds-bebe.jpg" backgroundPosition="center" className={classes.headerImage} />
       </header>
       <main className={classes.main}>
         <Navigation className={classes.navigation} link='/list' />
@@ -200,8 +214,13 @@ const Description = () => {
           <div className={classes.articleDetails}>
             <div className={classes.header}>
               <h1 className={classes.title}>{title}</h1>
-              <div className={classNames(classes.label, classes[labelClass()])}>
-                <p>{statusLabel[status]}</p>
+              <div className={classes.labels}>
+                <div className={classNames(classes.label, classes[labelClass()])}>
+                  <p>{statusLabel[status]}</p>
+                </div>
+                <div className={classNames(classes.label, classes.categorylabel)}>
+                  <p>{category}</p>
+                </div>
               </div>
             </div>
             <div className={classes.article}>
@@ -211,7 +230,7 @@ const Description = () => {
                 <p>Ce cadeau {frenchStatus[status]}.</p>
                 <p>Son prix total est de <b>{currency === '£' ? `£${amount}` : `${amount}€`}</b>.</p>
                 {
-                  remainingAmount !== amount && <div className={classes.textIcon}>
+                  !!remainingAmount && remainingAmount !== amount && <div className={classes.textIcon}>
                     <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
                     <p>Certaines personnes ont déjà contribué à l'achat de ce cadeau. Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
                   </div>
