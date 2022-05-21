@@ -56,7 +56,7 @@ const AdminAddGift = () => {
                 image
             }))
             .then(() => {setFormData(defaultFormData)})
-            .catch((exception) => setError(exception))
+            .catch((exception) => setError(exception?.response?.data?.message || exception?.message || exception))
     };
 
     const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -67,14 +67,6 @@ const AdminAddGift = () => {
     };
 
     const onFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        // const file = e.target.files?.item(0);
-        // if (!!file) {
-        //     fileToBase64(file)
-        //         .then(image => setFormData({
-        //             ...formData,
-        //             image,
-        //         }));
-        // }
         setFormData({
             ...formData,
             [e.target.name]: e.target.files?.item(0),
@@ -82,68 +74,71 @@ const AdminAddGift = () => {
     };
 
     return (
-        <form onSubmit={onFormSubmit} className={classes.form}>
-            <TextField
-                label="Gift title"
-                value={formData.title}
-                name="title"
-                required
-                onChange={onInputChange}
-            />
-            <TextField
-                label="Description"
-                value={formData.description}
-                name="description"
-                required
-                onChange={onInputChange}
-            />
-            <TextField
-                label="Category"
-                value={formData.category}
-                name="category"
-                required
-                onChange={onInputChange}
-            />
-            <TextField
-                // Not a controlled input on purpose.
-                label="Image"
-                name="image"
-                required
-                onChange={onFileInputChange}
-                type="file"
-                focused
-            />
-            <TextField
-                label="Store name"
-                value={formData.store}
-                name="store"
-                required
-                onChange={onInputChange}
-            />
-            <TextField
-                label="Gift URL"
-                value={formData.url}
-                name="url"
-                required
-                onChange={onInputChange}
-            />
-            <TextField
-                label="Price"
-                value={formData.amount}
-                name="amount"
-                inputProps={{ inputMode: 'numeric', pattern: '^[0-9]+(?:[.,][0-9]{1,2})?$' }}
-                required
-                onChange={onInputChange}
-            />
-            <TextField
-                label="Currency"
-                value={formData.currency}
-                name="currency"
-                required
-                onChange={onInputChange}
-            />
-            <button type="submit">Submit</button>
-        </form>
+        <>
+            {error && <h2>{error}</h2>}
+            <form onSubmit={onFormSubmit} className={classes.form}>
+                <TextField
+                    label="Gift title"
+                    value={formData.title}
+                    name="title"
+                    required
+                    onChange={onInputChange}
+                />
+                <TextField
+                    label="Description"
+                    value={formData.description}
+                    name="description"
+                    required
+                    onChange={onInputChange}
+                />
+                <TextField
+                    label="Category"
+                    value={formData.category}
+                    name="category"
+                    required
+                    onChange={onInputChange}
+                />
+                <TextField
+                    // Not a controlled input on purpose.
+                    label="Image"
+                    name="image"
+                    required
+                    onChange={onFileInputChange}
+                    type="file"
+                    focused
+                />
+                <TextField
+                    label="Store name"
+                    value={formData.store}
+                    name="store"
+                    required
+                    onChange={onInputChange}
+                />
+                <TextField
+                    label="Gift URL"
+                    value={formData.url}
+                    name="url"
+                    required
+                    onChange={onInputChange}
+                />
+                <TextField
+                    label="Price"
+                    value={formData.amount}
+                    name="amount"
+                    inputProps={{ inputMode: 'numeric', pattern: '^[0-9]+(?:[.,][0-9]{1,2})?$' }}
+                    required
+                    onChange={onInputChange}
+                />
+                <TextField
+                    label="Currency"
+                    value={formData.currency}
+                    name="currency"
+                    required
+                    onChange={onInputChange}
+                />
+                <button type="submit">Submit</button>
+            </form>
+        </>
     );
 };
 
