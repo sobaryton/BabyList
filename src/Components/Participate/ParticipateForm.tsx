@@ -86,6 +86,7 @@ const formStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    marginBottom: '4rem'
   },
 })
 
@@ -146,10 +147,8 @@ const ParticipateForm = () => {
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
-
     onParticipate()
       .then(refreshGift)
-
     setContent('thanks')
   }
 

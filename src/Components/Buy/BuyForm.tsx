@@ -74,6 +74,7 @@ const formStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'flex-start',
     alignItems: 'center',
+    marginBottom: '4rem'
   },
 })
 
