@@ -1,9 +1,9 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 import WarningIcon from '@mui/icons-material/Warning'
-import BigHeader from './Components/BigHeader'
-import Footer from './Components/Footer'
-import { font48, red, sansSerif, white } from './Components/constants'
+import BigHeader from '../Components/Headers/BigHeader'
+import Footer from '../Components/Footer'
+import { font48, red, sansSerif, white } from '../utils/constants'
 
 const homeStyles = createUseStyles({
   main: {

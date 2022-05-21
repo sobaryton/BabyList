@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import classNames from 'classnames'
-import BuyForm from './BuyForm'
-import { darkBlue, font20, lightBlue } from './constants'
-import ParticipationForm from './ParticipationForm'
-import { useAppSelector } from '../hooks'
+import BuyModalContent from './Buy/BuyModalContent'
+import { darkBlue, font20, lightBlue } from '../utils/constants'
+import ParticipateModalContent from './Participate/ParticipateModalContent'
+import { useAppSelector } from '../utils/hooks'
 
 const listPageStyles = createUseStyles({
   btnWrap: {
@@ -55,7 +55,7 @@ const FormContent = () => {
     <>
       {
         status === 'PARTLY_FUNDED'
-          ? <><h1>Participer</h1><ParticipationForm /></>
+          ? <><h1>Participer</h1><ParticipateModalContent /></>
           : <div className={classes.btnWrap}>
             <button onClick={() => setType('TO_OFFER')} className={classNames(classes.btn, type === 'TO_OFFER' ? classes.activeBtn : '')}>Offir</button>
             <button onClick={() => setType('PARTLY_FUNDED')} className={classNames(classes.btn, type === 'PARTLY_FUNDED' ? classes.activeBtn : '')}>Participer</button>
@@ -63,8 +63,8 @@ const FormContent = () => {
       }
       {
         type === '' ? '' : type === 'TO_OFFER'
-          ? <BuyForm />
-          : <ParticipationForm />
+          ? <BuyModalContent />
+          : <ParticipateModalContent />
       }
     </>
   )

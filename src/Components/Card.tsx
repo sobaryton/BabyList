@@ -2,11 +2,11 @@ import * as React from 'react'
 import { createUseStyles } from 'react-jss'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import SearchIcon from '@mui/icons-material/Search'
-import { darkBlue, darkYellow, font14, font16, font20, orange, lightBlue, lightYellow, white, green, red, blue } from './constants'
+import { darkBlue, darkYellow, font14, font16, font20, orange, lightBlue, lightYellow, white, green, red, blue } from '../utils/constants'
 import classNames from 'classnames'
 import { Link } from 'react-router-dom'
 import { GiftType, selectGift } from '../reducers/selectedGift'
-import { useAppDispatch } from '../hooks'
+import { useAppDispatch } from '../utils/hooks'
 
 const cardStyles = createUseStyles({
   card: {

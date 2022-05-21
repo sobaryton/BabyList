@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { createUseStyles } from 'react-jss'
-import { darkBlue, cursive, font64, white, font48 } from './constants'
+import { darkBlue, cursive, font64, white, font48 } from '../../utils/constants'
 
 const headerStyles = createUseStyles({
   header: {

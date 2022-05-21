@@ -1,7 +1,7 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 import BuyInformation from './BuyInformation'
-import Form from './Form'
+import BuyForm from './BuyForm'
 
 const buyFormStyles = createUseStyles({
   form: {
@@ -14,14 +14,14 @@ const buyFormStyles = createUseStyles({
   },
 })
 
-const BuyForm = () => {
+const BuyModalContent = () => {
   const classes = buyFormStyles()
   return (
     <>
       <BuyInformation className={classes.info} />
-      <Form submitText="OFFRIR" />
+      <BuyForm />
     </>
   )
 }
 
-export default BuyForm
+export default BuyModalContent

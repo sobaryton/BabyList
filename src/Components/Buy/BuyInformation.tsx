@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import WarningIcon from '@mui/icons-material/Warning'
 import CloseIcon from '@mui/icons-material/Close'
 import CheckIcon from '@mui/icons-material/Check'
-import { font24, green, red, white } from './constants'
+import { font24, green, red, white } from '../../utils/constants'
 
 const buyInfoStyles = createUseStyles({
   information: {

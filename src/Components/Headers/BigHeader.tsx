@@ -2,7 +2,7 @@ import * as React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Link } from 'react-router-dom'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { darkBlue, font32, lightBlue } from './constants'
+import { darkBlue, font32, lightBlue } from '../../utils/constants'
 
 const headerStyles = createUseStyles({
   header: {

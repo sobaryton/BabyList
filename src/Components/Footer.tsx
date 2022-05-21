@@ -1,6 +1,6 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
-import { font10 } from './constants'
+import { font10 } from '../utils/constants'
 
 const footerStyles = createUseStyles({
   footer: {

@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import { createUseStyles } from 'react-jss'
-import ListPage from './ListPage'
-import Home from './Home'
-import { sansSerif } from './Components/constants'
-import Description from './Components/Description'
+import ListPage from './Pages/ListPage'
+import Home from './Pages/Home'
+import { sansSerif } from './utils/constants'
+import Description from './Pages/Description'
 
 const appStyles = createUseStyles({
   "@global": {

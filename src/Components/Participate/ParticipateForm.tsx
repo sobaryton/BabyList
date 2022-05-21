@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
 import { createUseStyles } from 'react-jss'
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import CelebrationIcon from '@mui/icons-material/Celebration'
 import { TextField, FormControlLabel, Checkbox, FormGroup, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
-import { darkBlue, font20, font32, green, lightBlue } from './constants'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { sendOffer } from '../api/sendOffer'
-import { participate } from '../api/participate'
-import { randomizeGif } from '../utils/gifRandomizer'
-import { GiftType } from '../reducers/selectedGift'
-import { setGiftList } from '../reducers/giftList'
-import { getGift } from '../api/getGift'
+import { darkBlue, font20, font32, green, lightBlue } from '../../utils/constants'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { participate } from '../../api/participate'
+import { randomizeGif } from '../../utils/gifRandomizer'
+import { GiftType } from '../../reducers/selectedGift'
+import { setGiftList } from '../../reducers/giftList'
+import { getGift } from '../../api/getGift'
 
 const formStyles = createUseStyles({
   form: {
@@ -78,12 +76,6 @@ const formStyles = createUseStyles({
   currency: {
     margin: '0.5rem 0.5rem 0.5rem 0'
   },
-  gif: {
-    width: '28.125rem',
-    height: 0,
-    paddingBottom: '86%',
-    position: 'relative',
-  },
   thanksBox: {
     display: 'flex',
     flexDirection: 'column',
@@ -96,10 +88,6 @@ const formStyles = createUseStyles({
   },
 })
 
-type FormProps = {
-  submitText: string
-}
-
 const defaultValues = {
   name: '',
   email: '',
@@ -109,7 +97,7 @@ const defaultValues = {
   currency: 'euros'
 }
 
-const Form = ({ submitText }: FormProps) => {
+const ParticipateForm = () => {
   const dispatch = useAppDispatch()
   const classes = formStyles()
   const [formValues, setFormValues] = useState(defaultValues)
@@ -145,8 +133,7 @@ const Form = ({ submitText }: FormProps) => {
     dispatch(setGiftList(gifts.map(gift => gift.id === selectedGift.id ? refreshedGift : gift)))
   }
 
-  const buyOrParticipate = () => !!formValues.amount
-  ? participate(
+  const onParticipate = () => participate(
     {
       ...formValues,
       amount: formValues.amount,
@@ -154,17 +141,11 @@ const Form = ({ submitText }: FormProps) => {
       giftVersion: selectedGift.version
     }
   )
-  : sendOffer({
-    ...formValues,
-    amount: totalAmount,
-    giftId: selectedGift.id,
-    giftVersion: selectedGift.version
-  })
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault()
 
-    buyOrParticipate()
+    onParticipate()
       .then(refreshGift)
 
     setContent('thanks')
@@ -174,41 +155,38 @@ const Form = ({ submitText }: FormProps) => {
     <>
       {content === 'form'
         ? <form onSubmit={handleSubmit} className={classes.form}>
-          {
-            submitText !== 'OFFRIR' &&
-            <div className={classes.participation}>
-              <div className={classes.participationWrapper}>
-                <FormControl>
-                  <InputLabel id="demo-simple-select-label">Monnaie</InputLabel>
-                  <Select
-                    className={classes.currency}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={formValues.currency}
-                    label="currency"
-                    required
-                    onChange={handleChange}
-                  >
-                      <MenuItem value="euros">€ (Euros)</MenuItem>
-                      <MenuItem disabled={true} value="pounds">£ (Pounds)</MenuItem>
-                  </Select>
-                </FormControl>
-                <TextField
-                  id="outlined-helperText"
-                  label="Montant"
-                    name="amount"
-                  type="number"
+          <div className={classes.participation}>
+            <div className={classes.participationWrapper}>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">Monnaie</InputLabel>
+                <Select
+                  className={classes.currency}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={formValues.currency}
+                  label="currency"
                   required
-                  onChange={handleInputChange}
-                  className={classes.textInput}
-                />
-              </div>
-              {
-                (!!formValues.amount && totalAmount !== 0) 
-                  && <p>Ce qui fait {Math.floor((formValues.amount / totalAmount) * 100)}%</p>
-              }
+                  onChange={handleChange}
+                >
+                  <MenuItem value="euros">€ (Euros)</MenuItem>
+                  <MenuItem disabled={true} value="pounds">£ (Pounds)</MenuItem>
+                </Select>
+              </FormControl>
+              <TextField
+                id="outlined-helperText"
+                label="Montant"
+                name="amount"
+                type="number"
+                required
+                onChange={handleInputChange}
+                className={classes.textInput}
+              />
             </div>
-          }
+            {
+              (!!formValues.amount && totalAmount !== 0)
+              && <p>Ce qui fait {Math.floor((formValues.amount / totalAmount) * 100)}%</p>
+            }
+          </div>
           <p>Merci de remplir les informations suivantes, afin qu'on puisse vous faire un gros bisou ! &hearts; (et aussi vous recontacter)</p>
           <div className={classes.inputWrapper}>
             <TextField
@@ -243,12 +221,8 @@ const Form = ({ submitText }: FormProps) => {
             onChange={handleInputChange}
           />
           <button type='submit' className={classes.submitBtn}>
-            {
-              submitText === 'OFFRIR'
-                ? <CardGiftcardIcon />
-                : <CelebrationIcon />
-            }
-            {submitText}
+            <CelebrationIcon />
+            PARTICIPER
           </button>
         </form>
         : <div className={classes.thanksBox}>
@@ -265,4 +239,4 @@ const Form = ({ submitText }: FormProps) => {
   )
 }
 
-export default Form
+export default ParticipateForm

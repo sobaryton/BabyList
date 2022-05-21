@@ -1,8 +1,8 @@
 import React from 'react'
-import { useAppSelector } from '../hooks'
-import Form from './Form'
+import { useAppSelector } from '../../utils/hooks'
+import ParticipateForm from './ParticipateForm'
 
-const ParticipationForm = () => {
+const ParticipateModalContent = () => {
   const { remainingAmount, amount } = useAppSelector((state) => state.modal.data)
   return (
     <>
@@ -18,9 +18,9 @@ const ParticipationForm = () => {
         </>
       }
       <p>Merci de nous contacter à l'adresse email suivante afin d'obtenir nos coordonnées bancaires pour faire votre don : <a target="_blank" href="mailto:team.nico.soso@gmail.com" rel="noreferrer">team.nico.soso@gmail.com</a>.</p>
-      <Form submitText="PARTICIPER" />
+      <ParticipateForm />
     </>
   )
 }
 
-export default ParticipationForm
+export default ParticipateModalContent

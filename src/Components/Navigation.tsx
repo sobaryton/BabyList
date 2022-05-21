@@ -2,7 +2,7 @@ import * as React from 'react'
 import { createUseStyles } from 'react-jss'
 import { Link } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { darkBlue } from './constants'
+import { darkBlue } from '../utils/constants'
 import classNames from 'classnames'
 
 const navStyles = createUseStyles({
