@@ -185,7 +185,10 @@ const Card = ({ card, onToggleModal }: CardElement) => {
     PARTLY_FUNDED: 'À participer'
   }
 
-  const setSelectedGift = () => dispatch(selectGift(card))
+  const setSelectedGift = () => {
+    dispatch(selectGift(card))
+    window.scrollTo(0, 0)
+  }
 
   const openTransationModal = () => {
     onToggleModal()
@@ -196,7 +199,7 @@ const Card = ({ card, onToggleModal }: CardElement) => {
   return (
     <div className={classes.card}>
       <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
-      <div className={classes.price}><p>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</p></div>
+      <div className={classes.price}><p>{currency === '£' ? `${currency}${amount}` : `${amount}€`}</p></div>
       <div className={classNames(classes.label, classes[labelClass()])}>
         <p>{statusLabel[status]}</p>
       </div>

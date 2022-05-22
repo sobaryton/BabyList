@@ -92,9 +92,9 @@ const cardStyles = createUseStyles({
   },
   image: {
     width: '100%',
-    minWidth: '15rem',
+    minWidth: '17rem',
     maxWidth: '40rem',
-    height: '25rem',
+    minHeight: 'auto',
     backgroundSize: 'cover',
     marginRight: 0,
     backgroundOrigin: 'border-box',
@@ -102,6 +102,9 @@ const cardStyles = createUseStyles({
     '@media (min-width: 1024px)': {
       width: '40%',
       marginRight: '1rem',
+    },
+    '& img': {
+      width: '100%'
     }
   },
   articleText: {
@@ -149,7 +152,8 @@ const cardStyles = createUseStyles({
     '& p': {
       fontWeight: 700,
       textTransform: 'uppercase',
-      color: white
+      color: white,
+      textAlign: 'center'
     }
   },
   redLabel: {
@@ -266,7 +270,10 @@ const Description = () => {
               </div>
             </div>
             <div className={classes.article}>
-              <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
+              {/* <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div> */}
+              <div className={classes.image}>
+                <img src={image} alt={`${title}`} />
+              </div>
               <div className={classes.articleText}>
                 <p dangerouslySetInnerHTML={{ __html: replaceWithBr() }}></p>
                 <p>Ce cadeau {frenchStatus[status]}.</p>
