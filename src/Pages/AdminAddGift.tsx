@@ -11,6 +11,7 @@ export type AddGiftType = {
     url: string,
     amount: number,
     currency: string,
+    alreadyBought: boolean,
 };
 
 const defaultFormData: AddGiftType = {
@@ -22,6 +23,7 @@ const defaultFormData: AddGiftType = {
     url: "",
     amount: 0.00,
     currency: "EUR",
+    alreadyBought: false,
 };
 
 const AdminAddGift = () => {

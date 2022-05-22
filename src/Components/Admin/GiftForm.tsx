@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss'
-import { TextField } from '@mui/material';
+import { FormControlLabel, Switch, TextField } from '@mui/material';
 import { GiftType } from '../../reducers/selectedGift';
 import { AddGiftType } from '../../Pages/AdminAddGift';
 
@@ -11,6 +11,9 @@ const useStyle = createUseStyles({
         margin: '2rem',
         flexWrap: 'wrap',
         gap: '1rem',
+    },
+    switch: {
+        justifyContent: 'start',
     },
 });
 
@@ -23,6 +26,7 @@ export type GiftData = {
     url: string,
     amount: number,
     currency: string,
+    alreadyBought: boolean,
 };
 
 export type FormData = {
@@ -34,6 +38,7 @@ export type FormData = {
     url: string,
     amount: number,
     currency: string,
+    alreadyBought: boolean,
 };
 
 type GiftFormType = {
@@ -73,6 +78,13 @@ const GiftForm = ({message, onSubmit, gift}: GiftFormType) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
+        });
+    };
+
+    const onSwitchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.checked,
         });
     };
 
@@ -179,6 +191,17 @@ const GiftForm = ({message, onSubmit, gift}: GiftFormType) => {
                         shrink: true,
                     }}
                 />
+                <FormControlLabel
+                    className={classes.switch}
+                    name="alreadyBought"
+                    control={<Switch
+                        onChange={onSwitchInputChange}
+                        checked={formData.alreadyBought}
+                    />}
+                    label="Already bought"
+                    labelPlacement="start"
+                />
+                
                 <button type="submit">Submit</button>
             </form>
         </>

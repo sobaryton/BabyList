@@ -31,6 +31,7 @@ export type GiftType = {
   amount: number
   remainingAmount?: number | undefined
   currency: string
+  alreadyBought: boolean
   store: string
   status: 'TO_OFFER' | 'OFFERED' | 'PARTLY_FUNDED'
   createdAt: Date
