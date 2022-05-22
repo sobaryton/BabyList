@@ -282,7 +282,7 @@ const Description = () => {
                 <p dangerouslySetInnerHTML={{ __html: replaceWithBr() }}></p>
                 <p>Ce cadeau {frenchStatus[status]}.</p>
                 {
-                  alreadyBought && <p><span className={classes.red}>Ce cadeau n'accepte que des participations, car nous avons déjà fait l'achat.</span></p>
+                  alreadyBought && <p><span className={classes.red}>Ce cadeau n'accepte que des participations, car nous en avons déjà fait l'achat.</span></p>
                 }
                 <p>Son prix total est de <b>{currency === '£' ? `£${amount}` : `${amount}€`}</b>.</p>
                 {
