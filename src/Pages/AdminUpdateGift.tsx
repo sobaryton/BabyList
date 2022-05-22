@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
-import { adminAddGift } from '../api/adminAddGift';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
+import { adminUpdateGift } from '../api/adminUpdateGift';
+import { getGift } from '../api/getGift';
 import GiftForm, { GiftData } from '../Components/Admin/GiftForm';
+import { GiftType } from '../reducers/selectedGift';
 
 export type AddGiftType = {
     title: string,
@@ -13,27 +16,19 @@ export type AddGiftType = {
     currency: string,
 };
 
-const defaultFormData: AddGiftType = {
-    title: "",
-    description: "",
-    category: "",
-    image: undefined,
-    store: "",
-    url: "",
-    amount: 0.00,
-    currency: "EUR",
-};
-
-const AdminAddGift = () => {
-    const [formData, setFormData] = useState(defaultFormData);
+const AdminUpdateGift = () => {
+    const { id } = useParams()
+    const [formData, setFormData] = useState({} as GiftType);
     const [message, setMessage] = useState<string|undefined>(undefined);
 
+    useEffect(() => {
+        getGift(id as string)
+            .then(setFormData)
+    }, [id]);
+
     const onFormSubmit = (giftData: GiftData) => {
-        adminAddGift(giftData)
-            .then(gift => {
-                setFormData(defaultFormData);
-                setMessage(`Successfully created gift with id ${gift.data.id}`);
-            })
+        adminUpdateGift(id as string, giftData)
+            .then(() => setMessage("Successfully updated!"))
             .catch((exception) => setMessage("Error: " + (exception?.response?.data?.message || exception?.message || exception)))
     };
 
@@ -42,4 +37,4 @@ const AdminAddGift = () => {
     );
 };
 
-export default AdminAddGift;
+export default AdminUpdateGift;

@@ -190,7 +190,7 @@ const Description = () => {
     transactions
   } = selectedGift || {} as GiftType
 
-  const fetchSelectedGift = async () => await getGift(id ?? '')
+  const fetchSelectedGift = async () => await getGift(id as string)
   const nonAnonymousParticipants = transactions ? transactions.filter(transactions => !transactions.anonymous) : undefined
 
   useEffect(() => {

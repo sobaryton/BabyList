@@ -6,6 +6,7 @@ import Home from './Pages/Home'
 import { sansSerif } from './utils/constants'
 import Description from './Pages/Description'
 import AdminAddGift from './Pages/AdminAddGift'
+import AdminUpdateGift from './Pages/AdminUpdateGift'
 
 const appStyles = createUseStyles({
   "@global": {
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="list" element={<ListPage />} />
         <Route path="description/:id" element={<Description />} />
         <Route path="/admin/add" element={<AdminAddGift />} />
+        <Route path="/admin/update/:id" element={<AdminUpdateGift />} />
       </Routes>
     </>
   )
