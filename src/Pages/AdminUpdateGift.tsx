@@ -16,9 +16,26 @@ export type AddGiftType = {
     currency: string,
 };
 
+const defaultGiftData: GiftType = {
+    id: "",
+    wishlistId: "",
+    title: "",
+    description: "",
+    category: "",
+    image: "",
+    store: "",
+    url: "",
+    amount: 0.00,
+    currency: "EUR",
+    alreadyBought: false,
+    status: "TO_OFFER",
+    createdAt: new Date(),
+    version: 1
+};
+
 const AdminUpdateGift = () => {
     const { id } = useParams()
-    const [formData, setFormData] = useState({} as GiftType);
+    const [formData, setFormData] = useState(defaultGiftData);
     const [message, setMessage] = useState<string|undefined>(undefined);
 
     useEffect(() => {

@@ -47,8 +47,20 @@ type GiftFormType = {
     gift: GiftType | AddGiftType,
 };
 
+const defaultFormData: FormData = {
+    title: "",
+    description: "",
+    category: "",
+    image: undefined,
+    store: "",
+    url: "",
+    amount: 0.00,
+    currency: "",
+    alreadyBought: false,
+};
+
 const GiftForm = ({message, onSubmit, gift}: GiftFormType) => {
-    const [formData, setFormData] = useState({} as FormData);
+    const [formData, setFormData] = useState(defaultFormData);
     const classes = useStyle();
 
     useEffect(() => {
@@ -186,6 +198,7 @@ const GiftForm = ({message, onSubmit, gift}: GiftFormType) => {
                     label="Currency"
                     value={formData.currency}
                     name="currency"
+                    inputProps={{ pattern: '^[A-Z]{3}$' }}
                     onChange={onTextInputChange}
                     InputLabelProps={{
                         shrink: true,
