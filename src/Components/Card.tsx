@@ -163,7 +163,8 @@ const Card = ({ card, onToggleModal }: CardElement) => {
     currency,
     store,
     status,
-    id
+    id,
+    alreadyBought
   } = card
 
   const labelClass = () => {
@@ -216,14 +217,14 @@ const Card = ({ card, onToggleModal }: CardElement) => {
           </button>
         </Link>
         {
-          status === "TO_OFFER" &&
+          !alreadyBought && status === "TO_OFFER" &&
           <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Offrir
           </button>
         }
         {
-          status === "PARTLY_FUNDED" &&
+          (alreadyBought || status === "PARTLY_FUNDED") &&
           <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Participer

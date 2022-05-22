@@ -49,12 +49,13 @@ const listPageStyles = createUseStyles({
 const FormContent = () => {
   const classes = listPageStyles()
   const status = useAppSelector((state) => state.modal.data.status)
+  const alreadyBought = useAppSelector((state) => state.modal.data.alreadyBought)
   const [type, setType] = useState('')
 
   return (
     <>
       {
-        status === 'PARTLY_FUNDED'
+        (status === 'PARTLY_FUNDED' || alreadyBought)
           ? <><h1>Participer</h1><ParticipateForm /></>
           : <div className={classes.btnWrap}>
             <button onClick={() => setType('TO_OFFER')} className={classNames(classes.btn, type === 'TO_OFFER' ? classes.activeBtn : '')}>Offir</button>

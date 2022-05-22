@@ -101,7 +101,7 @@ const GiftForm = ({message, onSubmit, gift}: GiftFormType) => {
         Object.keys(formData)
             .forEach(key => {
                 const value = formData[key as keyof FormData];
-                if (key !== "amount" && !value) {
+                if (key !== "amount" && key !== "alreadyBought" && !value) {
                     delete formData[key as keyof FormData];
                 }
             });

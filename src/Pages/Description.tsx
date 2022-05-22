@@ -172,6 +172,10 @@ const cardStyles = createUseStyles({
   },
   headerImage: {
     opacity: 0.75
+  },
+  red: {
+    color: red,
+    fontWeight: 'bold'
   }
 })
 
@@ -191,7 +195,8 @@ const Description = () => {
     currency,
     remainingAmount,
     category,
-    transactions
+    transactions,
+    alreadyBought
   } = selectedGift || {} as GiftType
 
   const fetchSelectedGift = async () => await getGift(id as string)
@@ -233,7 +238,7 @@ const Description = () => {
   }
 
   const openTransactionModal = () => {
-    dispatch(toggleModal({ amount, status, remainingAmount }))
+    dispatch(toggleModal({ amount, status, remainingAmount, alreadyBought }))
   }
 
   const getParticipants = () => {
@@ -270,13 +275,15 @@ const Description = () => {
               </div>
             </div>
             <div className={classes.article}>
-              {/* <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div> */}
               <div className={classes.image}>
                 <img src={image} alt={`${title}`} />
               </div>
               <div className={classes.articleText}>
                 <p dangerouslySetInnerHTML={{ __html: replaceWithBr() }}></p>
                 <p>Ce cadeau {frenchStatus[status]}.</p>
+                {
+                  alreadyBought && <p><span className={classes.red}>Ce cadeau n'accepte que des participations, car nous avons déjà fait l'achat.</span></p>
+                }
                 <p>Son prix total est de <b>{currency === '£' ? `£${amount}` : `${amount}€`}</b>.</p>
                 {
                   !!remainingAmount && remainingAmount !== amount && <div className={classes.textIcon}>
@@ -291,14 +298,14 @@ const Description = () => {
                     Lien
                   </button>
                   {
-                    status === "TO_OFFER" &&
+                    !alreadyBought && status === "TO_OFFER" &&
                     <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Offrir
                     </button>
                   }
                   {
-                    status === "PARTLY_FUNDED" &&
+                    (alreadyBought || status === "PARTLY_FUNDED") &&
                     <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Participer

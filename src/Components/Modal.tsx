@@ -89,13 +89,13 @@ const Modal = ({children}: Props) => {
 
   return (
     <div className={classNames(classes.modal)}>
-      <div className={classes.overflow} onClick={() => dispatch(toggleModal({ amount: 0, status: '', remainingAmount: undefined }))} />
+      <div className={classes.overflow} onClick={() => dispatch(toggleModal({ amount: 0, status: '', remainingAmount: undefined, alreadyBought: false }))} />
       <div className={classes.modalContent}>
         <main className={classes.main}>
           {children}
         </main>
         <div className={classes.closeBtn}>
-          <button onClick={() => dispatch(toggleModal({ amount: 0, status: '', remainingAmount: undefined }))}>
+          <button onClick={() => dispatch(toggleModal({ amount: 0, status: '', remainingAmount: undefined, alreadyBought: false }))}>
             <CloseIcon sx={{ fontSize: '2rem' }} />
           </button>
         </div>

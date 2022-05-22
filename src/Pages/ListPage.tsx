@@ -93,7 +93,7 @@ const ListPage = () => {
                 <Card
                   key={card.url}
                   card={card}
-                  onToggleModal={() => dispatch(toggleModal({ amount: card.amount, status: card.status, remainingAmount: card.remainingAmount }))}
+                  onToggleModal={() => dispatch(toggleModal({ amount: card.amount, status: card.status, remainingAmount: card.remainingAmount, alreadyBought: card.alreadyBought }))}
                 />
               )
             })
