@@ -44,14 +44,17 @@ const ListPage = () => {
   const classes = listPageStyles()
   const [searched, setSearched] = useState("")
   const [rows, setRows] = useState([] as GiftType[])
+  const [loading, setLoading] = useState(false);
   const giftList = useAppSelector((state) => state.giftList.gifts)
   const showModal = useAppSelector((state) => state.modal.isOpen)
 
   const fetchGifts = async () => await getGifts()
 
   useEffect(() => {
+    setLoading(true)
     fetchGifts()
       .then((gifts) => {
+        setLoading(false)
         dispatch(setGiftList(gifts))
       })
   }, [dispatch])
@@ -71,7 +74,7 @@ const ListPage = () => {
   }
 
   return (
-    !rows.length
+    loading
       ? <Loading />
       : <div className={classes.page}>
       <header>
@@ -91,7 +94,7 @@ const ListPage = () => {
             rows.map((card) => {
               return (
                 <Card
-                  key={card.url}
+                  key={card.id}
                   card={card}
                   onToggleModal={() => dispatch(toggleModal({ amount: card.amount, status: card.status, remainingAmount: card.remainingAmount, alreadyBought: card.alreadyBought }))}
                 />
