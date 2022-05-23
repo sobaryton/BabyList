@@ -11,6 +11,7 @@ const ParticipateInformation = () => {
           <p>Il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
         </>
         : <>
+          <p>Le prix total est de <b>{amount}€</b>, vous êtes le premier contributeur.</p>
           <p>Si l'article vous plaît, mais que vous ne voulez pas contribuer à 100%, vous êtes au bon endroit !</p>
           <p><strong>Ou</strong> que vous ne voulez pas payer en livres, mais quand même offrir complétement le cadeau, vous êtes également au bon endroit !</p>
 

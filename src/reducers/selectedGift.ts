@@ -29,7 +29,7 @@ export type GiftType = {
   description: string
   category: string
   amount: number
-  remainingAmount?: number | undefined
+  remainingAmount: number
   currency: string
   alreadyBought: boolean
   store: string

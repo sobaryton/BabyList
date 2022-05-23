@@ -200,7 +200,7 @@ const Description = () => {
   } = selectedGift || {} as GiftType
 
   const fetchSelectedGift = async () => await getGift(id as string)
-  const nonAnonymousParticipants = transactions ? transactions.filter(transactions => !transactions.anonymous) : undefined
+  const nonAnonymousParticipants = transactions?.filter(transactions => !transactions.anonymous) || []
 
   useEffect(() => {
     if ((!selectedGift && !!id) || !transactions) {
@@ -218,8 +218,8 @@ const Description = () => {
     PARTLY_FUNDED: 'a besoin de participation'
   }
 
-  const labelClass = () => {
-    switch (status) {
+  const labelClass = (displayStatus: string) => {
+    switch (displayStatus) {
       case 'OFFERED':
         return 'greenLabel'
       case 'TO_OFFER':
@@ -242,17 +242,27 @@ const Description = () => {
   }
 
   const getParticipants = () => {
-    if (!nonAnonymousParticipants) return ''
+    if (nonAnonymousParticipants.length === 0) return 'Certaines personnes'
+
     const nonAnonymousParticipantNames = nonAnonymousParticipants.map(transaction => transaction.name)
     const uniqParticipants = Array.from(new Set(nonAnonymousParticipantNames))
 
-    if (uniqParticipants.length === 1) return uniqParticipants.toString()
-    if (uniqParticipants.length === 2) return uniqParticipants.join(' et ')
-
-    const firstPartOfArray = uniqParticipants.slice(0, uniqParticipants.length - 2).join(', ')
-    const secondPartArray = `${uniqParticipants[uniqParticipants.length - 2]} et ${uniqParticipants[uniqParticipants.length - 1]}`
-    return `${firstPartOfArray}, ${secondPartArray}`
+    if (!!transactions && transactions.length - nonAnonymousParticipants.length > 0) {
+      return `${uniqParticipants.join(', ')} et d'autres`
+    } else if (nonAnonymousParticipants.length === 1) {
+      return uniqParticipants[0]
+    } else {
+      return `${uniqParticipants.slice(0, uniqParticipants.length - 1).join(', ')} et ${uniqParticipants[uniqParticipants.length - 1]}`
+    }
   }
+
+  const GiftStatus = ({displayStatus}: { displayStatus: "OFFERED" | "TO_OFFER" | "PARTLY_FUNDED"}) => (
+    <div className={classNames(classes.label, classes[labelClass(displayStatus)])}>
+      <p>{statusLabel[displayStatus]}</p>
+    </div>
+  )
+
+  const giftDisplayStatus = status === "TO_OFFER" && alreadyBought ? "PARTLY_FUNDED" : status
 
   return selectedGift ? (
     <div className={classes.page}>
@@ -266,9 +276,7 @@ const Description = () => {
             <div className={classes.header}>
               <h1 className={classes.title}>{title}</h1>
               <div className={classes.labels}>
-                <div className={classNames(classes.label, classes[labelClass()])}>
-                  <p>{statusLabel[status]}</p>
-                </div>
+                <GiftStatus displayStatus={giftDisplayStatus}/>
                 <div className={classNames(classes.label, classes.categorylabel)}>
                   <p>{category}</p>
                 </div>
@@ -282,13 +290,13 @@ const Description = () => {
                 <p dangerouslySetInnerHTML={{ __html: replaceWithBr() }}></p>
                 <p>Ce cadeau {frenchStatus[status]}.</p>
                 {
-                  alreadyBought && <p><span className={classes.red}>Ce cadeau n'accepte que des participations, car nous en avons déjà fait l'achat.</span></p>
+                  alreadyBought && status === "TO_OFFER" && <p><span className={classes.red}>Ce cadeau n'accepte que des participations, car nous en avons déjà fait l'achat.</span></p>
                 }
                 <p>Son prix total est de <b>{currency === '£' ? `£${amount}` : `${amount}€`}</b>.</p>
                 {
-                  !!remainingAmount && remainingAmount !== amount && <div className={classes.textIcon}>
+                  !!transactions && transactions.length > 0 && <div className={classes.textIcon}>
                     <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
-                    <p>{nonAnonymousParticipants ? getParticipants() : 'Certaines personnes'} {nonAnonymousParticipants && nonAnonymousParticipants.length === 1 ? 'a' : 'ont'} déjà contribué à l'achat de ce cadeau. Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</p>
+                    <p>{nonAnonymousParticipants ? getParticipants() : 'Certaines personnes'} {nonAnonymousParticipants && nonAnonymousParticipants.length === 1 ? 'a' : 'ont'} {status !== "OFFERED" && "déjà"} contribué à l'achat de ce cadeau. {status !== "OFFERED" && <>Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</>}</p>
                   </div>
                 }
                 <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a>.</p>
@@ -305,7 +313,7 @@ const Description = () => {
                     </button>
                   }
                   {
-                    (alreadyBought || status === "PARTLY_FUNDED") &&
+                    ((alreadyBought && status === "TO_OFFER") || status === "PARTLY_FUNDED") &&
                     <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Participer

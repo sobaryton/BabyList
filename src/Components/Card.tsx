@@ -167,8 +167,8 @@ const Card = ({ card, onToggleModal }: CardElement) => {
     alreadyBought
   } = card
 
-  const labelClass = () => {
-    switch (status) {
+  const labelClass = (displayStatus: string) => {
+    switch (displayStatus) {
       case 'OFFERED':
         return 'greenLabel'
       case 'TO_OFFER':
@@ -196,14 +196,20 @@ const Card = ({ card, onToggleModal }: CardElement) => {
     setSelectedGift()
   }
 
+  const GiftStatus = ({displayStatus}: { displayStatus: "OFFERED" | "TO_OFFER" | "PARTLY_FUNDED"}) => (
+    <div className={classNames(classes.label, classes[labelClass(displayStatus)])}>
+      <p>{statusLabel[displayStatus]}</p>
+    </div>
+  )
+
+  const giftDisplayStatus = status === "TO_OFFER" && alreadyBought ? "PARTLY_FUNDED" : status
+
   const classes = cardStyles()
   return (
     <div className={classes.card}>
       <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
       <div className={classes.price}><p>{currency === '£' ? `${currency}${amount}` : `${amount}€`}</p></div>
-      <div className={classNames(classes.label, classes[labelClass()])}>
-        <p>{statusLabel[status]}</p>
-      </div>
+      <GiftStatus displayStatus={giftDisplayStatus}/>
       <div className={classes.desc}>
         <h3>{title.length > 30 ? `${title.substring(0, 30)}...` : title}</h3>
         <p className={classes.provider}>{store}</p>
@@ -224,7 +230,7 @@ const Card = ({ card, onToggleModal }: CardElement) => {
           </button>
         }
         {
-          (alreadyBought || status === "PARTLY_FUNDED") &&
+          ((alreadyBought && status === "TO_OFFER") || status === "PARTLY_FUNDED") &&
           <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Participer

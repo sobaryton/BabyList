@@ -30,7 +30,8 @@ const defaultGiftData: GiftType = {
     alreadyBought: false,
     status: "TO_OFFER",
     createdAt: new Date(),
-    version: 1
+    version: 1,
+    remainingAmount: 0
 };
 
 const AdminUpdateGift = () => {
