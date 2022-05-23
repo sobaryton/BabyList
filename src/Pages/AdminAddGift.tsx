@@ -33,7 +33,7 @@ const AdminAddGift = () => {
     const onFormSubmit = (giftData: GiftData) => {
         adminAddGift(giftData)
             .then(gift => {
-                setFormData(defaultFormData);
+                setFormData({...defaultFormData});
                 setMessage(`Successfully created gift with id ${gift.id}`);
             })
             .catch((exception) => setMessage("Error: " + (exception?.response?.data?.message || exception?.message || exception)))
