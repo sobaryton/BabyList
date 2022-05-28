@@ -76,7 +76,7 @@ const Home = () => {
       </div>
       <Footer />
     </main>
-  );
+  )
 }
 
 export default Home

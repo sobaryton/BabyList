@@ -1,12 +1,12 @@
 import axios from 'axios'
 
 export type Transaction = {
-  giftId: string,
-  name: string,
-  email: string,
-  message: string,
-  amount: number,
-  anonymous: boolean,
+  giftId: string
+  name: string
+  email: string
+  message: string
+  amount: number
+  anonymous: boolean
   giftVersion: number
 }
 
