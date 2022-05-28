@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import ClearIcon from '@mui/icons-material/Clear';
 import { darkBlue, font14, font16, font20, lightBlue, white, lightRed, darkRed, orange, red, green } from '../../utils/constants';
-import { GiftType } from '../../reducers/selectedGift';
+import { GiftStatus, GiftType } from '../../reducers/selectedGift';
 
 const useStyle = createUseStyles({
     card: {
@@ -150,24 +150,17 @@ const GiftCard = ({ gift, onDelete }: { gift: GiftType, onDelete: () => void }) 
     const {id, image, amount, currency, store, title, description, status} = gift;
     const classes = useStyle();
 
-    const labelClass = (giftStatus: string) => {
-        switch (giftStatus) {
-            case 'OFFERED':
-                return 'greenLabel'
-            case 'TO_OFFER':
-                return 'redLabel'
-            case 'PARTLY_FUNDED':
-                return 'orangeLabel'
-            default:
-                return 'orangeLabel'
-        }
+    const labelClass: {[key in GiftStatus]: keyof typeof classes} = {
+        [GiftStatus.OFFERED]: 'greenLabel',
+        [GiftStatus.TO_OFFER]: 'redLabel',
+        [GiftStatus.PARTLY_FUNDED]: 'orangeLabel',
     };
 
     return (
         <div className={classes.card}>
             <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
-            <div className={classes.price}><p>{currency === '£' ? `${currency}${amount}` : `${amount}${currency}`}</p></div>
-            <div className={classNames(classes.label, classes[labelClass(status)])}>
+            <div className={classes.price}><p>{currency === 'GBP' ? `£${amount}` : `${amount}${currency}`}</p></div>
+            <div className={classNames(classes.label, classes[labelClass[status]])}>
                 <p>{status}</p>
             </div>
             <div className={classes.desc}>

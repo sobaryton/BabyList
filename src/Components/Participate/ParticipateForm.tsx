@@ -176,7 +176,7 @@ const ParticipateForm = () => {
                     onChange={handleChange}
                   >
                     <MenuItem value="euros">€ (Euros)</MenuItem>
-                    <MenuItem disabled={true} value="pounds">£ (Pounds)</MenuItem>
+                    <MenuItem disabled={true} value="pounds">£ (Livres Sterling)</MenuItem>
                   </Select>
                 </FormControl>
                 <TextField

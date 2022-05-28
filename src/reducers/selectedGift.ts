@@ -4,10 +4,21 @@ type InitialState = {
   selectedGift: GiftType | undefined
 }
 
+export enum GiftStatus {
+  TO_OFFER = 'TO_OFFER',
+  OFFERED = 'OFFERED',
+  PARTLY_FUNDED = 'PARTLY_FUNDED',
+}
+
+export enum TransactionType {
+  ORDER,
+  PARTICIPATE,
+}
+
 export type Transaction = {
   id: string
   giftId: string
-  type: "ORDER" | "PARTICIPATE"
+  type: TransactionType
   name: string
   email: string
   message: string
@@ -33,7 +44,7 @@ export type GiftType = {
   currency: string
   alreadyBought: boolean
   store: string
-  status: 'TO_OFFER' | 'OFFERED' | 'PARTLY_FUNDED'
+  status: GiftStatus
   createdAt: Date
   updatedAt?: Date
   deletedAt?: Date

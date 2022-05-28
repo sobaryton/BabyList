@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { adminGetTransactions } from '../api/adminGetTransactions'
 import Header from '../Components/Headers/Header'
 import Loading from '../Components/Loading'
-import { Transaction } from '../reducers/selectedGift'
+import { TransactionType, Transaction } from '../reducers/selectedGift'
 import { darkBlue, font14, font16, font20, lightBlue } from '../utils/constants'
 
 const messagePageStyles = createUseStyles({
@@ -68,7 +68,7 @@ const faketransactions = [
   {
     id: 'id1',
     giftId: 'wdhf',
-    type: "ORDER",
+    type: TransactionType.ORDER,
     name: 'Famille 1',
     email: 'ksdjhf@ldf.com',
     message: 'Wesh bisous ljf owi gw rgke rgkj ergk ekrj gekjr gekjr gek rgekrj gekrjg ekrbj gekrj gerkbjg erkbgerkbj ',
@@ -81,7 +81,7 @@ const faketransactions = [
   {
     id: 'id2',
     giftId: 'wrdhf',
-    type: "PARTICIPATE",
+    type: TransactionType.PARTICIPATE,
     name: 'Famille 2',
     email: 'ksdjffhf@ldf.com',
     message: 'Wesh bisous !!!!!!!!',
@@ -107,8 +107,8 @@ const AdminMessages = () => {
   }, [transactions])
 
   const frenchTypes = {
-    ORDER: 'À commander',
-    PARTICIPATE: 'Participé'
+    [TransactionType.ORDER]: 'À commander',
+    [TransactionType.PARTICIPATE]: 'Participé'
   }
 
   return <>

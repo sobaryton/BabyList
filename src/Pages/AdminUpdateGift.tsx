@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { adminUpdateGift } from '../api/adminUpdateGift'
 import { getGift } from '../api/getGift'
 import GiftForm, { GiftData } from '../Components/Admin/GiftForm'
-import { GiftType } from '../reducers/selectedGift'
+import { GiftStatus, GiftType } from '../reducers/selectedGift'
 
 export type AddGiftType = {
     title: string
@@ -28,7 +28,7 @@ const defaultGiftData: GiftType = {
     amount: 0.00,
     currency: "EUR",
     alreadyBought: false,
-    status: "TO_OFFER",
+    status: GiftStatus.TO_OFFER,
     createdAt: new Date(),
     version: 1,
     remainingAmount: 0

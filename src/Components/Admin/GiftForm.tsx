@@ -139,6 +139,7 @@ const GiftForm = ({message, onSubmit, gift}: GiftFormType) => {
                     value={formData.description}
                     name="description"
                     onChange={onTextInputChange}
+                    multiline
                     InputLabelProps={{
                         shrink: true,
                     }}

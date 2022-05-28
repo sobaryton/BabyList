@@ -38,7 +38,7 @@ const BuyInformation = ({ className }: { className?: string }) => {
       <div className={classes.iconPara}>
         <WarningIcon sx={{ fontSize: font24, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
         <p>
-          <span className={classes.redHighlight}>Attention</span> nous avons choisi la plupart des articles sur des <span className={classes.red}>sites en anglais</span> et où la <span className={classes.red}>monnaie est en Livres</span>, non pas en Euros.
+          <span className={classes.redHighlight}>Attention</span> nous avons choisi la plupart des articles sur des <span className={classes.red}>sites en anglais</span> et où la <span className={classes.red}>monnaie est en Livres Sterling</span>, non pas en Euros.
         </p>
       </div>
       <p className={classes.iconPara}>

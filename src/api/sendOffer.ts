@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { TransactionType } from '../reducers/selectedGift'
 
 export type Transaction = {
   giftId: string
@@ -14,7 +15,7 @@ export const sendOffer = ({ giftId, name, email, message, amount, anonymous, gif
   return axios.post(
     `https://baby-wishlist.herokuapp.com/wishlists/cf30c26b-f287-4541-9340-58cd672d72b2/gifts/${giftId}/transactions`,
     {
-      type: "ORDER",
+      type: TransactionType.ORDER,
       name,
       email,
       message,

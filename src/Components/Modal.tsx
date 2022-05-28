@@ -5,6 +5,7 @@ import { darkBlue, red, white } from '../utils/constants'
 import CloseIcon from '@mui/icons-material/Close'
 import { useAppDispatch } from '../utils/hooks'
 import { toggleModal } from '../reducers/modal'
+import { GiftStatus } from '../reducers/selectedGift'
 
 const modalStyles = createUseStyles({
   modal: {
@@ -89,13 +90,13 @@ const Modal = ({children}: Props) => {
 
   return (
     <div className={classNames(classes.modal)}>
-      <div className={classes.overflow} onClick={() => dispatch(toggleModal({ amount: 0, status: '', remainingAmount: undefined, alreadyBought: false }))} />
+      <div className={classes.overflow} onClick={() => dispatch(toggleModal({ amount: 0, status: GiftStatus.TO_OFFER, remainingAmount: undefined, alreadyBought: false }))} />
       <div className={classes.modalContent}>
         <main className={classes.main}>
           {children}
         </main>
         <div className={classes.closeBtn}>
-          <button onClick={() => dispatch(toggleModal({ amount: 0, status: '', remainingAmount: undefined, alreadyBought: false }))}>
+          <button onClick={() => dispatch(toggleModal({ amount: 0, status: GiftStatus.TO_OFFER, remainingAmount: undefined, alreadyBought: false }))}>
             <CloseIcon sx={{ fontSize: '2rem' }} />
           </button>
         </div>

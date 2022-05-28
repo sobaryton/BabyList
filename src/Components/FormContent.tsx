@@ -5,6 +5,7 @@ import { darkBlue, font20, lightBlue } from '../utils/constants'
 import ParticipateForm from './Participate/ParticipateForm'
 import { useAppSelector } from '../utils/hooks'
 import BuyForm from './Buy/BuyForm'
+import { GiftStatus } from '../reducers/selectedGift'
 
 const listPageStyles = createUseStyles({
   btnWrap: {
@@ -50,20 +51,20 @@ const FormContent = () => {
   const classes = listPageStyles()
   const status = useAppSelector((state) => state.modal.data.status)
   const alreadyBought = useAppSelector((state) => state.modal.data.alreadyBought)
-  const [type, setType] = useState('')
+  const [type, setType] = useState<GiftStatus | undefined>()
 
   return (
     <>
       {
-        (status === 'PARTLY_FUNDED' || alreadyBought)
+        (status === GiftStatus.PARTLY_FUNDED || alreadyBought)
           ? <><h1>Participer</h1><ParticipateForm /></>
           : <div className={classes.btnWrap}>
-            <button onClick={() => setType('TO_OFFER')} className={classNames(classes.btn, type === 'TO_OFFER' ? classes.activeBtn : '')}>Offir</button>
-            <button onClick={() => setType('PARTLY_FUNDED')} className={classNames(classes.btn, type === 'PARTLY_FUNDED' ? classes.activeBtn : '')}>Participer</button>
+            <button onClick={() => setType(GiftStatus.TO_OFFER)} className={classNames(classes.btn, type === GiftStatus.TO_OFFER ? classes.activeBtn : '')}>Commander</button>
+            <button onClick={() => setType(GiftStatus.PARTLY_FUNDED)} className={classNames(classes.btn, type === GiftStatus.PARTLY_FUNDED ? classes.activeBtn : '')}>Participer</button>
       </div>
       }
       {
-        type === '' ? '' : type === 'TO_OFFER'
+        type === undefined ? '' : type === GiftStatus.TO_OFFER
           ? <BuyForm />
           : <ParticipateForm />
       }

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import SearchIcon from '@mui/icons-material/Search'
 import { darkBlue, darkYellow, font14, font16, font20, orange, lightBlue, lightYellow, white, green, red, blue } from '../utils/constants'
-import { GiftType, selectGift } from '../reducers/selectedGift'
+import { GiftStatus, GiftType, selectGift } from '../reducers/selectedGift'
 import { useAppDispatch } from '../utils/hooks'
 
 const cardStyles = createUseStyles({
@@ -167,23 +167,16 @@ const Card = ({ card, onToggleModal }: CardElement) => {
     alreadyBought
   } = card
 
-  const labelClass = (displayStatus: string) => {
-    switch (displayStatus) {
-      case 'OFFERED':
-        return 'greenLabel'
-      case 'TO_OFFER':
-        return 'redLabel'
-      case 'PARTLY_FUNDED':
-        return 'orangeLabel'
-      default:
-        return 'orangeLabel'
-    }
+  const labelClass: {[key in GiftStatus]: keyof typeof classes} = {
+    [GiftStatus.OFFERED]: 'greenLabel',
+    [GiftStatus.TO_OFFER]: 'redLabel',
+    [GiftStatus.PARTLY_FUNDED]: 'orangeLabel',
   }
 
   const statusLabel = {
-    OFFERED: 'Offert',
-    TO_OFFER: 'À offrir',
-    PARTLY_FUNDED: 'À participer'
+    [GiftStatus.OFFERED]: 'Offert',
+    [GiftStatus.TO_OFFER]: 'À offrir',
+    [GiftStatus.PARTLY_FUNDED]: 'À participer',
   }
 
   const setSelectedGift = () => {
@@ -196,20 +189,20 @@ const Card = ({ card, onToggleModal }: CardElement) => {
     setSelectedGift()
   }
 
-  const GiftStatus = ({displayStatus}: { displayStatus: "OFFERED" | "TO_OFFER" | "PARTLY_FUNDED"}) => (
-    <div className={classNames(classes.label, classes[labelClass(displayStatus)])}>
+  const GiftStatusBanner = ({displayStatus}: { displayStatus: GiftStatus}) => (
+    <div className={classNames(classes.label, classes[labelClass[displayStatus]])}>
       <p>{statusLabel[displayStatus]}</p>
     </div>
   )
 
-  const giftDisplayStatus = status === "TO_OFFER" && alreadyBought ? "PARTLY_FUNDED" : status
+  const giftDisplayStatus = status === GiftStatus.TO_OFFER && alreadyBought ? GiftStatus.PARTLY_FUNDED : status
 
   const classes = cardStyles()
   return (
     <div className={classes.card}>
       <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
-      <div className={classes.price}><p>{currency === '£' ? `${currency}${amount}` : `${amount}€`}</p></div>
-      <GiftStatus displayStatus={giftDisplayStatus}/>
+      <div className={classes.price}><p>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</p></div>
+      <GiftStatusBanner displayStatus={giftDisplayStatus}/>
       <div className={classes.desc}>
         <h3>{title.length > 30 ? `${title.substring(0, 30)}...` : title}</h3>
         <p className={classes.provider}>{store}</p>
@@ -223,14 +216,14 @@ const Card = ({ card, onToggleModal }: CardElement) => {
           </button>
         </Link>
         {
-          !alreadyBought && status === "TO_OFFER" &&
+          !alreadyBought && status === GiftStatus.TO_OFFER &&
           <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Offrir
           </button>
         }
         {
-          ((alreadyBought && status === "TO_OFFER") || status === "PARTLY_FUNDED") &&
+          ((alreadyBought && status === GiftStatus.TO_OFFER) || status === GiftStatus.PARTLY_FUNDED) &&
           <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Participer

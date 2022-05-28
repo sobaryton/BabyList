@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { GiftStatus } from './selectedGift'
 
 type InitialState = {
   isOpen: boolean
   data:
   {
     amount: number
-    status: string
+    status: GiftStatus
     remainingAmount?: number
     alreadyBought?: boolean
   }
@@ -17,13 +18,13 @@ export const modalSlice = createSlice({
     isOpen: false,
     data: {
       amount: 0,
-      status: '',
+      status: GiftStatus.TO_OFFER,
       remainingAmount: 0,
-      alreadyBought: false
+      alreadyBought: false,
     }
   } as InitialState,
   reducers: {
-    toggleModal: (state, action: PayloadAction<{ amount: number, status: string, remainingAmount?: number, alreadyBought: boolean }>) => {
+    toggleModal: (state, action: PayloadAction<{ amount: number, status: GiftStatus, remainingAmount?: number, alreadyBought: boolean }>) => {
       state.isOpen = !state.isOpen
       state.data.amount = action.payload.amount
       state.data.status = action.payload.status

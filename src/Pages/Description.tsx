@@ -13,7 +13,7 @@ import Modal from '../Components/Modal'
 import FormContent from '../Components/FormContent'
 import { toggleModal } from '../reducers/modal'
 import { getGift } from '../api/getGift'
-import { GiftType, selectGift } from '../reducers/selectedGift'
+import { GiftStatus, GiftType, selectGift } from '../reducers/selectedGift'
 import Loading from '../Components/Loading'
 
 const cardStyles = createUseStyles({
@@ -176,6 +176,13 @@ const cardStyles = createUseStyles({
   red: {
     color: red,
     fontWeight: 'bold'
+  },
+  nl2br: {
+    whiteSpace: 'pre-line'
+  },
+  textWithIcon: {
+    display: 'flex',
+    alignItems: 'center'
   }
 })
 
@@ -189,7 +196,8 @@ const Description = () => {
     image,
     url,
     title,
-    store, description,
+    store,
+    description,
     amount,
     status,
     currency,
@@ -200,7 +208,6 @@ const Description = () => {
   } = selectedGift || {} as GiftType
 
   const fetchSelectedGift = async () => await getGift(id as string)
-  const nonAnonymousParticipants = transactions?.filter(transactions => !transactions.anonymous) || []
 
   useEffect(() => {
     if ((!selectedGift && !!id) || !transactions) {
@@ -209,60 +216,105 @@ const Description = () => {
     }
   }, [dispatch, id, selectedGift, transactions]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const replaceWithBr = () => description?.replace(/\n/g, "<br />")
-
-  const frenchStatus = {
-    OFFERED: 'a déjà été offert',
-    TO_OFFER: 'est à offrir',
-    RECEIVED: 'a été reçu',
-    PARTLY_FUNDED: 'a besoin de participation'
-  }
-
-  const labelClass = (displayStatus: string) => {
-    switch (displayStatus) {
-      case 'OFFERED':
-        return 'greenLabel'
-      case 'TO_OFFER':
-        return 'redLabel'
-      case 'PARTLY_FUNDED':
-        return 'orangeLabel'
-      default:
-        return 'orangeLabel'
-    }
+  const labelClass: {[key in GiftStatus]: keyof typeof classes} = {
+    [GiftStatus.OFFERED]: 'greenLabel',
+    [GiftStatus.TO_OFFER]: 'redLabel',
+    [GiftStatus.PARTLY_FUNDED]: 'orangeLabel',
   }
 
   const statusLabel = {
-    OFFERED: 'Offert',
-    TO_OFFER: 'À offrir',
-    PARTLY_FUNDED: 'À participer'
+    [GiftStatus.OFFERED]: 'Offert',
+    [GiftStatus.TO_OFFER]: 'À offrir',
+    [GiftStatus.PARTLY_FUNDED]: 'À participer',
   }
 
   const openTransactionModal = () => {
     dispatch(toggleModal({ amount, status, remainingAmount, alreadyBought }))
   }
 
-  const getParticipants = () => {
-    if (nonAnonymousParticipants.length === 0) return 'Certaines personnes'
+  const Participants = ({uppercaseFirstLetter}: {uppercaseFirstLetter: boolean}) => {
+    const nonAnonymousTransactions = transactions?.filter(transactions => !transactions.anonymous) || []
+    if (nonAnonymousTransactions.length === 0) {
+      return uppercaseFirstLetter ? <span>Certaines personnes</span> : <span>certaines personnes</span>
+    }
 
-    const nonAnonymousParticipantNames = nonAnonymousParticipants.map(transaction => transaction.name)
-    const uniqParticipants = Array.from(new Set(nonAnonymousParticipantNames))
+    const nonAnonymousParticipants = nonAnonymousTransactions.map(transaction => transaction.name)
+    const uniqParticipants = Array.from(new Set(nonAnonymousParticipants))
+    const anonymousTransactions = transactions?.filter(transactions => transactions.anonymous) || []
 
-    if (!!transactions && transactions.length - nonAnonymousParticipants.length > 0) {
-      return `${uniqParticipants.join(', ')} et d'autres`
-    } else if (nonAnonymousParticipants.length === 1) {
-      return uniqParticipants[0]
+    if (uniqParticipants.length > 0 && anonymousTransactions.length > 0) {
+      return <span>
+        {uniqParticipants.map((name, key) => [
+          key > 0 && ', ',
+          <b key={key}>{name}</b>
+        ])} et {anonymousTransactions.length} autre{anonymousTransactions.length > 1 && 's'}
+      </span>
+    } else if (uniqParticipants.length === 1) {
+      return <b>{uniqParticipants[0]}</b>
     } else {
-      return `${uniqParticipants.slice(0, uniqParticipants.length - 1).join(', ')} et ${uniqParticipants[uniqParticipants.length - 1]}`
+      return <span>
+        {uniqParticipants.slice(0, uniqParticipants.length - 1).map((name, key) => [
+          key > 0 && ', ',
+          <b key={key}>{name}</b>
+        ])} et <b>{uniqParticipants[uniqParticipants.length - 1]}</b></span>
     }
   }
 
-  const GiftStatus = ({displayStatus}: { displayStatus: "OFFERED" | "TO_OFFER" | "PARTLY_FUNDED"}) => (
-    <div className={classNames(classes.label, classes[labelClass(displayStatus)])}>
+  const GiftStatusBanner = ({displayStatus}: { displayStatus: GiftStatus}) => (
+    <div className={classNames(classes.label, classes[labelClass[displayStatus]])}>
       <p>{statusLabel[displayStatus]}</p>
     </div>
   )
 
-  const giftDisplayStatus = status === "TO_OFFER" && alreadyBought ? "PARTLY_FUNDED" : status
+  const GiftStatusMessage = ({giftStatus, alreadyBought, amount, remainingAmount, participants}: {giftStatus: GiftStatus, alreadyBought: boolean, amount: number, remainingAmount: number, participants: number}) => {
+    if (giftStatus === GiftStatus.OFFERED) {
+      return <OfferedGiftStatusMessage amount={amount} />
+    } else if (giftStatus === GiftStatus.TO_OFFER && alreadyBought) {
+      return <ToOfferAlreadyBoughtGiftStatusMessage amount={amount} />
+    } else if (giftStatus === GiftStatus.TO_OFFER && !alreadyBought) {
+      return <ToOfferGiftStatusMessage amount={amount} />
+    } else {
+      return <ToParticipateGiftStatusMessage amount={amount} remainingAmount={remainingAmount} alreadyBought={alreadyBought} participants={participants} />
+    }
+  }
+
+  const OfferedGiftStatusMessage = ({amount} : {amount: number}) => (
+    <>
+      <p>Ce cadeau a déjà été offert par <Participants uppercaseFirstLetter={false} />.</p>
+      <p>Son prix était de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.</p>
+    </>
+  )
+
+  const ToOfferGiftStatusMessage = ({amount} : {amount: number}) => (
+    <>
+      <p>Ce cadeau est à offrir.</p>
+      <p>Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.</p>
+    </>
+  )
+
+  const ToOfferAlreadyBoughtGiftStatusMessage = ({amount} : {amount: number}) => (
+    <>
+      <p>Ce cadeau est à offrir <span className={classes.red}>sous forme de participation uniqument, car nous en avons fait l'achat à l'avance</span>.</p>
+      <p>Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.</p>
+    </>
+  )
+
+  const ToParticipateGiftStatusMessage = ({amount, remainingAmount, alreadyBought, participants}: {amount: number, remainingAmount: number, alreadyBought: boolean, participants: number}) => (
+    <>
+      <div className={classes.textWithIcon}>
+        <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
+        <p><Participants uppercaseFirstLetter={true} /> {participants > 1 ? 'ont' : 'a'} déjà contribué à financer ce cadeau.</p>
+      </div>
+      <p>
+        Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>,
+        et il reste <b>{currency === 'GBP' ? `£${remainingAmount}` : `${remainingAmount}€`}</b> ({Math.floor((remainingAmount / amount) * 100)}%)
+        à participer.
+      </p>
+      <p className={classes.red}>Notez que nous avons déjà fait l'achat de ce cadeau à l'avance.</p>
+    </>
+  )
+
+  const giftDisplayStatus = status === GiftStatus.TO_OFFER && alreadyBought ? GiftStatus.PARTLY_FUNDED : status
 
   return selectedGift ? (
     <div className={classes.page}>
@@ -276,7 +328,7 @@ const Description = () => {
             <div className={classes.header}>
               <h1 className={classes.title}>{title}</h1>
               <div className={classes.labels}>
-                <GiftStatus displayStatus={giftDisplayStatus}/>
+                <GiftStatusBanner displayStatus={giftDisplayStatus}/>
                 <div className={classNames(classes.label, classes.categorylabel)}>
                   <p>{category}</p>
                 </div>
@@ -287,18 +339,8 @@ const Description = () => {
                 <img src={image} alt={`${title}`} />
               </div>
               <div className={classes.articleText}>
-                <p dangerouslySetInnerHTML={{ __html: replaceWithBr() }}></p>
-                <p>Ce cadeau {frenchStatus[status]}.</p>
-                {
-                  alreadyBought && status === "TO_OFFER" && <p><span className={classes.red}>Ce cadeau n'accepte que des participations, car nous en avons déjà fait l'achat.</span></p>
-                }
-                <p>Son prix total est de <b>{currency === '£' ? `£${amount}` : `${amount}€`}</b>.</p>
-                {
-                  !!transactions && transactions.length > 0 && <div className={classes.textIcon}>
-                    <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
-                    <p>{nonAnonymousParticipants ? getParticipants() : 'Certaines personnes'} {nonAnonymousParticipants && nonAnonymousParticipants.length === 1 ? 'a' : 'ont'} {status !== "OFFERED" && "déjà"} contribué à l'achat de ce cadeau. {status !== "OFFERED" && <>Si vous voulez également participer, il ne reste que <b>{remainingAmount}€</b> à payer sur le prix de départ.</>}</p>
-                  </div>
-                }
+                <p className={classes.nl2br}>{description}</p>
+                <GiftStatusMessage giftStatus={status} alreadyBought={alreadyBought} amount={amount} remainingAmount={remainingAmount} participants={transactions?.length || 0} />
                 <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a>.</p>
                 <div className={classes.buttonWrap}>
                   <button className={classes.btn} onClick={() => window.open(url)}>
@@ -306,14 +348,14 @@ const Description = () => {
                     Lien
                   </button>
                   {
-                    !alreadyBought && status === "TO_OFFER" &&
+                    !alreadyBought && status === GiftStatus.TO_OFFER &&
                     <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Offrir
                     </button>
                   }
                   {
-                    ((alreadyBought && status === "TO_OFFER") || status === "PARTLY_FUNDED") &&
+                    ((alreadyBought && status === GiftStatus.TO_OFFER) || status === GiftStatus.PARTLY_FUNDED) &&
                     <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Participer
