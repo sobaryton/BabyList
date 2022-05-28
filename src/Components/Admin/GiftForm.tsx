@@ -70,10 +70,6 @@ const GiftForm = ({message, onSubmit, gift}: GiftFormType) => {
         });
     }, [gift]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // const dataUriToFile = (dataUri: string) => fetch(dataUri)
-    //     .then(res => res.blob())
-    //     .then(blob => new File([blob], "filename", { type: dataUri.substring(dataUri.indexOf(":") + 1, dataUri.indexOf(";")) }));
-
     const fileToDataUri = (file: File|undefined) => new Promise<string|undefined>((resolve, reject) => {
         if (!file) {
             resolve(undefined);
