@@ -18,7 +18,7 @@ const footerStyles = createUseStyles({
 
 const Loading = () => {
   const classes = footerStyles()
-  return <div className={classes.loadingImage}><iframe src="https://giphy.com/embed/3o85xscgnCWS8Xxqik" className={classes.gif} frameBorder="0" title="loading gif"></iframe></div>
+  return <div className={classes.loadingImage}><img src={process.env.PUBLIC_URL + '/images/hands.gif'} alt="gif for loading" /></div>
 }
 
 export default Loading
