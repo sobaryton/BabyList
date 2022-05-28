@@ -41,7 +41,7 @@ const AdminAddGift = () => {
 
     return (
         <GiftForm message={message} onSubmit={onFormSubmit} gift={formData} />
-    );
-};
+    )
+}
 
 export default AdminAddGift
