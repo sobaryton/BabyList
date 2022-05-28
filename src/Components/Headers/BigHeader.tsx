@@ -63,7 +63,7 @@ const BigHeader = () => {
         </button>
       </Link>
     </div>
-  );
+  )
 }
 
-export default BigHeader;
+export default BigHeader

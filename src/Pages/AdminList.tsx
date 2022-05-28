@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { createUseStyles } from 'react-jss'
-import { Link } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
-import { font20, lightGreen, darkGreen } from '../utils/constants';
-import { adminDeleteGift } from '../api/adminDeleteGift';
-import { adminListGifts } from '../api/adminListGifts';
-import GiftCard from '../Components/Admin/GiftCard';
-import { GiftType } from '../reducers/selectedGift';
+import { Link } from 'react-router-dom'
+import AddIcon from '@mui/icons-material/Add'
+import { font20, lightGreen, darkGreen } from '../utils/constants'
+import { adminDeleteGift } from '../api/adminDeleteGift'
+import { adminListGifts } from '../api/adminListGifts'
+import GiftCard from '../Components/Admin/GiftCard'
+import { GiftType } from '../reducers/selectedGift'
 
 const useStyle = createUseStyles({
     list: {
@@ -52,21 +52,21 @@ const useStyle = createUseStyles({
     btnIcon: {
         marginRight: '0.7rem',
     },
-});
+})
 
 const AdminList = () => {
-    const [gifts, setGifts] = useState([] as GiftType[]);
+    const [gifts, setGifts] = useState([] as GiftType[])
     const classes = useStyle()
 
     useEffect(() => {
         adminListGifts()
-            .then(setGifts);
-    }, []);
+            .then(setGifts)
+    }, [])
 
     const deleteGift = (giftId: string) => {
         adminDeleteGift(giftId)
             .then(() => setGifts(gifts.filter(gift => gift.id !== giftId)));
-    };
+    }
 
     return (
         <>
@@ -84,7 +84,7 @@ const AdminList = () => {
                 />)}
             </article>
         </>
-    );
-};
+    )
+}
 
-export default AdminList;
+export default AdminList

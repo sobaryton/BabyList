@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
-import { adminAddGift } from '../api/adminAddGift';
-import GiftForm, { GiftData } from '../Components/Admin/GiftForm';
+import { adminAddGift } from '../api/adminAddGift'
+import GiftForm, { GiftData } from '../Components/Admin/GiftForm'
 
 export type AddGiftType = {
-    title: string,
-    description: string,
-    category: string,
-    image: string|undefined,
-    store: string,
-    url: string,
-    amount: number,
-    currency: string,
-    alreadyBought: boolean,
-};
+    title: string
+    description: string
+    category: string
+    image?: string
+    store: string
+    url: string
+    amount: number
+    currency: string
+    alreadyBought: boolean
+}
 
 const defaultFormData: AddGiftType = {
     title: "",
@@ -24,11 +24,11 @@ const defaultFormData: AddGiftType = {
     amount: 0.00,
     currency: "EUR",
     alreadyBought: false,
-};
+}
 
 const AdminAddGift = () => {
-    const [formData, setFormData] = useState(defaultFormData);
-    const [message, setMessage] = useState<string|undefined>(undefined);
+    const [formData, setFormData] = useState(defaultFormData)
+    const [message, setMessage] = useState<string | undefined>(undefined)
 
     const onFormSubmit = (giftData: GiftData) => {
         adminAddGift(giftData)
@@ -41,7 +41,7 @@ const AdminAddGift = () => {
 
     return (
         <GiftForm message={message} onSubmit={onFormSubmit} gift={formData} />
-    );
-};
+    )
+}
 
-export default AdminAddGift;
+export default AdminAddGift

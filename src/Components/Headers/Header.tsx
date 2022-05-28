@@ -48,7 +48,7 @@ const Header = ({ text, background, backgroundPosition, className }: HeaderType)
         </div>
       </div>
     </>
-  );
+  )
 }
 
-export default Header;
+export default Header
