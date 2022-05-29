@@ -64,50 +64,17 @@ const messagePageStyles = createUseStyles({
   }
 })
 
-const faketransactions = [
-  {
-    id: 'id1',
-    giftId: 'wdhf',
-    type: TransactionType.ORDER,
-    name: 'Famille 1',
-    email: 'ksdjhf@ldf.com',
-    message: 'Wesh bisous ljf owi gw rgke rgkj ergk ekrj gekjr gekjr gek rgekrj gekrjg ekrbj gekrj gerkbjg erkbgerkbj ',
-    amount: 20,
-    currency: 'EUR',
-    anonymous: false,
-    createdAt: new Date(),
-    giftVersion: '1'
-  },
-  {
-    id: 'id2',
-    giftId: 'wrdhf',
-    type: TransactionType.PARTICIPATE,
-    name: 'Famille 2',
-    email: 'ksdjffhf@ldf.com',
-    message: 'Wesh bisous !!!!!!!!',
-    amount: 30,
-    currency: 'EUR',
-    anonymous: true,
-    createdAt: new Date(),
-    giftVersion: '1'
-  }
-]
-
 const AdminMessages = () => {
   const classes = messagePageStyles()
-  // const [transactions, setTransactions] = useState([] as Transaction[])
-  const [transactions, setTransactions] = useState(faketransactions as Transaction[])
+  const [transactions, setTransactions] = useState([] as Transaction[])
 
   useEffect(() => {
-    if (!transactions) {
       adminGetTransactions()
         .then((transactions: Transaction[]) => setTransactions(transactions))
-    }
-  }, [transactions])
+  }, [])
 
-  const frenchTypes = {
-    [TransactionType.ORDER]: 'À commander',
-    [TransactionType.PARTICIPATE]: 'Participé'
+  const getfFrenchTypes = (type: TransactionType) => {
+    return type === TransactionType.ORDER ? 'À commander' : 'Participé'
   }
 
   return <>
@@ -123,7 +90,7 @@ const AdminMessages = () => {
                   <div key={transaction.id} className={classes.transaction}>
                     <h3>{transaction.name} - <span className={classes.email}>{transaction.email}</span></h3>
                     <p className={classes.date}>{(transaction.createdAt)?.toLocaleString()}</p>
-                    <p>{frenchTypes[transaction.type]}  -  {transaction.amount}€</p>
+                    <p>{getfFrenchTypes(transaction.type)}  -  {transaction.amount}€</p>
                     <p className={classes.message}>{transaction.message}</p>
                     <Link to={`/description/${transaction.giftId}`} className={classes.btn}>Lien du cadeau</Link>
                   </div>
