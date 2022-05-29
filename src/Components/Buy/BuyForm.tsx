@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
 import CelebrationIcon from '@mui/icons-material/Celebration'
@@ -98,7 +98,7 @@ const BuyForm = () => {
   const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift) as GiftType
   const gifts = useAppSelector((state) => state.giftList.gifts)
 
-  const handleInputChange = (e: { target: { name: any; value: any } }) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormValues({
       ...formValues,
@@ -106,7 +106,7 @@ const BuyForm = () => {
     })
   }
 
-  const handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckBoxChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
       anonymous: event.target.checked,
@@ -126,7 +126,7 @@ const BuyForm = () => {
     giftVersion: selectedGift.version
   })
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     onBuy()
       .then(refreshGift)

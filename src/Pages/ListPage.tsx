@@ -48,23 +48,22 @@ const ListPage = () => {
   const giftList = useAppSelector((state) => state.giftList.gifts)
   const showModal = useAppSelector((state) => state.modal.isOpen)
 
-  const fetchGifts = async () => await getGifts()
-
   useEffect(() => {
-    setLoading(true)
-    fetchGifts()
-      .then((gifts) => {
-        setLoading(false)
-        dispatch(setGiftList(gifts))
-      })
-  }, [dispatch])
+    if (giftList.length === 0) {
+      setLoading(true)
+      getGifts()
+        .then((gifts) => {
+          setLoading(false)
+          dispatch(setGiftList(gifts))
+        })
+    }
+  }, [dispatch, giftList.length])
 
   useEffect(() => {
     requestSearch(giftList, searched)
-  }, [giftList]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [giftList, searched])
 
   const requestSearch = (giftsToFilter: GiftType[], searchedVal: string) => {
-    setSearched(searchedVal)
     if (searchedVal === '') {
       setRows(giftsToFilter)
     } else {
@@ -85,8 +84,8 @@ const ListPage = () => {
         <SearchBar
           value={searched}
           placeholder="Rechercher"
-          onChange={(searchVal) => requestSearch(giftList, searchVal)}
-          onCancelSearch={() => requestSearch(giftList, "")}
+          onChange={searchVal => setSearched(searchVal)}
+          onCancelSearch={() => setSearched("")}
           className={classes.searchBar}
         />
         <article className={classes.list}>

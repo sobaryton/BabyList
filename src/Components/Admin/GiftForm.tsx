@@ -21,7 +21,7 @@ export type GiftData = {
     title: string,
     description: string,
     category: string,
-    image: string | undefined,
+    image?: string,
     store: string,
     url: string,
     amount: number,
@@ -33,7 +33,7 @@ export type FormData = {
     title: string,
     description: string,
     category: string,
-    image: File|undefined,
+    image?: File,
     store: string,
     url: string,
     amount: number,
@@ -68,7 +68,7 @@ const GiftForm = ({message, onSubmit, gift}: GiftFormType) => {
             ...gift,
             image: undefined,
         });
-    }, [gift]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [gift]);
 
     const fileToDataUri = (file: File|undefined) => new Promise<string|undefined>((resolve, reject) => {
         if (!file) {

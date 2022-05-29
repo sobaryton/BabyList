@@ -97,11 +97,10 @@ const AdminMessages = () => {
   const classes = messagePageStyles()
   // const [transactions, setTransactions] = useState([] as Transaction[])
   const [transactions, setTransactions] = useState(faketransactions as Transaction[])
-  const fetchTransactions = async () => await adminGetTransactions()
 
   useEffect(() => {
     if (!transactions) {
-      fetchTransactions()
+      adminGetTransactions()
         .then((transactions: Transaction[]) => setTransactions(transactions))
     }
   }, [transactions])

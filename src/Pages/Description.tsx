@@ -15,6 +15,7 @@ import { toggleModal } from '../reducers/modal'
 import { getGift } from '../api/getGift'
 import { GiftStatus, GiftType, selectGift } from '../reducers/selectedGift'
 import Loading from '../Components/Loading'
+import { setGiftList } from '../reducers/giftList'
 
 const cardStyles = createUseStyles({
   page: {
@@ -190,8 +191,9 @@ const Description = () => {
   const classes = cardStyles()
   const dispatch = useAppDispatch()
   const showModal = useAppSelector((state) => state.modal.isOpen)
-  const { id } = useParams()
+  const { id } = useParams() as { id: string }
   const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift)
+  const gifts = useAppSelector((state) => state.giftList.gifts)
   const {
     image,
     url,
@@ -207,14 +209,17 @@ const Description = () => {
     alreadyBought
   } = selectedGift || {} as GiftType
 
-  const fetchSelectedGift = async () => await getGift(id as string)
+  const refreshGift = async (id: string) => {
+    const refreshedGift = await getGift(id)
+    dispatch(setGiftList(gifts.map(gift => gift.id === id ? refreshedGift : gift)))
+    dispatch(selectGift(refreshedGift))
+  }
 
   useEffect(() => {
-    if ((!selectedGift && !!id) || !transactions) {
-      fetchSelectedGift()
-        .then(gift => dispatch(selectGift(gift)))
+    if (!selectedGift || !transactions) {
+      refreshGift(id)
     }
-  }, [dispatch, id, selectedGift, transactions]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, selectedGift, transactions]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const labelClass: {[key in GiftStatus]: keyof typeof classes} = {
     [GiftStatus.OFFERED]: 'greenLabel',

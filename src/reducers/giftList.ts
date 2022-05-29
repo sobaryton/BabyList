@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { GiftType } from './selectedGift'
 
 type InitialState = {
-  gifts: [] | GiftType[]
+  gifts: GiftType[]
 }
 
 const giftListSlice = createSlice({

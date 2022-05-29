@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import CelebrationIcon from '@mui/icons-material/Celebration'
 import { TextField, FormControlLabel, Checkbox, FormGroup, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
@@ -111,7 +111,7 @@ const ParticipateForm = () => {
   const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift) as GiftType
   const gifts = useAppSelector((state) => state.giftList.gifts)
 
-  const handleInputChange = (e: { target: { name: any; value: any } }) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     const transformedValues = name === 'amount' ? parseFloat(value.replace(',', '.')) : value
     setFormValues({
@@ -120,7 +120,7 @@ const ParticipateForm = () => {
     })
   }
 
-  const handleCheckBoxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCheckBoxChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFormValues({
       ...formValues,
       anonymous: event.target.checked,
@@ -149,7 +149,7 @@ const ParticipateForm = () => {
     }
   )
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     onParticipate()
       .then(refreshGift)

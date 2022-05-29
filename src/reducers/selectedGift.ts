@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type InitialState = {
-  selectedGift: GiftType | undefined
+  selectedGift?: GiftType
 }
 
 export enum GiftStatus {
