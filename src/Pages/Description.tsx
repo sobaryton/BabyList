@@ -216,7 +216,7 @@ const Description = () => {
   }
 
   useEffect(() => {
-    if (!selectedGift || !transactions) {
+    if (!selectedGift || !transactions || selectedGift.id !== id) {
       refreshGift(id)
     }
   }, [id, selectedGift, transactions]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -315,7 +315,7 @@ const Description = () => {
         et il reste <b>{currency === 'GBP' ? `£${remainingAmount}` : `${remainingAmount}€`}</b> ({Math.floor((remainingAmount / amount) * 100)}%)
         à participer.
       </p>
-      <p className={classes.red}>Notez que nous avons déjà fait l'achat de ce cadeau à l'avance.</p>
+      {alreadyBought && <p className={classes.red}>Notez que nous avons déjà fait l'achat de ce cadeau à l'avance.</p>}
     </>
   )
 

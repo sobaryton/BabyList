@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import { Link } from 'react-router-dom'
+import classNames from 'classnames'
 import AddIcon from '@mui/icons-material/Add'
-import { font20, lightGreen, darkGreen } from '../utils/constants'
+import MessageIcon from '@mui/icons-material/Message'
+import { font20, lightGreen, darkGreen, lightBlue, darkBlue } from '../utils/constants'
 import { adminDeleteGift } from '../api/adminDeleteGift'
 import { adminListGifts } from '../api/adminListGifts'
 import GiftCard from '../Components/Admin/GiftCard'
@@ -33,24 +35,34 @@ const useStyle = createUseStyles({
         width: '100%',
         minHeight: '2rem',
         marginRight: '0.5rem',
-        background: lightGreen,
-        color: darkGreen,
         border: 'none',
         cursor: 'pointer',
         transition: '500ms all ease',
         fontWeight: 600,
         fontSize: font20,
         padding: '0.5rem',
-        '&:hover': {
-            background: darkGreen,
-            color: lightGreen,
-        },
         '&:last-child': {
             marginRight: 0,
         },
     },
     btnIcon: {
         marginRight: '0.7rem',
+    },
+    greenBtn: {
+        background: lightGreen,
+        color: darkGreen,
+        '&:hover': {
+            background: darkGreen,
+            color: lightGreen,
+        },
+    },
+    blueBtn: {
+        background: lightBlue,
+        color: darkBlue,
+        '&:hover': {
+            background: darkBlue,
+            color: lightBlue,
+        },
     },
 })
 
@@ -71,9 +83,15 @@ const AdminList = () => {
     return (
         <>
             <Link to="/admin/add" className={classes.link}>
-                <button className={classes.btn}>
+                <button className={classNames(classes.btn, classes.greenBtn)}>
                     <AddIcon className={classes.btnIcon} />
                     Add Gift
+                </button>
+            </Link>
+            <Link to="/admin/messages" className={classes.link}>
+                <button className={classNames(classes.btn, classes.blueBtn)}>
+                    <MessageIcon className={classes.btnIcon} />
+                    View Messages
                 </button>
             </Link>
             <article className={classes.list}>
