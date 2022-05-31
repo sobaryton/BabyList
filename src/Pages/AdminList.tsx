@@ -76,6 +76,11 @@ const AdminList = () => {
     }, [])
 
     const deleteGift = (giftId: string) => {
+        const gift = gifts.find(gift => gift.id === giftId)
+        if (!window.confirm(`Are you sure you want to delete ${gift?.title}?`)) {
+            return
+        }
+
         adminDeleteGift(giftId)
             .then(() => setGifts(gifts.filter(gift => gift.id !== giftId)));
     }
