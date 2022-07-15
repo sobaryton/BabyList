@@ -10,7 +10,7 @@ import { toggleModal } from '../reducers/modal'
 import FormContent from '../Components/FormContent'
 import { setGiftList } from '../reducers/giftList'
 import { getGifts } from '../api/getGifts'
-import { GiftType } from '../reducers/selectedGift'
+import { GiftType, GiftStatus } from '../reducers/selectedGift'
 import Loading from '../Components/Loading'
 
 const listPageStyles = createUseStyles({
@@ -61,15 +61,26 @@ const ListPage = () => {
 
   useEffect(() => {
     requestSearch(giftList, searched)
-  }, [giftList, searched])
+  }, [giftList, searched]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const giftOrder = (gift: GiftType) => {
+    if (gift.status === GiftStatus.PARTLY_FUNDED) {
+      return 0
+    } else if (gift.status === GiftStatus.TO_OFFER && !gift.alreadyBought) {
+      return 1
+    } else if (gift.status === GiftStatus.TO_OFFER) {
+      return 2
+    } else {
+      return 3
+    }
+  }
 
   const requestSearch = (giftsToFilter: GiftType[], searchedVal: string) => {
-    if (searchedVal === '') {
-      setRows(giftsToFilter)
-    } else {
-      const filteredRows = giftsToFilter.filter((card) => card.title.toLowerCase().includes(searchedVal.toLowerCase()))
-      setRows(filteredRows)
-    }
+    const filteredRows = searchedVal === ''
+      ? giftsToFilter
+      : giftsToFilter.filter((card) => card.title.toLowerCase().includes(searchedVal.toLowerCase()))
+    const sortedRows = [...filteredRows].sort((a, b) => giftOrder(a) - giftOrder(b))
+    setRows(sortedRows)
   }
 
   return (
