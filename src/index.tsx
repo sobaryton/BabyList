@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -8,7 +8,9 @@ import App from './App'
 import theme from './theme'
 import { store } from './store/store'
 
-ReactDOM.render(
+const container = document.getElementById('root')
+const root = createRoot(container!)
+root.render(
   <Provider store={store}>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -16,6 +18,5 @@ ReactDOM.render(
         <App />
       </ThemeProvider>
     </BrowserRouter>
-  </Provider>,
-  document.getElementById('root'),
+  </Provider>
 )

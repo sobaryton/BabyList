@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { createUseStyles } from 'react-jss'
-import SearchBar from 'material-ui-search-bar'
+import SearchBar from '../Components/SearchBar'
 import Card from '../Components/Card'
 import Header from '../Components/Headers/Header'
 import Navigation from '../Components/Navigation'
