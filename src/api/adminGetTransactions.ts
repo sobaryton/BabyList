@@ -2,6 +2,6 @@ import axios from 'axios'
 import { Transaction } from '../reducers/selectedGift'
 
 export const adminGetTransactions = () => {
-  return axios.get(`https://baby-wishlist.herokuapp.com/my/wishlists/cf30c26b-f287-4541-9340-58cd672d72b2/transactions`, { headers: { "X-User": "solene" } })
+  return axios.get(`https://wishlist-backend.fly.dev/my/wishlists/cf30c26b-f287-4541-9340-58cd672d72b2/transactions`, { headers: { "X-User": "solene" } })
     .then((res) => res.data as Transaction[])
 }
