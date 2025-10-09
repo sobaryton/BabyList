@@ -8,7 +8,7 @@ const headerStyles = createUseStyles({
   header: {
     width: '100%',
     height: '50vh',
-    backgroundImage: `url('${process.env.PUBLIC_URL + '/images/bebe.jpg'}')`,
+    backgroundImage: `url('/images/bebe.jpg')`,
     backgroundSize: 'cover',
     display: 'flex',
     justifyContent: 'center',

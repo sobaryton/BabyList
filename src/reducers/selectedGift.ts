@@ -47,7 +47,7 @@ export type GiftType = {
   status: GiftStatus
   createdAt: Date
   updatedAt?: Date
-  deletedAt?: Date
+    deletedAt?: Date
   version: number
   transactions?: Transaction[]
 }

@@ -38,7 +38,7 @@ const Header = ({ text, background, backgroundPosition, className }: HeaderType)
   const classes = headerStyles()
   return (
     <>
-      <div className={classNames(classes.header, className)} style={{ backgroundImage: `url('${process.env.PUBLIC_URL}${background ? background : '/images/plaid.jpg'}')`, backgroundPosition }}>
+      <div className={classNames(classes.header, className)} style={{ backgroundImage: `url('${background ? background : '/images/plaid.jpg'}')`, backgroundPosition }}>
         <div className={classes.titleContainer}>
           {text &&
             <h1 className={classes.title}>

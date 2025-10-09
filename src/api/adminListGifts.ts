@@ -1,5 +1,11 @@
 import axios from 'axios'
-import { GiftType } from '../reducers/selectedGift'
+import {GiftType} from '../reducers/selectedGift'
 
-export const adminListGifts = (): Promise<GiftType[]> => axios.get(`https://wishlist-backend.nseverin.fr/my/wishlists/cf30c26b-f287-4541-9340-58cd672d72b2/gifts`, { headers: {"X-User": "solene"}})
-    .then(response => response.data)
+export const adminListGifts = async () => {
+    const res = await axios.get<GiftType[]>(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/my/wishlists/${import.meta.env.VITE_BABY_WISHLIST_ID}/gifts`,
+        {headers: {"X-User": "solene"}}
+    );
+
+    return res.data;
+};

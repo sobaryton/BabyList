@@ -20,7 +20,7 @@ const Loading = () => {
   const classes = footerStyles()
   return (
     <div className={classes.loadingImage}>
-      <img className={classes.gif} src={process.env.PUBLIC_URL + '/images/hands.gif'} alt="gif for loading" />
+      <img className={classes.gif} src="/images/hands.gif" alt="gif for loading" />
     </div>
   )
 }

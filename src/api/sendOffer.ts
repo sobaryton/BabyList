@@ -1,28 +1,30 @@
 import axios from 'axios'
-import { TransactionType } from '../reducers/selectedGift'
+import {Transaction, TransactionType} from '../reducers/selectedGift'
 
-export type Transaction = {
-  giftId: string
-  name: string
-  email: string
-  message: string
-  amount: number
-  anonymous: boolean
-  giftVersion: number
+export type TransactionData = {
+    giftId: string
+    name: string
+    email: string
+    message: string
+    amount: number
+    anonymous: boolean
+    giftVersion: number
 }
 
-export const sendOffer = ({ giftId, name, email, message, amount, anonymous, giftVersion }: Transaction) => {
-  return axios.post(
-    `https://wishlist-backend.nseverin.fr/wishlists/cf30c26b-f287-4541-9340-58cd672d72b2/gifts/${giftId}/transactions`,
-    {
-      type: TransactionType.ORDER,
-      name,
-      email,
-      message,
-      amount,
-      currency: "EUR",
-      anonymous,
-      giftVersion
-    }
-  )
-}
+export const sendOffer = async ({giftId, name, email, message, amount, anonymous, giftVersion}: TransactionData) => {
+    const res = await axios.post<Transaction>(
+        `${import.meta.env.VITE_BACKEND_BASE_URL}/wishlists/${import.meta.env.VITE_BABY_WISHLIST_ID}/gifts/${giftId}/transactions`,
+        {
+            type: TransactionType.ORDER,
+            name,
+            email,
+            message,
+            amount,
+            currency: "EUR",
+            anonymous,
+            giftVersion
+        }
+    );
+
+    return res.data;
+};
