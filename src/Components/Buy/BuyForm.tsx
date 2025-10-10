@@ -145,7 +145,7 @@ const BuyForm = () => {
             </p>
             <div className={classes.inputWrapper}>
               <TextField
-                id="outlined-helperText"
+                id="name"
                 label="Votre nom"
                 name="name"
                 required
@@ -154,7 +154,7 @@ const BuyForm = () => {
                 margin="normal"
               />
               <TextField
-                id="outlined-helperText2"
+                id="email"
                 type="email"
                 label="Votre email"
                 helperText="Nous n'afficherons pas votre email."

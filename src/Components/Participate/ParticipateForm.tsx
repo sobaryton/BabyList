@@ -121,8 +121,8 @@ const ParticipateForm = () => {
   const selectedGift = useAppSelector(state => state.selectedGift.selectedGift) as GiftType;
   const gifts = useAppSelector(state => state.giftList.gifts);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     const transformedValues = name === 'amount' ? parseFloat(value.replace(',', '.')) : value;
     setFormValues({
       ...formValues,
@@ -131,16 +131,18 @@ const ParticipateForm = () => {
   };
 
   const handleCheckBoxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
     setFormValues({
       ...formValues,
-      anonymous: event.target.checked,
+      [name]: event.target.checked,
     });
   };
 
   const handleChange = (event: SelectChangeEvent) => {
+    const { name, value } = event.target;
     setFormValues({
       ...formValues,
-      currency: event.target.value,
+      [name]: value,
     });
   };
 
@@ -173,13 +175,13 @@ const ParticipateForm = () => {
             <div className={classes.participation}>
               <div className={classes.participationWrapper}>
                 <FormControl>
-                  <InputLabel id="demo-simple-select-label">Monnaie</InputLabel>
+                  <InputLabel id="currency-label">Monnaie</InputLabel>
                   <Select
                     className={classes.currency}
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="currency-label"
+                    id="currency"
+                    name="currency"
                     value={formValues.currency}
-                    label="currency"
                     required
                     onChange={handleChange}
                   >
@@ -190,13 +192,18 @@ const ParticipateForm = () => {
                   </Select>
                 </FormControl>
                 <TextField
-                  id="outlined-helperText"
+                  id="amount"
                   label="Montant"
                   name="amount"
-                  inputProps={{ inputMode: 'numeric', pattern: '^[0-9]+(?:[.,][0-9]{1,2})?$' }}
                   required
                   onChange={handleInputChange}
                   className={classes.textInput}
+                  slotProps={{
+                    htmlInput: {
+                      inputMode: 'numeric',
+                      pattern: '^[0-9]+(?:[.,][0-9]{1,2})?$',
+                    },
+                  }}
                 />
               </div>
               {!!formValues.amount && totalAmount !== 0 && (
@@ -209,7 +216,7 @@ const ParticipateForm = () => {
             </p>
             <div className={classes.inputWrapper}>
               <TextField
-                id="outlined-helperText"
+                id="name"
                 label="Votre nom"
                 name="name"
                 required
@@ -218,7 +225,7 @@ const ParticipateForm = () => {
                 margin="normal"
               />
               <TextField
-                id="outlined-helperText2"
+                id="email"
                 type="email"
                 label="Votre email"
                 helperText="Nous n'afficherons pas votre email."

@@ -5,17 +5,6 @@ import { getGift } from '../../api/getGift';
 import GiftForm, { GiftData } from '../../Components/Admin/GiftForm';
 import { GiftStatus, GiftType } from '../../reducers/selectedGift';
 
-export type AddGiftType = {
-  title: string;
-  description: string;
-  category: string;
-  image?: string;
-  store: string;
-  url: string;
-  amount: number;
-  currency: string;
-};
-
 const defaultGiftData: GiftType = {
   id: '',
   wishlistId: '',

@@ -60,7 +60,7 @@ const SearchBar = (
   forwardedRef: Ref<Partial<HTMLElement>>
 ) => {
   const classes = useStyle();
-  const inputRef = useRef<HTMLElement>();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const [value, setValue] = useState(inputProps.value ?? '');
 
   useEffect(() => {
@@ -88,6 +88,8 @@ const SearchBar = (
   };
 
   const handleRequestSearch = () => {
+    inputRef.current?.focus();
+
     if (inputProps.onRequestSearch) {
       inputProps.onRequestSearch(value);
     }
@@ -131,6 +133,7 @@ const SearchBar = (
           disableUnderline
           disabled={inputProps.disabled}
           placeholder={inputProps.placeholder}
+          inputRef={inputRef}
         />
       </div>
       <IconButton

@@ -131,9 +131,7 @@ const GiftForm = ({ message, onSubmit, gift }: GiftFormType) => {
           value={formData.title}
           name="title"
           onChange={onTextInputChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
         <TextField
           label="Description"
@@ -141,18 +139,14 @@ const GiftForm = ({ message, onSubmit, gift }: GiftFormType) => {
           name="description"
           onChange={onTextInputChange}
           multiline
-          InputLabelProps={{
-            shrink: true,
-          }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
         <TextField
           label="Category"
           value={formData.category}
           name="category"
           onChange={onTextInputChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
         <TextField
           // Not a controlled input on purpose, as it's impossible to set the file programatically.
@@ -160,46 +154,45 @@ const GiftForm = ({ message, onSubmit, gift }: GiftFormType) => {
           name="image"
           onChange={onFileInputChange}
           type="file"
-          InputLabelProps={{
-            shrink: true,
-          }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
         <TextField
           label="Store name"
           value={formData.store}
           name="store"
           onChange={onTextInputChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
         <TextField
           label="Gift URL"
           value={formData.url}
           name="url"
           onChange={onTextInputChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
+          slotProps={{ inputLabel: { shrink: true } }}
         />
         <TextField
           label="Price"
           value={formData.amount}
           name="amount"
-          inputProps={{ inputMode: 'numeric', pattern: '^[0-9]+(?:[.,][0-9]{1,2})?$' }}
           onChange={onTextInputChange}
-          InputLabelProps={{
-            shrink: true,
+          slotProps={{
+            htmlInput: {
+              inputMode: 'numeric',
+              pattern: '^[0-9]+(?:[.,][0-9]{1,2})?$',
+            },
+            inputLabel: { shrink: true },
           }}
         />
         <TextField
           label="Currency"
           value={formData.currency}
           name="currency"
-          inputProps={{ pattern: '^[A-Z]{3}$' }}
           onChange={onTextInputChange}
-          InputLabelProps={{
-            shrink: true,
+          slotProps={{
+            htmlInput: {
+              pattern: '^[A-Z]{3}$',
+            },
+            inputLabel: { shrink: true },
           }}
         />
         <FormControlLabel
