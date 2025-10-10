@@ -1,19 +1,32 @@
-import * as React from 'react'
-import { createUseStyles } from 'react-jss'
-import classNames from 'classnames'
-import { Link } from 'react-router-dom'
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
-import SearchIcon from '@mui/icons-material/Search'
-import { darkBlue, darkYellow, font14, font16, font20, orange, lightBlue, lightYellow, white, green, red, blue } from '../utils/constants'
-import { GiftStatus, GiftType, selectGift } from '../reducers/selectedGift'
-import { useAppDispatch } from '../utils/hooks'
+import * as React from 'react';
+import { createUseStyles } from 'react-jss';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import SearchIcon from '@mui/icons-material/Search';
+import {
+  darkBlue,
+  darkYellow,
+  font14,
+  font16,
+  font20,
+  orange,
+  lightBlue,
+  lightYellow,
+  white,
+  green,
+  red,
+  blue,
+} from '../utils/constants';
+import { GiftStatus, GiftType, selectGift } from '../reducers/selectedGift';
+import { useAppDispatch } from '../utils/hooks';
 
 const cardStyles = createUseStyles({
   card: {
     width: '20rem',
     position: 'relative',
     boxShadow: '0px 0px 13px 0px rgba(0,0,0,0.15)',
-    margin: '1rem 0.5rem'
+    margin: '1rem 0.5rem',
   },
   image: {
     width: '100%',
@@ -62,7 +75,7 @@ const cardStyles = createUseStyles({
       position: 'absolute',
       left: '-9px',
       top: 17,
-    }
+    },
   },
   desc: {
     padding: '0.5rem',
@@ -71,14 +84,14 @@ const cardStyles = createUseStyles({
     fontSize: font14,
     fontStyle: 'italic',
     color: 'grey',
-    marginBottom: '1rem'
+    marginBottom: '1rem',
   },
   buttonWrap: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '0.5rem',
-    marginTop: '0.5rem'
+    marginTop: '0.5rem',
   },
   btn: {
     display: 'flex',
@@ -97,14 +110,14 @@ const cardStyles = createUseStyles({
     padding: '0.5rem',
     '&:hover': {
       background: darkBlue,
-      color: lightBlue
+      color: lightBlue,
     },
     '&:last-child': {
-      marginRight: 0
-    }
+      marginRight: 0,
+    },
   },
   btnIcon: {
-    marginRight: '0.7rem'
+    marginRight: '0.7rem',
   },
   label: {
     width: '100%',
@@ -114,31 +127,31 @@ const cardStyles = createUseStyles({
     justifyContent: 'center',
     '& p': {
       fontWeight: 700,
-      textTransform: 'uppercase'
-    }
+      textTransform: 'uppercase',
+    },
   },
   blueLabel: {
     background: lightBlue,
-    color: blue
+    color: blue,
   },
   redLabel: {
     background: red,
-    color: white
+    color: white,
   },
   greenLabel: {
     background: green,
-    color: white
+    color: white,
   },
   orangeLabel: {
     background: orange,
-    color: white
+    color: white,
   },
   offrirBtn: {
     background: lightYellow,
     color: darkYellow,
     '&:hover': {
       background: darkYellow,
-      color: lightYellow
+      color: lightYellow,
     },
   },
   link: {
@@ -149,60 +162,52 @@ const cardStyles = createUseStyles({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-})
+});
 
-type CardElement = { card: GiftType } & { onToggleModal: () => void }
+type CardElement = { card: GiftType } & { onToggleModal: () => void };
 
 const Card = ({ card, onToggleModal }: CardElement) => {
-  const dispatch = useAppDispatch()
-  const {
-    image,
-    title,
-    description,
-    amount,
-    currency,
-    store,
-    status,
-    id,
-    alreadyBought
-  } = card
+  const dispatch = useAppDispatch();
+  const { image, title, description, amount, currency, store, status, id, alreadyBought } = card;
 
-  const labelClass: {[key in GiftStatus]: keyof typeof classes} = {
+  const labelClass: { [key in GiftStatus]: keyof typeof classes } = {
     [GiftStatus.OFFERED]: 'greenLabel',
     [GiftStatus.TO_OFFER]: 'redLabel',
     [GiftStatus.PARTLY_FUNDED]: 'orangeLabel',
-  }
+  };
 
   const statusLabel = {
     [GiftStatus.OFFERED]: 'Offert',
     [GiftStatus.TO_OFFER]: 'À offrir',
     [GiftStatus.PARTLY_FUNDED]: 'À participer',
-  }
+  };
 
   const setSelectedGift = () => {
-    dispatch(selectGift(card))
-    window.scrollTo(0, 0)
-  }
+    dispatch(selectGift(card));
+    window.scrollTo(0, 0);
+  };
 
   const openTransationModal = () => {
-    onToggleModal()
-    setSelectedGift()
-  }
+    onToggleModal();
+    setSelectedGift();
+  };
 
-  const GiftStatusBanner = ({displayStatus}: { displayStatus: GiftStatus}) => (
+  const GiftStatusBanner = ({ displayStatus }: { displayStatus: GiftStatus }) => (
     <div className={classNames(classes.label, classes[labelClass[displayStatus]])}>
       <p>{statusLabel[displayStatus]}</p>
     </div>
-  )
+  );
 
-  const giftDisplayStatus = status === GiftStatus.TO_OFFER && alreadyBought ? GiftStatus.PARTLY_FUNDED : status
+  const giftDisplayStatus = status === GiftStatus.TO_OFFER && alreadyBought ? GiftStatus.PARTLY_FUNDED : status;
 
-  const classes = cardStyles()
+  const classes = cardStyles();
   return (
     <div className={classes.card}>
       <div className={classes.image} style={{ backgroundImage: `url(${image})` }}></div>
-      <div className={classes.price}><p>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</p></div>
-      <GiftStatusBanner displayStatus={giftDisplayStatus}/>
+      <div className={classes.price}>
+        <p>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</p>
+      </div>
+      <GiftStatusBanner displayStatus={giftDisplayStatus} />
       <div className={classes.desc}>
         <h3>{title.length > 30 ? `${title.substring(0, 30)}...` : title}</h3>
         <p className={classes.provider}>{store}</p>
@@ -215,23 +220,21 @@ const Card = ({ card, onToggleModal }: CardElement) => {
             Détails
           </button>
         </Link>
-        {
-          !alreadyBought && status === GiftStatus.TO_OFFER &&
+        {!alreadyBought && status === GiftStatus.TO_OFFER && (
           <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Offrir
           </button>
-        }
-        {
-          ((alreadyBought && status === GiftStatus.TO_OFFER) || status === GiftStatus.PARTLY_FUNDED) &&
+        )}
+        {((alreadyBought && status === GiftStatus.TO_OFFER) || status === GiftStatus.PARTLY_FUNDED) && (
           <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Participer
           </button>
-        }
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

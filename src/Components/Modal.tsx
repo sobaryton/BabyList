@@ -1,11 +1,11 @@
-import classNames from 'classnames'
-import React, { ReactNode } from 'react'
-import { createUseStyles } from 'react-jss'
-import { darkBlue, red, white } from '../utils/constants'
-import CloseIcon from '@mui/icons-material/Close'
-import { useAppDispatch } from '../utils/hooks'
-import { toggleModal } from '../reducers/modal'
-import { GiftStatus } from '../reducers/selectedGift'
+import classNames from 'classnames';
+import React, { ReactNode } from 'react';
+import { createUseStyles } from 'react-jss';
+import { darkBlue, red, white } from '../utils/constants';
+import CloseIcon from '@mui/icons-material/Close';
+import { useAppDispatch } from '../utils/hooks';
+import { toggleModal } from '../reducers/modal';
+import { GiftStatus } from '../reducers/selectedGift';
 
 const modalStyles = createUseStyles({
   modal: {
@@ -16,7 +16,7 @@ const modalStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    top: 0
+    top: 0,
   },
   open: {
     display: 'flex',
@@ -48,7 +48,7 @@ const modalStyles = createUseStyles({
     left: 0,
     width: '100%',
     height: '100%',
-    background: 'rgba(0,0,0,0.75)'
+    background: 'rgba(0,0,0,0.75)',
   },
   main: {
     display: 'flex',
@@ -56,7 +56,7 @@ const modalStyles = createUseStyles({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: '100%',
-    padding: '1rem 0 0 0'
+    padding: '1rem 0 0 0',
   },
   closeBtn: {
     position: 'absolute',
@@ -74,35 +74,51 @@ const modalStyles = createUseStyles({
       border: 'none',
       color: darkBlue,
       '&:hover': {
-        color: red
-      }
-    }
-  }
-})
+        color: red,
+      },
+    },
+  },
+});
 
 type Props = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
-const Modal = ({children}: Props) => {
-  const classes = modalStyles()
-  const dispatch = useAppDispatch()
+const Modal = ({ children }: Props) => {
+  const classes = modalStyles();
+  const dispatch = useAppDispatch();
 
   return (
     <div className={classNames(classes.modal)}>
-      <div className={classes.overflow} onClick={() => dispatch(toggleModal({ amount: 0, status: GiftStatus.TO_OFFER, remainingAmount: undefined, alreadyBought: false }))} />
+      <div
+        className={classes.overflow}
+        onClick={() =>
+          dispatch(
+            toggleModal({ amount: 0, status: GiftStatus.TO_OFFER, remainingAmount: undefined, alreadyBought: false })
+          )
+        }
+      />
       <div className={classes.modalContent}>
-        <main className={classes.main}>
-          {children}
-        </main>
+        <main className={classes.main}>{children}</main>
         <div className={classes.closeBtn}>
-          <button onClick={() => dispatch(toggleModal({ amount: 0, status: GiftStatus.TO_OFFER, remainingAmount: undefined, alreadyBought: false }))}>
+          <button
+            onClick={() =>
+              dispatch(
+                toggleModal({
+                  amount: 0,
+                  status: GiftStatus.TO_OFFER,
+                  remainingAmount: undefined,
+                  alreadyBought: false,
+                })
+              )
+            }
+          >
             <CloseIcon sx={{ fontSize: '2rem' }} />
           </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

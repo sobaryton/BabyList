@@ -1,7 +1,7 @@
-import classNames from 'classnames'
-import * as React from 'react'
-import { createUseStyles } from 'react-jss'
-import { darkBlue, cursive, font64, white, font48 } from '../../utils/constants'
+import classNames from 'classnames';
+import * as React from 'react';
+import { createUseStyles } from 'react-jss';
+import { darkBlue, cursive, font64, white, font48 } from '../../utils/constants';
 
 const headerStyles = createUseStyles({
   header: {
@@ -10,7 +10,7 @@ const headerStyles = createUseStyles({
     backgroundSize: 'cover',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   titleContainer: {
     borderRadius: '20%',
@@ -23,32 +23,29 @@ const headerStyles = createUseStyles({
     background: white,
     '@media (min-width: 1024px)': {
       fontSize: font64,
-    }
-  }
-})
+    },
+  },
+});
 
 type HeaderType = {
-  text?: string
-  background?: string
-  backgroundPosition?: string
-  className?: string
-}
+  text?: string;
+  background?: string;
+  backgroundPosition?: string;
+  className?: string;
+};
 
 const Header = ({ text, background, backgroundPosition, className }: HeaderType) => {
-  const classes = headerStyles()
+  const classes = headerStyles();
   return (
     <>
-      <div className={classNames(classes.header, className)} style={{ backgroundImage: `url('${background ? background : '/images/plaid.jpg'}')`, backgroundPosition }}>
-        <div className={classes.titleContainer}>
-          {text &&
-            <h1 className={classes.title}>
-              {text}
-            </h1>
-          }
-        </div>
+      <div
+        className={classNames(classes.header, className)}
+        style={{ backgroundImage: `url('${background ? background : '/images/plaid.jpg'}')`, backgroundPosition }}
+      >
+        <div className={classes.titleContainer}>{text && <h1 className={classes.title}>{text}</h1>}</div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

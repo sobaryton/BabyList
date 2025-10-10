@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import { createUseStyles } from 'react-jss'
-import classNames from 'classnames'
-import { darkBlue, font20, lightBlue } from '../utils/constants'
-import ParticipateForm from './Participate/ParticipateForm'
-import { useAppSelector } from '../utils/hooks'
-import BuyForm from './Buy/BuyForm'
-import { GiftStatus } from '../reducers/selectedGift'
+import React, { useState } from 'react';
+import { createUseStyles } from 'react-jss';
+import classNames from 'classnames';
+import { darkBlue, font20, lightBlue } from '../utils/constants';
+import ParticipateForm from './Participate/ParticipateForm';
+import { useAppSelector } from '../utils/hooks';
+import BuyForm from './Buy/BuyForm';
+import { GiftStatus } from '../reducers/selectedGift';
 
 const listPageStyles = createUseStyles({
   btnWrap: {
@@ -13,7 +13,7 @@ const listPageStyles = createUseStyles({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    marginBottom: '2rem'
+    marginBottom: '2rem',
   },
   btn: {
     display: 'flex',
@@ -32,44 +32,53 @@ const listPageStyles = createUseStyles({
     padding: '0.5rem',
     '&:hover': {
       background: darkBlue,
-      color: lightBlue
+      color: lightBlue,
     },
     '&:last-child': {
-      marginRight: 0
-    }
+      marginRight: 0,
+    },
   },
   btnIcon: {
-    marginRight: '0.7rem'
+    marginRight: '0.7rem',
   },
   activeBtn: {
     background: darkBlue,
-    color: lightBlue
+    color: lightBlue,
   },
-})
+});
 
 const FormContent = () => {
-  const classes = listPageStyles()
-  const status = useAppSelector((state) => state.modal.data.status)
-  const alreadyBought = useAppSelector((state) => state.modal.data.alreadyBought)
-  const [type, setType] = useState<GiftStatus | undefined>()
+  const classes = listPageStyles();
+  const status = useAppSelector(state => state.modal.data.status);
+  const alreadyBought = useAppSelector(state => state.modal.data.alreadyBought);
+  const [type, setType] = useState<GiftStatus | undefined>();
 
   return (
     <>
-      {
-        (status === GiftStatus.PARTLY_FUNDED || alreadyBought)
-          ? <><h1>Participer</h1><ParticipateForm /></>
-          : <div className={classes.btnWrap}>
-            <button onClick={() => setType(GiftStatus.TO_OFFER)} className={classNames(classes.btn, type === GiftStatus.TO_OFFER ? classes.activeBtn : '')}>Commander</button>
-            <button onClick={() => setType(GiftStatus.PARTLY_FUNDED)} className={classNames(classes.btn, type === GiftStatus.PARTLY_FUNDED ? classes.activeBtn : '')}>Participer</button>
-      </div>
-      }
-      {
-        type === undefined ? '' : type === GiftStatus.TO_OFFER
-          ? <BuyForm />
-          : <ParticipateForm />
-      }
+      {status === GiftStatus.PARTLY_FUNDED || alreadyBought ? (
+        <>
+          <h1>Participer</h1>
+          <ParticipateForm />
+        </>
+      ) : (
+        <div className={classes.btnWrap}>
+          <button
+            onClick={() => setType(GiftStatus.TO_OFFER)}
+            className={classNames(classes.btn, type === GiftStatus.TO_OFFER ? classes.activeBtn : '')}
+          >
+            Commander
+          </button>
+          <button
+            onClick={() => setType(GiftStatus.PARTLY_FUNDED)}
+            className={classNames(classes.btn, type === GiftStatus.PARTLY_FUNDED ? classes.activeBtn : '')}
+          >
+            Participer
+          </button>
+        </div>
+      )}
+      {type === undefined ? '' : type === GiftStatus.TO_OFFER ? <BuyForm /> : <ParticipateForm />}
     </>
-  )
-}
+  );
+};
 
-export default FormContent
+export default FormContent;

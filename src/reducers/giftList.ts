@@ -1,22 +1,22 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { GiftType } from './selectedGift'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GiftType } from './selectedGift';
 
 type InitialState = {
-  gifts: GiftType[]
-}
+  gifts: GiftType[];
+};
 
 const giftListSlice = createSlice({
   name: 'modal',
   initialState: {
-    gifts: []
+    gifts: [],
   } as InitialState,
   reducers: {
     setGiftList: (state, action: PayloadAction<GiftType[]>) => {
-      state.gifts = action.payload
-    }
-  }
-})
+      state.gifts = action.payload;
+    },
+  },
+});
 
-export const { setGiftList } = giftListSlice.actions
+export const { setGiftList } = giftListSlice.actions;
 
-export default giftListSlice.reducer
+export default giftListSlice.reducer;

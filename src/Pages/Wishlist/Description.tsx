@@ -1,31 +1,42 @@
-import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { createUseStyles } from 'react-jss'
-import classNames from 'classnames'
-import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import WarningIcon from '@mui/icons-material/Warning'
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard'
-import { lightBlue, darkBlue, font20, darkYellow, lightYellow, red, white, green, orange, font48 } from '../../utils/constants'
-import Navigation from '../../Components/Navigation'
-import Header from '../../Components/Headers/Header'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import Modal from '../../Components/Modal'
-import FormContent from '../../Components/FormContent'
-import { toggleModal } from '../../reducers/modal'
-import { getGift } from '../../api/getGift'
-import { GiftStatus, GiftType, selectGift } from '../../reducers/selectedGift'
-import Loading from '../../Components/Loading'
-import { setGiftList } from '../../reducers/giftList'
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { createUseStyles } from 'react-jss';
+import classNames from 'classnames';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import WarningIcon from '@mui/icons-material/Warning';
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import {
+  lightBlue,
+  darkBlue,
+  font20,
+  darkYellow,
+  lightYellow,
+  red,
+  white,
+  green,
+  orange,
+  font48,
+} from '../../utils/constants';
+import Navigation from '../../Components/Navigation';
+import Header from '../../Components/Headers/Header';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import Modal from '../../Components/Modal';
+import FormContent from '../../Components/FormContent';
+import { toggleModal } from '../../reducers/modal';
+import { getGift } from '../../api/getGift';
+import { GiftStatus, GiftType, selectGift } from '../../reducers/selectedGift';
+import Loading from '../../Components/Loading';
+import { setGiftList } from '../../reducers/giftList';
 
 const cardStyles = createUseStyles({
   page: {
-    position: 'relative'
+    position: 'relative',
   },
   main: {
-    padding: '2rem 0.5rem'
+    padding: '2rem 0.5rem',
   },
   navigation: {
-    maxWidth: '25rem'
+    maxWidth: '25rem',
   },
   btn: {
     display: 'flex',
@@ -44,21 +55,21 @@ const cardStyles = createUseStyles({
     padding: '0.5rem',
     '&:hover': {
       background: darkBlue,
-      color: lightBlue
+      color: lightBlue,
     },
     '&:last-child': {
-      marginRight: 0
-    }
+      marginRight: 0,
+    },
   },
   btnIcon: {
-    marginRight: '0.7rem'
+    marginRight: '0.7rem',
   },
   offrirBtn: {
     background: lightYellow,
     color: darkYellow,
     '&:hover': {
       background: darkYellow,
-      color: lightYellow
+      color: lightYellow,
     },
   },
   articleDetails: {
@@ -73,7 +84,7 @@ const cardStyles = createUseStyles({
     alignItems: 'center',
     padding: '0.5rem 0',
     marginTop: '3rem',
-    maxWidth: '20rem'
+    maxWidth: '20rem',
   },
   article: {
     display: 'flex',
@@ -83,13 +94,13 @@ const cardStyles = createUseStyles({
     width: '100%',
     flexWrap: 'wrap',
     '& p': {
-      margin: '0.5rem 0'
+      margin: '0.5rem 0',
     },
     '@media (min-width: 1024px)': {
       flexDirection: 'row',
       alignContent: 'flex-start',
       justifyContent: 'flex-start',
-    }
+    },
   },
   image: {
     width: '100%',
@@ -105,14 +116,14 @@ const cardStyles = createUseStyles({
       marginRight: '1rem',
     },
     '& img': {
-      width: '100%'
-    }
+      width: '100%',
+    },
   },
   articleText: {
     width: '100%',
     '@media (min-width: 1024px)': {
       width: 'calc(60% - 1rem)',
-    }
+    },
   },
   provider: {
     color: darkBlue,
@@ -120,28 +131,28 @@ const cardStyles = createUseStyles({
     marginBottom: '1rem',
     fontWeight: 'bold',
     padding: '0.3rem 0.4rem',
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   header: {
     display: 'flex',
     width: '100%',
     alignItems: 'flex-start',
     flexDirection: 'column',
-    marginBottom: '3rem'
+    marginBottom: '3rem',
   },
   title: {
-    color: darkBlue
+    color: darkBlue,
   },
   labels: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   categorylabel: {
     background: lightBlue,
     color: darkBlue,
     '& p': {
       color: darkBlue,
-    }
+    },
   },
   label: {
     width: '10rem',
@@ -154,46 +165,46 @@ const cardStyles = createUseStyles({
       fontWeight: 700,
       textTransform: 'uppercase',
       color: white,
-      textAlign: 'center'
-    }
+      textAlign: 'center',
+    },
   },
   redLabel: {
-    background: red
+    background: red,
   },
   greenLabel: {
-    background: green
+    background: green,
   },
   orangeLabel: {
-    background: orange
+    background: orange,
   },
   textIcon: {
     display: 'flex',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   headerImage: {
-    opacity: 0.75
+    opacity: 0.75,
   },
   red: {
     color: red,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   nl2br: {
-    whiteSpace: 'pre-line'
+    whiteSpace: 'pre-line',
   },
   textWithIcon: {
     display: 'flex',
-    alignItems: 'center'
-  }
-})
+    alignItems: 'center',
+  },
+});
 
 const Description = () => {
-  const classes = cardStyles()
-  const dispatch = useAppDispatch()
-  const showModal = useAppSelector((state) => state.modal.isOpen)
-  const { id } = useParams() as { id: string }
-  const selectedGift = useAppSelector((state) => state.selectedGift.selectedGift)
-  const gifts = useAppSelector((state) => state.giftList.gifts)
+  const classes = cardStyles();
+  const dispatch = useAppDispatch();
+  const showModal = useAppSelector(state => state.modal.isOpen);
+  const { id } = useParams() as { id: string };
+  const selectedGift = useAppSelector(state => state.selectedGift.selectedGift);
+  const gifts = useAppSelector(state => state.giftList.gifts);
   const {
     image,
     url,
@@ -206,120 +217,169 @@ const Description = () => {
     remainingAmount,
     category,
     transactions,
-    alreadyBought
-  } = selectedGift || {} as GiftType
+    alreadyBought,
+  } = selectedGift || ({} as GiftType);
 
   const refreshGift = async (id: string) => {
-    const refreshedGift = await getGift(id)
-    dispatch(setGiftList(gifts.map(gift => gift.id === id ? refreshedGift : gift)))
-    dispatch(selectGift(refreshedGift))
-  }
+    const refreshedGift = await getGift(id);
+    dispatch(setGiftList(gifts.map(gift => (gift.id === id ? refreshedGift : gift))));
+    dispatch(selectGift(refreshedGift));
+  };
 
   useEffect(() => {
     if (!selectedGift || !transactions || selectedGift.id !== id) {
-      refreshGift(id)
+      refreshGift(id);
     }
-  }, [id, selectedGift, transactions]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, selectedGift, transactions]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const labelClass: {[key in GiftStatus]: keyof typeof classes} = {
+  const labelClass: { [key in GiftStatus]: keyof typeof classes } = {
     [GiftStatus.OFFERED]: 'greenLabel',
     [GiftStatus.TO_OFFER]: 'redLabel',
     [GiftStatus.PARTLY_FUNDED]: 'orangeLabel',
-  }
+  };
 
   const statusLabel = {
     [GiftStatus.OFFERED]: 'Offert',
     [GiftStatus.TO_OFFER]: 'À offrir',
     [GiftStatus.PARTLY_FUNDED]: 'À participer',
-  }
+  };
 
   const openTransactionModal = () => {
-    dispatch(toggleModal({ amount, status, remainingAmount, alreadyBought }))
-  }
+    dispatch(toggleModal({ amount, status, remainingAmount, alreadyBought }));
+  };
 
-  const Participants = ({uppercaseFirstLetter}: {uppercaseFirstLetter: boolean}) => {
-    const nonAnonymousTransactions = transactions?.filter(transactions => !transactions.anonymous) || []
+  const Participants = ({ uppercaseFirstLetter }: { uppercaseFirstLetter: boolean }) => {
+    const nonAnonymousTransactions = transactions?.filter(transactions => !transactions.anonymous) || [];
     if (nonAnonymousTransactions.length === 0) {
-      return uppercaseFirstLetter ? <span>Certaines personnes</span> : <span>certaines personnes</span>
+      return uppercaseFirstLetter ? <span>Certaines personnes</span> : <span>certaines personnes</span>;
     }
 
-    const nonAnonymousParticipants = nonAnonymousTransactions.map(transaction => transaction.name)
-    const uniqParticipants = Array.from(new Set(nonAnonymousParticipants))
-    const anonymousTransactions = transactions?.filter(transactions => transactions.anonymous) || []
+    const nonAnonymousParticipants = nonAnonymousTransactions.map(transaction => transaction.name);
+    const uniqParticipants = Array.from(new Set(nonAnonymousParticipants));
+    const anonymousTransactions = transactions?.filter(transactions => transactions.anonymous) || [];
 
     if (uniqParticipants.length > 0 && anonymousTransactions.length > 0) {
-      return <span>
-        {uniqParticipants.map((name, key) => [
-          key > 0 && ', ',
-          <b key={key}>{name}</b>
-        ])} et {anonymousTransactions.length} autre{anonymousTransactions.length > 1 && 's'}
-      </span>
+      return (
+        <span>
+          {uniqParticipants.map((name, key) => [key > 0 && ', ', <b key={key}>{name}</b>])} et{' '}
+          {anonymousTransactions.length} autre{anonymousTransactions.length > 1 && 's'}
+        </span>
+      );
     } else if (uniqParticipants.length === 1) {
-      return <b>{uniqParticipants[0]}</b>
+      return <b>{uniqParticipants[0]}</b>;
     } else {
-      return <span>
-        {uniqParticipants.slice(0, uniqParticipants.length - 1).map((name, key) => [
-          key > 0 && ', ',
-          <b key={key}>{name}</b>
-        ])} et <b>{uniqParticipants[uniqParticipants.length - 1]}</b></span>
+      return (
+        <span>
+          {uniqParticipants
+            .slice(0, uniqParticipants.length - 1)
+            .map((name, key) => [key > 0 && ', ', <b key={key}>{name}</b>])}{' '}
+          et <b>{uniqParticipants[uniqParticipants.length - 1]}</b>
+        </span>
+      );
     }
-  }
+  };
 
-  const GiftStatusBanner = ({displayStatus}: { displayStatus: GiftStatus}) => (
+  const GiftStatusBanner = ({ displayStatus }: { displayStatus: GiftStatus }) => (
     <div className={classNames(classes.label, classes[labelClass[displayStatus]])}>
       <p>{statusLabel[displayStatus]}</p>
     </div>
-  )
+  );
 
-  const GiftStatusMessage = ({giftStatus, alreadyBought, amount, remainingAmount, participants}: {giftStatus: GiftStatus, alreadyBought: boolean, amount: number, remainingAmount: number, participants: number}) => {
+  const GiftStatusMessage = ({
+    giftStatus,
+    alreadyBought,
+    amount,
+    remainingAmount,
+    participants,
+  }: {
+    giftStatus: GiftStatus;
+    alreadyBought: boolean;
+    amount: number;
+    remainingAmount: number;
+    participants: number;
+  }) => {
     if (giftStatus === GiftStatus.OFFERED) {
-      return <OfferedGiftStatusMessage amount={amount} />
+      return <OfferedGiftStatusMessage amount={amount} />;
     } else if (giftStatus === GiftStatus.TO_OFFER && alreadyBought) {
-      return <ToOfferAlreadyBoughtGiftStatusMessage amount={amount} />
+      return <ToOfferAlreadyBoughtGiftStatusMessage amount={amount} />;
     } else if (giftStatus === GiftStatus.TO_OFFER && !alreadyBought) {
-      return <ToOfferGiftStatusMessage amount={amount} />
+      return <ToOfferGiftStatusMessage amount={amount} />;
     } else {
-      return <ToParticipateGiftStatusMessage amount={amount} remainingAmount={remainingAmount} alreadyBought={alreadyBought} participants={participants} />
+      return (
+        <ToParticipateGiftStatusMessage
+          amount={amount}
+          remainingAmount={remainingAmount}
+          alreadyBought={alreadyBought}
+          participants={participants}
+        />
+      );
     }
-  }
+  };
 
-  const OfferedGiftStatusMessage = ({amount} : {amount: number}) => (
+  const OfferedGiftStatusMessage = ({ amount }: { amount: number }) => (
     <>
-      <p>Ce cadeau a déjà été offert par <Participants uppercaseFirstLetter={false} />.</p>
-      <p>Son prix était de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.</p>
+      <p>
+        Ce cadeau a déjà été offert par <Participants uppercaseFirstLetter={false} />.
+      </p>
+      <p>
+        Son prix était de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.
+      </p>
     </>
-  )
+  );
 
-  const ToOfferGiftStatusMessage = ({amount} : {amount: number}) => (
+  const ToOfferGiftStatusMessage = ({ amount }: { amount: number }) => (
     <>
       <p>Ce cadeau est à offrir.</p>
-      <p>Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.</p>
+      <p>
+        Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.
+      </p>
     </>
-  )
+  );
 
-  const ToOfferAlreadyBoughtGiftStatusMessage = ({amount} : {amount: number}) => (
+  const ToOfferAlreadyBoughtGiftStatusMessage = ({ amount }: { amount: number }) => (
     <>
-      <p>Ce cadeau est à offrir <span className={classes.red}>sous forme de participation uniqument, car nous en avons fait l'achat à l'avance</span>.</p>
-      <p>Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.</p>
+      <p>
+        Ce cadeau est à offrir{' '}
+        <span className={classes.red}>
+          sous forme de participation uniqument, car nous en avons fait l'achat à l'avance
+        </span>
+        .
+      </p>
+      <p>
+        Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>.
+      </p>
     </>
-  )
+  );
 
-  const ToParticipateGiftStatusMessage = ({amount, remainingAmount, alreadyBought, participants}: {amount: number, remainingAmount: number, alreadyBought: boolean, participants: number}) => (
+  const ToParticipateGiftStatusMessage = ({
+    amount,
+    remainingAmount,
+    alreadyBought,
+    participants,
+  }: {
+    amount: number;
+    remainingAmount: number;
+    alreadyBought: boolean;
+    participants: number;
+  }) => (
     <>
       <div className={classes.textWithIcon}>
         <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
-        <p><Participants uppercaseFirstLetter={true} /> {participants > 1 ? 'ont' : 'a'} déjà contribué à financer ce cadeau.</p>
+        <p>
+          <Participants uppercaseFirstLetter={true} /> {participants > 1 ? 'ont' : 'a'} déjà contribué à financer ce
+          cadeau.
+        </p>
       </div>
       <p>
-        Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>,
-        et il reste <b>{currency === 'GBP' ? `£${remainingAmount}` : `${remainingAmount}€`}</b> ({Math.floor((remainingAmount / amount) * 100)}%)
-        à participer.
+        Son prix total est de <b>{currency === 'GBP' ? `£${amount}` : `${amount}€`}</b>, et il reste{' '}
+        <b>{currency === 'GBP' ? `£${remainingAmount}` : `${remainingAmount}€`}</b> (
+        {Math.floor((remainingAmount / amount) * 100)}%) à participer.
       </p>
       {alreadyBought && <p className={classes.red}>Notez que nous avons déjà fait l'achat de ce cadeau à l'avance.</p>}
     </>
-  )
+  );
 
-  const giftDisplayStatus = status === GiftStatus.TO_OFFER && alreadyBought ? GiftStatus.PARTLY_FUNDED : status
+  const giftDisplayStatus = status === GiftStatus.TO_OFFER && alreadyBought ? GiftStatus.PARTLY_FUNDED : status;
 
   return selectedGift ? (
     <div className={classes.page}>
@@ -327,13 +387,13 @@ const Description = () => {
         <Header background="/images/pieds-bebe.jpg" backgroundPosition="center" className={classes.headerImage} />
       </header>
       <main className={classes.main}>
-        <Navigation className={classes.navigation} link='/list' />
+        <Navigation className={classes.navigation} link="/list" />
         <div>
           <div className={classes.articleDetails}>
             <div className={classes.header}>
               <h1 className={classes.title}>{title}</h1>
               <div className={classes.labels}>
-                <GiftStatusBanner displayStatus={giftDisplayStatus}/>
+                <GiftStatusBanner displayStatus={giftDisplayStatus} />
                 <div className={classNames(classes.label, classes.categorylabel)}>
                   <p>{category}</p>
                 </div>
@@ -345,36 +405,52 @@ const Description = () => {
               </div>
               <div className={classes.articleText}>
                 <p className={classes.nl2br}>{description}</p>
-                <GiftStatusMessage giftStatus={status} alreadyBought={alreadyBought} amount={amount} remainingAmount={remainingAmount} participants={transactions?.length || 0} />
-                <p>Trouvez cet article sur <a className={classes.provider} href={url} target='_blank' rel="noreferrer">{store}</a>.</p>
+                <GiftStatusMessage
+                  giftStatus={status}
+                  alreadyBought={alreadyBought}
+                  amount={amount}
+                  remainingAmount={remainingAmount}
+                  participants={transactions?.length || 0}
+                />
+                <p>
+                  Trouvez cet article sur{' '}
+                  <a className={classes.provider} href={url} target="_blank" rel="noreferrer">
+                    {store}
+                  </a>
+                  .
+                </p>
                 <div className={classes.buttonWrap}>
                   <button className={classes.btn} onClick={() => window.open(url)}>
                     <OpenInNewIcon className={classes.btnIcon} />
                     Lien
                   </button>
-                  {
-                    !alreadyBought && status === GiftStatus.TO_OFFER &&
+                  {!alreadyBought && status === GiftStatus.TO_OFFER && (
                     <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Offrir
                     </button>
-                  }
-                  {
-                    ((alreadyBought && status === GiftStatus.TO_OFFER) || status === GiftStatus.PARTLY_FUNDED) &&
+                  )}
+                  {((alreadyBought && status === GiftStatus.TO_OFFER) || status === GiftStatus.PARTLY_FUNDED) && (
                     <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Participer
                     </button>
-                  }
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </main>
-      {showModal && <Modal><FormContent /></Modal>}
+      {showModal && (
+        <Modal>
+          <FormContent />
+        </Modal>
+      )}
     </div>
-  ) : <Loading />
-}
+  ) : (
+    <Loading />
+  );
+};
 
-export default Description
+export default Description;

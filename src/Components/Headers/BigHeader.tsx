@@ -1,8 +1,8 @@
-import * as React from 'react'
-import { createUseStyles } from 'react-jss'
-import { Link } from 'react-router-dom'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
-import { darkBlue, font32, lightBlue } from '../../utils/constants'
+import * as React from 'react';
+import { createUseStyles } from 'react-jss';
+import { Link } from 'react-router-dom';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { darkBlue, font32, lightBlue } from '../../utils/constants';
 
 const headerStyles = createUseStyles({
   header: {
@@ -13,19 +13,19 @@ const headerStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-end',
-    position: 'relative'
+    position: 'relative',
   },
   overlay: {
     position: 'absolute',
     width: '100%',
     height: '50vh',
-    background: 'rgba(255,255,255,0.5)'
+    background: 'rgba(255,255,255,0.5)',
   },
   link: {
     textDecoration: 'none',
     cursor: 'pointer',
     marginBottom: '-2rem',
-    zIndex: 10
+    zIndex: 10,
   },
   button: {
     width: '22rem',
@@ -43,16 +43,16 @@ const headerStyles = createUseStyles({
     '&:hover': {
       background: darkBlue,
       color: lightBlue,
-    }
+    },
   },
   arrow: {
     marginLeft: '1rem',
     transition: '500ms all ease',
-  }
-})
+  },
+});
 
 const BigHeader = () => {
-  const classes = headerStyles()
+  const classes = headerStyles();
   return (
     <div className={classes.header}>
       <div className={classes.overlay}></div>
@@ -63,7 +63,7 @@ const BigHeader = () => {
         </button>
       </Link>
     </div>
-  )
-}
+  );
+};
 
-export default BigHeader
+export default BigHeader;
