@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss'
 import { FormControlLabel, Switch, TextField } from '@mui/material';
 import { GiftType } from '../../reducers/selectedGift';
-import { AddGiftType } from '../../Pages/AdminAddGift';
+import { AddGiftType } from '../../Pages/Admin/AdminAddGift';
 
 const useStyle = createUseStyles({
     form: {

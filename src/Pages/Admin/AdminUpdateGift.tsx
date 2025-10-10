@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { adminUpdateGift } from '../api/adminUpdateGift'
-import { getGift } from '../api/getGift'
-import GiftForm, { GiftData } from '../Components/Admin/GiftForm'
-import { GiftStatus, GiftType } from '../reducers/selectedGift'
+import { adminUpdateGift } from '../../api/adminUpdateGift'
+import { getGift } from '../../api/getGift'
+import GiftForm, { GiftData } from '../../Components/Admin/GiftForm'
+import { GiftStatus, GiftType } from '../../reducers/selectedGift'
 
 export type AddGiftType = {
     title: string

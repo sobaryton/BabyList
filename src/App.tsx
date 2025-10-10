@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router'
 import { createUseStyles } from 'react-jss'
-import ListPage from './Pages/ListPage'
 import Home from './Pages/Home'
 import { sansSerif } from './utils/constants'
-import Description from './Pages/Description'
-import AdminAddGift from './Pages/AdminAddGift'
-import AdminUpdateGift from './Pages/AdminUpdateGift'
-import AdminList from './Pages/AdminList'
-import AdminMessages from './Pages/AdminMessages'
+import Loading from './Components/Loading'
+
+const ListPage = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.ListPage })))
+const Description = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.Description })))
+
+const AdminAddGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminAddGift })))
+const AdminUpdateGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminUpdateGift })))
+const AdminList = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminList })))
+const AdminMessages = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminMessages })))
 
 const appStyles = createUseStyles({
   "@global": {
@@ -30,15 +33,17 @@ const App = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="list" element={<ListPage />} />
-        <Route path="description/:id" element={<Description />} />
-        <Route path="/admin" element={<AdminList />} />
-        <Route path="/admin/add" element={<AdminAddGift />} />
-        <Route path="/admin/messages" element={<AdminMessages />} />
-        <Route path="/admin/update/:id" element={<AdminUpdateGift />} />
-      </Routes>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/list" element={<ListPage />} />
+          <Route path="/description/:id" element={<Description />} />
+          <Route path="/admin" element={<AdminList />} />
+          <Route path="/admin/add" element={<AdminAddGift />} />
+          <Route path="/admin/messages" element={<AdminMessages />} />
+          <Route path="/admin/update/:id" element={<AdminUpdateGift />} />
+        </Routes>
+      </Suspense>
     </>
   )
 }

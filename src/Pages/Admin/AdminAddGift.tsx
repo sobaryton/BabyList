@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { adminAddGift } from '../api/adminAddGift'
-import GiftForm, { GiftData } from '../Components/Admin/GiftForm'
+import { adminAddGift } from '../../api/adminAddGift'
+import GiftForm, { GiftData } from '../../Components/Admin/GiftForm'
 
 export type AddGiftType = {
     title: string

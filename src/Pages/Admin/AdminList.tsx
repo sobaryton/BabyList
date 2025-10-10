@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import AddIcon from '@mui/icons-material/Add'
 import MessageIcon from '@mui/icons-material/Message'
-import { font20, lightGreen, darkGreen, lightBlue, darkBlue } from '../utils/constants'
-import { adminDeleteGift } from '../api/adminDeleteGift'
-import { adminListGifts } from '../api/adminListGifts'
-import GiftCard from '../Components/Admin/GiftCard'
-import { GiftType } from '../reducers/selectedGift'
+import { font20, lightGreen, darkGreen, lightBlue, darkBlue } from '../../utils/constants'
+import { adminDeleteGift } from '../../api/adminDeleteGift'
+import { adminListGifts } from '../../api/adminListGifts'
+import GiftCard from '../../Components/Admin/GiftCard'
+import { GiftType } from '../../reducers/selectedGift'
 
 const useStyle = createUseStyles({
     list: {

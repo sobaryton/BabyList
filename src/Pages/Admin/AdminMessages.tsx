@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 import { Link } from 'react-router-dom'
-import { adminGetTransactions } from '../api/adminGetTransactions'
-import Header from '../Components/Headers/Header'
-import Loading from '../Components/Loading'
-import { TransactionType, Transaction } from '../reducers/selectedGift'
-import { darkBlue, font14, font16, font20, lightBlue } from '../utils/constants'
+import { adminGetTransactions } from '../../api/adminGetTransactions'
+import Header from '../../Components/Headers/Header'
+import Loading from '../../Components/Loading'
+import { TransactionType, Transaction } from '../../reducers/selectedGift'
+import { darkBlue, font14, font16, font20, lightBlue } from '../../utils/constants'
 
 const messagePageStyles = createUseStyles({
   transactions: {
