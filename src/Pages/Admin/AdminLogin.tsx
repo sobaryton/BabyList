@@ -8,8 +8,8 @@ const AdminLogin = () => {
   const loginAction = async () => {
     await auth.signinPopup();
 
-    await navigate("/admin");
-  }
+    await navigate('/admin');
+  };
 
   return (
     <>

@@ -5,8 +5,9 @@ import { sansSerif } from './utils/constants';
 import Loading from './Components/Loading';
 import { Navigate } from 'react-router-dom';
 
-// Bundle code into 3 lazily-loaded artifacts: home, lists + gifts, admin.
+// Bundle code into 4 lazily-loaded artifacts: home, not found, lists + gifts, admin.
 const Home = lazy(() => import('./Pages/Home').then(m => ({ default: m.default })));
+const NotFound = lazy(() => import('./Pages/NotFound').then(m => ({ default: m.default })));
 
 const ListPage = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.ListPage })));
 const Description = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.Description })));
@@ -39,21 +40,22 @@ const App = () => {
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        <Route path="" element={<Home />} />
+        <Route index element={<Home />} />
         <Route path="list">
           <Route path="" element={<ListPage />} />
           <Route path="description/:id" element={<Description />} />
         </Route>
         <Route path="admin" element={<Authenticated />}>
-          <Route path="" element={<Navigate to="list" />} />
+          <Route index element={<Navigate to="list" />} />
           <Route path="login" element={<AdminLogin />} />
           <Route path="list">
-            <Route path="" element={<AdminList />} />
+            <Route index element={<AdminList />} />
             <Route path="add" element={<AdminAddGift />} />
             <Route path="messages" element={<AdminMessages />} />
             <Route path="update/:id" element={<AdminUpdateGift />} />
           </Route>
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

@@ -7,6 +7,7 @@ import Loading from '../../Components/Loading';
 import { TransactionType, Transaction } from '../../reducers/selectedGift';
 import { darkBlue, font14, font16, font20, lightBlue } from '../../utils/constants';
 import { withAuthenticationRequired } from '../../utils/authentication';
+import { useAuth } from 'react-oidc-context';
 
 const messagePageStyles = createUseStyles({
   transactions: {
@@ -67,10 +68,11 @@ const messagePageStyles = createUseStyles({
 
 const AdminMessages = () => {
   const classes = messagePageStyles();
+  const auth = useAuth();
   const [transactions, setTransactions] = useState([] as Transaction[]);
 
   useEffect(() => {
-    adminGetTransactions().then((transactions: Transaction[]) => setTransactions(transactions));
+    adminGetTransactions(auth.user!.access_token).then((transactions: Transaction[]) => setTransactions(transactions));
   }, []);
 
   const getfFrenchTypes = (type: TransactionType) => {

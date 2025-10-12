@@ -18,6 +18,7 @@ The Admin portal requires authentication using Authentik SSO.
 The `/admin` route prefix is wrapped in an `AuthProvider` from
 [`react-oidc-context`](https://github.com/authts/react-oidc-context).
 When accessing a protected route without being authenticated:
+
 - A redirect occurs to `/admin/login`
 - The OIDC package generates a PKCE `code_verifier` and a `state`, and stores them in
   the context
@@ -33,8 +34,8 @@ When accessing a protected route without being authenticated:
   authentication details to its parent tab, and then closes
 - In the parent tab the OIDC package reads the message with something like:
   ```ts
-  window.addEventListener("message", (event) => {
-    if (event.origin != "theExpectedUrl") return;
+  window.addEventListener('message', event => {
+    if (event.origin != 'theExpectedUrl') return;
     process(event.data);
   });
   ```

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import AddIcon from '@mui/icons-material/Add';
 import MessageIcon from '@mui/icons-material/Message';
@@ -10,6 +10,7 @@ import { adminListGifts } from '../../api/adminListGifts';
 import GiftCard from '../../Components/Admin/GiftCard';
 import { GiftType } from '../../reducers/selectedGift';
 import { withAuthenticationRequired } from '../../utils/authentication';
+import { useAuth } from 'react-oidc-context';
 
 const useStyle = createUseStyles({
   list: {
@@ -69,10 +70,12 @@ const useStyle = createUseStyles({
 
 const AdminList = () => {
   const [gifts, setGifts] = useState([] as GiftType[]);
+  const navigate = useNavigate();
+  const auth = useAuth();
   const classes = useStyle();
 
   useEffect(() => {
-    adminListGifts().then(setGifts);
+    adminListGifts(auth.user!.access_token).then(setGifts);
   }, []);
 
   const deleteGift = (giftId: string) => {
@@ -81,8 +84,14 @@ const AdminList = () => {
       return;
     }
 
-    adminDeleteGift(giftId).then(() => setGifts(gifts.filter(gift => gift.id !== giftId)));
+    adminDeleteGift(giftId, auth.user!.access_token).then(() => setGifts(gifts.filter(gift => gift.id !== giftId)));
   };
+
+  const logout = async ()=> {
+    await auth.signoutRedirect();
+
+    await navigate("/");
+  }
 
   return (
     <>
@@ -98,6 +107,8 @@ const AdminList = () => {
           View Messages
         </button>
       </Link>
+      {/* TODO: Logout which calls OIDC package logout + ensure it also logs out in Authentik */}
+      <button onClick={logout}>Logout</button>
       <article className={classes.list}>
         {gifts.map(gift => (
           <GiftCard key={gift.id} gift={gift} onDelete={() => deleteGift(gift.id)} />

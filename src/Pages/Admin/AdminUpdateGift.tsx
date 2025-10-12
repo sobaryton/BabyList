@@ -5,6 +5,7 @@ import { getGift } from '../../api/getGift';
 import GiftForm, { GiftData } from '../../Components/Admin/GiftForm';
 import { GiftStatus, GiftType } from '../../reducers/selectedGift';
 import { withAuthenticationRequired } from '../../utils/authentication';
+import { useAuth } from 'react-oidc-context';
 
 const defaultGiftData: GiftType = {
   id: '',
@@ -28,13 +29,14 @@ const AdminUpdateGift = () => {
   const { id } = useParams();
   const [formData, setFormData] = useState(defaultGiftData);
   const [message, setMessage] = useState<string | undefined>(undefined);
+  const auth = useAuth();
 
   useEffect(() => {
     getGift(id as string).then(setFormData);
   }, [id]);
 
   const onFormSubmit = (giftData: GiftData) => {
-    adminUpdateGift(id as string, giftData)
+    adminUpdateGift(id as string, giftData, auth.user!.access_token)
       .then(() => setMessage('Successfully updated!'))
       .catch(exception =>
         setMessage('Error: ' + (exception?.response?.data?.message || exception?.message || exception))

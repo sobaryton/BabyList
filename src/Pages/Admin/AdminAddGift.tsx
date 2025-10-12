@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { adminAddGift } from '../../api/adminAddGift';
 import GiftForm, { GiftData } from '../../Components/Admin/GiftForm';
 import { withAuthenticationRequired } from '../../utils/authentication';
+import { useAuth } from 'react-oidc-context';
 
 export type AddGiftType = {
   title: string;
@@ -30,9 +31,10 @@ const defaultFormData: AddGiftType = {
 const AdminAddGift = () => {
   const [formData, setFormData] = useState(defaultFormData);
   const [message, setMessage] = useState<string | undefined>(undefined);
+  const auth = useAuth();
 
   const onFormSubmit = (giftData: GiftData) => {
-    adminAddGift(giftData)
+    adminAddGift(giftData, auth.user!.access_token)
       .then(gift => {
         setFormData({ ...defaultFormData });
         setMessage(`Successfully created gift with id ${gift.id}`);
