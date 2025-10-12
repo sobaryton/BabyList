@@ -13,7 +13,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { darkBlue, font20, font32, green, lightBlue, red } from '../../utils/constants';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { useAppDispatch, useAppSelector } from '../../utils/state';
 import { participate } from '../../api/participate';
 import { randomizeGif } from '../../utils/gifRandomizer';
 import { GiftType, selectGift } from '../../reducers/selectedGift';

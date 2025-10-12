@@ -9,6 +9,7 @@ import { adminDeleteGift } from '../../api/adminDeleteGift';
 import { adminListGifts } from '../../api/adminListGifts';
 import GiftCard from '../../Components/Admin/GiftCard';
 import { GiftType } from '../../reducers/selectedGift';
+import { withAuthenticationRequired } from '../../utils/authentication';
 
 const useStyle = createUseStyles({
   list: {
@@ -85,13 +86,13 @@ const AdminList = () => {
 
   return (
     <>
-      <Link to="/admin/add" className={classes.link}>
+      <Link to="add" className={classes.link}>
         <button className={classNames(classes.btn, classes.greenBtn)}>
           <AddIcon className={classes.btnIcon} />
           Add Gift
         </button>
       </Link>
-      <Link to="/admin/messages" className={classes.link}>
+      <Link to="messages" className={classes.link}>
         <button className={classNames(classes.btn, classes.blueBtn)}>
           <MessageIcon className={classes.btnIcon} />
           View Messages
@@ -106,4 +107,4 @@ const AdminList = () => {
   );
 };
 
-export default AdminList;
+export default withAuthenticationRequired(AdminList);

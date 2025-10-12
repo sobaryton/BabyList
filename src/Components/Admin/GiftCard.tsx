@@ -183,7 +183,7 @@ const GiftCard = ({ gift, onDelete }: { gift: GiftType; onDelete: () => void }) 
         <p>{description.length > 35 ? `${description.substring(0, 35)}...` : description}</p>
       </div>
       <div className={classes.buttonWrap}>
-        <Link to={`/admin/update/${id}`} className={classes.link}>
+        <Link to={`update/${id}`} className={classes.link}>
           <button className={classes.btn}>
             <AutorenewIcon className={classes.btnIcon} />
             Update

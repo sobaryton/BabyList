@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type InitialState = {
+type SelectedGiftState = {
   selectedGift?: GiftType;
 };
 
@@ -53,10 +53,10 @@ export type GiftType = {
 };
 
 const selectedGiftSlice = createSlice({
-  name: 'modal',
+  name: 'selectedGift',
   initialState: {
     selectedGift: undefined,
-  } as InitialState,
+  } as SelectedGiftState,
   reducers: {
     selectGift: (state, action: PayloadAction<GiftType>) => {
       state.selectedGift = action.payload;

@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { createUseStyles } from 'react-jss';
 import { darkBlue, red, white } from '../utils/constants';
 import CloseIcon from '@mui/icons-material/Close';
-import { useAppDispatch } from '../utils/hooks';
+import { useAppDispatch } from '../utils/state';
 import { toggleModal } from '../reducers/modal';
 import { GiftStatus } from '../reducers/selectedGift';
 

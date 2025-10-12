@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
 import { darkBlue, font20, lightBlue } from '../utils/constants';
 import ParticipateForm from './Participate/ParticipateForm';
-import { useAppSelector } from '../utils/hooks';
+import { useAppSelector } from '../utils/state';
 import BuyForm from './Buy/BuyForm';
 import { GiftStatus } from '../reducers/selectedGift';
 

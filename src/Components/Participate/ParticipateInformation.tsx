@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAppSelector } from '../../utils/hooks';
+import { useAppSelector } from '../../utils/state';
 
 const ParticipateInformation = () => {
   const { remainingAmount, amount } = useAppSelector(state => state.modal.data);

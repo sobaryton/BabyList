@@ -19,7 +19,7 @@ import {
   blue,
 } from '../utils/constants';
 import { GiftStatus, GiftType, selectGift } from '../reducers/selectedGift';
-import { useAppDispatch } from '../utils/hooks';
+import { useAppDispatch } from '../utils/state';
 
 const cardStyles = createUseStyles({
   card: {
@@ -214,7 +214,7 @@ const Card = ({ card, onToggleModal }: CardElement) => {
         <p>{description.length > 35 ? `${description.substring(0, 35)}...` : description}</p>
       </div>
       <div className={classes.buttonWrap}>
-        <Link to={`/description/${id}`} className={classes.link} onClick={setSelectedGift}>
+        <Link to={`/list/description/${id}`} className={classes.link} onClick={setSelectedGift}>
           <button className={classes.btn}>
             <SearchIcon className={classes.btnIcon} />
             Détails

@@ -6,6 +6,7 @@ import Header from '../../Components/Headers/Header';
 import Loading from '../../Components/Loading';
 import { TransactionType, Transaction } from '../../reducers/selectedGift';
 import { darkBlue, font14, font16, font20, lightBlue } from '../../utils/constants';
+import { withAuthenticationRequired } from '../../utils/authentication';
 
 const messagePageStyles = createUseStyles({
   transactions: {
@@ -96,7 +97,7 @@ const AdminMessages = () => {
                       {getfFrenchTypes(transaction.type)} - {transaction.amount}€
                     </p>
                     <p className={classes.message}>{transaction.message}</p>
-                    <Link to={`/description/${transaction.giftId}`} className={classes.btn}>
+                    <Link to={`/list/description/${transaction.giftId}`} className={classes.btn}>
                       Lien du cadeau
                     </Link>
                   </div>
@@ -110,4 +111,4 @@ const AdminMessages = () => {
   );
 };
 
-export default AdminMessages;
+export default withAuthenticationRequired(AdminMessages);

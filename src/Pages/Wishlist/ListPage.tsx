@@ -4,7 +4,7 @@ import SearchBar from '../../Components/SearchBar';
 import Card from '../../Components/Card';
 import Header from '../../Components/Headers/Header';
 import Navigation from '../../Components/Navigation';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { useAppDispatch, useAppSelector } from '../../utils/state';
 import Modal from '../../Components/Modal';
 import { toggleModal } from '../../reducers/modal';
 import FormContent from '../../Components/FormContent';

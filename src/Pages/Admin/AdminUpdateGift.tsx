@@ -4,6 +4,7 @@ import { adminUpdateGift } from '../../api/adminUpdateGift';
 import { getGift } from '../../api/getGift';
 import GiftForm, { GiftData } from '../../Components/Admin/GiftForm';
 import { GiftStatus, GiftType } from '../../reducers/selectedGift';
+import { withAuthenticationRequired } from '../../utils/authentication';
 
 const defaultGiftData: GiftType = {
   id: '',
@@ -43,4 +44,4 @@ const AdminUpdateGift = () => {
   return <GiftForm message={message} onSubmit={onFormSubmit} gift={formData} />;
 };
 
-export default AdminUpdateGift;
+export default withAuthenticationRequired(AdminUpdateGift);

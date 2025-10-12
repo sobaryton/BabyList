@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { adminAddGift } from '../../api/adminAddGift';
 import GiftForm, { GiftData } from '../../Components/Admin/GiftForm';
+import { withAuthenticationRequired } from '../../utils/authentication';
 
 export type AddGiftType = {
   title: string;
@@ -44,4 +45,4 @@ const AdminAddGift = () => {
   return <GiftForm message={message} onSubmit={onFormSubmit} gift={formData} />;
 };
 
-export default AdminAddGift;
+export default withAuthenticationRequired(AdminAddGift);

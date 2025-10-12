@@ -19,7 +19,7 @@ import {
 } from '../../utils/constants';
 import Navigation from '../../Components/Navigation';
 import Header from '../../Components/Headers/Header';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { useAppDispatch, useAppSelector } from '../../utils/state';
 import Modal from '../../Components/Modal';
 import FormContent from '../../Components/FormContent';
 import { toggleModal } from '../../reducers/modal';
@@ -228,7 +228,7 @@ const Description = () => {
 
   useEffect(() => {
     if (!selectedGift || !transactions || selectedGift.id !== id) {
-      refreshGift(id);
+      void refreshGift(id);
     }
   }, [id, selectedGift, transactions]); // eslint-disable-line react-hooks/exhaustive-deps
 

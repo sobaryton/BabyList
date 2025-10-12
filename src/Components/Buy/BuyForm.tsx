@@ -4,7 +4,7 @@ import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import { TextField, FormControlLabel, Checkbox, FormGroup } from '@mui/material';
 import { darkBlue, font20, font32, green, lightBlue, red } from '../../utils/constants';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks';
+import { useAppDispatch, useAppSelector } from '../../utils/state';
 import { sendOffer } from '../../api/sendOffer';
 import { randomizeGif } from '../../utils/gifRandomizer';
 import { GiftType, selectGift } from '../../reducers/selectedGift';
