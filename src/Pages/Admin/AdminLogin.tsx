@@ -5,7 +5,7 @@ const AdminLogin = () => {
   const auth = useAuth();
   const navigate = useNavigate();
 
-  const loginAction = async () => {
+  const authentikLogin = async () => {
     await auth.signinPopup();
 
     await navigate('/admin');
@@ -14,7 +14,7 @@ const AdminLogin = () => {
   return (
     <>
       <h1>Please login</h1>
-      <button onClick={loginAction}>Login</button>
+      <button onClick={authentikLogin}>Login with Authentik</button>
     </>
   );
 };

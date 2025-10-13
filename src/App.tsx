@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss';
 import { sansSerif } from './utils/constants';
 import Loading from './Components/Loading';
 import { Navigate } from 'react-router-dom';
+import AuthentikLoginCallback from './Pages/Admin/AuthentikLoginCallback';
 
 // Bundle code into 4 lazily-loaded artifacts: home, not found, lists + gifts, admin.
 const Home = lazy(() => import('./Pages/Home').then(m => ({ default: m.default })));
@@ -18,6 +19,7 @@ const AdminAddGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.
 const AdminUpdateGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminUpdateGift })));
 const AdminList = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminList })));
 const AdminMessages = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminMessages })));
+const AuthentikLogin = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AuthentikLogin })));
 
 const appStyles = createUseStyles({
   '@global': {
@@ -42,12 +44,18 @@ const App = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path="list">
-          <Route path="" element={<ListPage />} />
+          <Route index element={<ListPage />} />
           <Route path="description/:id" element={<Description />} />
         </Route>
         <Route path="admin" element={<Authenticated />}>
           <Route index element={<Navigate to="list" />} />
-          <Route path="login" element={<AdminLogin />} />
+          <Route path="login">
+            <Route index element={<AdminLogin />} />
+            <Route path="authentik">
+              <Route index element={<AuthentikLogin />} />
+              <Route path="callback" element={<AuthentikLoginCallback />} />
+            </Route>
+          </Route>
           <Route path="list">
             <Route index element={<AdminList />} />
             <Route path="add" element={<AdminAddGift />} />

@@ -11,6 +11,7 @@ import GiftCard from '../../Components/Admin/GiftCard';
 import { GiftType } from '../../reducers/selectedGift';
 import { withAuthenticationRequired } from '../../utils/authentication';
 import { useAuth } from 'react-oidc-context';
+import type { RevokeTokensTypes } from 'oidc-client-ts';
 
 const useStyle = createUseStyles({
   list: {
@@ -87,11 +88,12 @@ const AdminList = () => {
     adminDeleteGift(giftId, auth.user!.access_token).then(() => setGifts(gifts.filter(gift => gift.id !== giftId)));
   };
 
-  const logout = async ()=> {
-    await auth.signoutRedirect();
+  const logout = async () => {
+    void auth.revokeTokens(); //TODO: The promise is not awaited because it currently gets a CORS error, which should be fixed after https://github.com/goauthentik/authentik/pull/17233 is merged.
+    await auth.removeUser();
 
-    await navigate("/");
-  }
+    await navigate('/');
+  };
 
   return (
     <>

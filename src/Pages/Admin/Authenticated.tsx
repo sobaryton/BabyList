@@ -8,6 +8,7 @@ const oidcConfig: AuthProviderProps = {
   scope: 'openid profile email',
   redirect_uri: `${window.origin}/admin/login`,
   userStore: new WebStorageStateStore({ store: window.localStorage }),
+  revokeTokensOnSignout: true,
 };
 
 const Authenticated = () => {
