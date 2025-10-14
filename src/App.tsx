@@ -14,11 +14,11 @@ const ListPage = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.L
 const Description = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.Description })));
 
 const Authenticated = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Authenticated })));
-const AdminLogin = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminLogin })));
-const AdminAddGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminAddGift })));
+const AdminLogin = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Login })));
+const AdminAddGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AddGift })));
 const AdminUpdateGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminUpdateGift })));
-const AdminList = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminList })));
-const AdminMessages = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminMessages })));
+const AdminList = lazy(() => import('./Pages/Admin').then(m => ({ default: m.List })));
+const AdminMessages = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Messages })));
 const AuthentikLogin = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AuthentikLogin })));
 
 const appStyles = createUseStyles({

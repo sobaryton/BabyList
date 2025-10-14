@@ -1,9 +1,9 @@
 import Authenticated from './Authenticated';
-import AdminLogin from './AdminLogin';
-import AdminAddGift from './AdminAddGift';
-import AdminList from './AdminList';
-import AdminMessages from './AdminMessages';
-import AdminUpdateGift from './AdminUpdateGift';
+import Login from './Login';
+import AddGift from './AddGift';
+import List from './List';
+import Messages from './Messages';
+import AdminUpdateGift from './UpdateGift';
 import AuthentikLogin from './AuthentikLogin';
 
-export { Authenticated, AdminLogin, AdminAddGift, AdminList, AdminMessages, AdminUpdateGift, AuthentikLogin };
+export { Authenticated, Login, AddGift, List, Messages, AdminUpdateGift, AuthentikLogin };

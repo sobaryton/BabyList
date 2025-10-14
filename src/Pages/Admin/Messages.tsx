@@ -66,7 +66,7 @@ const messagePageStyles = createUseStyles({
   },
 });
 
-const AdminMessages = () => {
+const Messages = () => {
   const classes = messagePageStyles();
   const auth = useAuth();
   const [transactions, setTransactions] = useState([] as Transaction[]);
@@ -113,4 +113,4 @@ const AdminMessages = () => {
   );
 };
 
-export default withAuthenticationRequired(AdminMessages);
+export default withAuthenticationRequired(Messages);

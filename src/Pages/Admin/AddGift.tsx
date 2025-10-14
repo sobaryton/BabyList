@@ -28,7 +28,7 @@ const defaultFormData: AddGiftType = {
   alreadyBought: false,
 };
 
-const AdminAddGift = () => {
+const AddGift = () => {
   const [formData, setFormData] = useState(defaultFormData);
   const [message, setMessage] = useState<string | undefined>(undefined);
   const auth = useAuth();
@@ -47,4 +47,4 @@ const AdminAddGift = () => {
   return <GiftForm message={message} onSubmit={onFormSubmit} gift={formData} />;
 };
 
-export default withAuthenticationRequired(AdminAddGift);
+export default withAuthenticationRequired(AddGift);

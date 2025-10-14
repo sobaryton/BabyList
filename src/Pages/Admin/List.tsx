@@ -69,7 +69,7 @@ const useStyle = createUseStyles({
   },
 });
 
-const AdminList = () => {
+const List = () => {
   const [gifts, setGifts] = useState([] as GiftType[]);
   const navigate = useNavigate();
   const auth = useAuth();
@@ -120,4 +120,4 @@ const AdminList = () => {
   );
 };
 
-export default withAuthenticationRequired(AdminList);
+export default withAuthenticationRequired(List);

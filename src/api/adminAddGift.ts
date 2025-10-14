@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AddGiftType } from '../Pages/Admin/AdminAddGift';
+import { AddGiftType } from '../Pages/Admin/AddGift';
 import { GiftType } from '../reducers/selectedGift';
 
 export const adminAddGift = async (data: AddGiftType, accessToken: string) => {

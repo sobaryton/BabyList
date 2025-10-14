@@ -25,7 +25,7 @@ const defaultGiftData: GiftType = {
   remainingAmount: 0,
 };
 
-const AdminUpdateGift = () => {
+const UpdateGift = () => {
   const { id } = useParams();
   const [formData, setFormData] = useState(defaultGiftData);
   const [message, setMessage] = useState<string | undefined>(undefined);
@@ -46,4 +46,4 @@ const AdminUpdateGift = () => {
   return <GiftForm message={message} onSubmit={onFormSubmit} gift={formData} />;
 };
 
-export default withAuthenticationRequired(AdminUpdateGift);
+export default withAuthenticationRequired(UpdateGift);
