@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import modalReducer from '../reducers/modal';
 import giftListReducer from '../reducers/giftList';
+import modalReducer from '../reducers/modal';
 import selectedGiftReducer from '../reducers/selectedGift';
 
 export const store = configureStore({

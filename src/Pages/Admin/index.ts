@@ -1,9 +1,11 @@
-import Authenticated from './Authenticated';
-import Login from './Login';
 import AddGift from './AddGift';
-import List from './List';
-import Messages from './Messages';
-import AdminUpdateGift from './UpdateGift';
+import Authenticated from './Authenticated';
 import AuthentikLogin from './AuthentikLogin';
+import AuthentikLoginCallback from './AuthentikLoginCallback';
+import Layout from './Layout';
+import List from './List';
+import Login from './Login';
+import Messages from './Messages';
+import UpdateGift from './UpdateGift';
 
-export { Authenticated, Login, AddGift, List, Messages, AdminUpdateGift, AuthentikLogin };
+export { AddGift, Authenticated, AuthentikLogin, AuthentikLoginCallback, Layout, List, Login, Messages, UpdateGift };

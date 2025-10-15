@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuth } from 'react-oidc-context';
 import { useParams } from 'react-router-dom';
 import { adminUpdateGift } from '../../api/adminUpdateGift';
 import { getGift } from '../../api/getGift';
-import GiftForm, { GiftData } from '../../Components/Admin/GiftForm';
-import { GiftStatus, GiftType } from '../../reducers/selectedGift';
+import GiftForm, { type GiftData } from '../../Components/Admin/GiftForm';
+import { GiftStatus, type GiftType } from '../../reducers/selectedGift';
 import { withAuthenticationRequired } from '../../utils/authentication';
-import { useAuth } from 'react-oidc-context';
 
 const defaultGiftData: GiftType = {
   id: '',
@@ -36,10 +36,11 @@ const UpdateGift = () => {
   }, [id]);
 
   const onFormSubmit = (giftData: GiftData) => {
+    // biome-ignore lint/style/noNonNullAssertion: This is inside a protected route
     adminUpdateGift(id as string, giftData, auth.user!.access_token)
       .then(() => setMessage('Successfully updated!'))
       .catch(exception =>
-        setMessage('Error: ' + (exception?.response?.data?.message || exception?.message || exception))
+        setMessage(`Error: ${exception?.response?.data?.message || exception?.message || exception}`),
       );
   };
 

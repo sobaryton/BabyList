@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 import { useAuth } from 'react-oidc-context';
 import { Navigate } from 'react-router-dom';
 

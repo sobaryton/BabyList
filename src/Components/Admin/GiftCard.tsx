@@ -1,23 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import classNames from 'classnames';
-import { createUseStyles } from 'react-jss';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import ClearIcon from '@mui/icons-material/Clear';
+import classNames from 'classnames';
+import { createUseStyles } from 'react-jss';
+import { Link } from 'react-router-dom';
+import { GiftStatus, type GiftType } from '../../reducers/selectedGift';
 import {
   darkBlue,
+  darkRed,
   font14,
   font16,
   font20,
+  green,
   lightBlue,
-  white,
   lightRed,
-  darkRed,
   orange,
   red,
-  green,
+  white,
 } from '../../utils/constants';
-import { GiftStatus, GiftType } from '../../reducers/selectedGift';
 
 const useStyle = createUseStyles({
   card: {
@@ -184,12 +183,12 @@ const GiftCard = ({ gift, onDelete }: { gift: GiftType; onDelete: () => void }) 
       </div>
       <div className={classes.buttonWrap}>
         <Link to={`update/${id}`} className={classes.link}>
-          <button className={classes.btn}>
+          <button type="button" className={classes.btn}>
             <AutorenewIcon className={classes.btnIcon} />
             Update
           </button>
         </Link>
-        <button className={classNames(classes.btn, classes.deleteBtn)} onClick={onDelete}>
+        <button type="button" className={classNames(classes.btn, classes.deleteBtn)} onClick={onDelete}>
           <ClearIcon className={classes.btnIcon} />
           Delete
         </button>

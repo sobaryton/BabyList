@@ -1,24 +1,23 @@
-import * as React from 'react';
-import { createUseStyles } from 'react-jss';
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import SearchIcon from '@mui/icons-material/Search';
+import classNames from 'classnames';
+import { createUseStyles } from 'react-jss';
+import { Link } from 'react-router-dom';
+import { GiftStatus, type GiftType, selectGift } from '../reducers/selectedGift';
 import {
+  blue,
   darkBlue,
   darkYellow,
   font14,
   font16,
   font20,
-  orange,
+  green,
   lightBlue,
   lightYellow,
-  white,
-  green,
+  orange,
   red,
-  blue,
+  white,
 } from '../utils/constants';
-import { GiftStatus, GiftType, selectGift } from '../reducers/selectedGift';
 import { useAppDispatch } from '../utils/state';
 
 const cardStyles = createUseStyles({
@@ -192,6 +191,7 @@ const Card = ({ card, onToggleModal }: CardElement) => {
     setSelectedGift();
   };
 
+  // biome-ignore lint/correctness/noNestedComponentDefinitions: Unfortunate really
   const GiftStatusBanner = ({ displayStatus }: { displayStatus: GiftStatus }) => (
     <div className={classNames(classes.label, classes[labelClass[displayStatus]])}>
       <p>{statusLabel[displayStatus]}</p>
@@ -215,19 +215,19 @@ const Card = ({ card, onToggleModal }: CardElement) => {
       </div>
       <div className={classes.buttonWrap}>
         <Link to={`/list/description/${id}`} className={classes.link} onClick={setSelectedGift}>
-          <button className={classes.btn}>
+          <button type="button" className={classes.btn}>
             <SearchIcon className={classes.btnIcon} />
             Détails
           </button>
         </Link>
         {!alreadyBought && status === GiftStatus.TO_OFFER && (
-          <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
+          <button type="button" className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Offrir
           </button>
         )}
         {((alreadyBought && status === GiftStatus.TO_OFFER) || status === GiftStatus.PARTLY_FUNDED) && (
-          <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
+          <button type="button" className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransationModal}>
             <CardGiftcardIcon className={classes.btnIcon} />
             Participer
           </button>

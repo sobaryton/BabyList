@@ -1,5 +1,5 @@
-import { useAuth } from 'react-oidc-context';
 import { useEffect } from 'react';
+import { useAuth } from 'react-oidc-context';
 import { useNavigate } from 'react-router-dom';
 
 const AuthentikLoginCallback = () => {
@@ -14,13 +14,9 @@ const AuthentikLoginCallback = () => {
     };
 
     void gotoAdmin();
-  }, [auth.isAuthenticated]);
+  }, [auth.isAuthenticated, navigate]);
 
-  return (
-    <>
-      <div>Authenticating with Authentik...</div>
-    </>
-  );
+  return <div>Authenticating with Authentik...</div>;
 };
 
 export default AuthentikLoginCallback;

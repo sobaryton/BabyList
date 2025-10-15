@@ -1,7 +1,6 @@
 import classNames from 'classnames';
-import * as React from 'react';
 import { createUseStyles } from 'react-jss';
-import { darkBlue, cursive, font64, white, font48 } from '../../utils/constants';
+import { cursive, darkBlue, font48, font64, white } from '../../utils/constants';
 
 const headerStyles = createUseStyles({
   header: {
@@ -37,14 +36,15 @@ type HeaderType = {
 const Header = ({ text, background, backgroundPosition, className }: HeaderType) => {
   const classes = headerStyles();
   return (
-    <>
-      <div
-        className={classNames(classes.header, className)}
-        style={{ backgroundImage: `url('${background ? background : '/images/plaid.jpg'}')`, backgroundPosition }}
-      >
-        <div className={classes.titleContainer}>{text && <h1 className={classes.title}>{text}</h1>}</div>
-      </div>
-    </>
+    <div
+      className={classNames(classes.header, className)}
+      style={{
+        backgroundImage: `url('${background ? background : '/images/plaid.jpg'}')`,
+        backgroundPosition,
+      }}
+    >
+      <div className={classes.titleContainer}>{text && <h1 className={classes.title}>{text}</h1>}</div>
+    </div>
   );
 };
 

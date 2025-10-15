@@ -1,7 +1,6 @@
-import * as React from 'react';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { createUseStyles } from 'react-jss';
 import { Link } from 'react-router-dom';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { darkBlue, font32, lightBlue } from '../../utils/constants';
 
 const headerStyles = createUseStyles({
@@ -57,7 +56,7 @@ const BigHeader = () => {
     <div className={classes.header}>
       <div className={classes.overlay}></div>
       <Link to="/list" className={classes.link}>
-        <button className={classes.button}>
+        <button type="button" className={classes.button}>
           Accéder à la liste
           <ArrowForwardIcon className={classes.arrow} />
         </button>

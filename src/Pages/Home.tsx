@@ -1,8 +1,7 @@
-import React from 'react';
-import { createUseStyles } from 'react-jss';
 import WarningIcon from '@mui/icons-material/Warning';
-import BigHeader from '../Components/Headers/BigHeader';
+import { createUseStyles } from 'react-jss';
 import Footer from '../Components/Footer';
+import BigHeader from '../Components/Headers/BigHeader';
 import { font48, red, sansSerif, white } from '../utils/constants';
 
 const homeStyles = createUseStyles({
@@ -90,7 +89,14 @@ const Home = () => {
             .
           </p>
           <div className={classes.warning}>
-            <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
+            <WarningIcon
+              sx={{
+                fontSize: font48,
+                color: red,
+                marginRight: '1rem',
+                marginBottom: '0.3rem',
+              }}
+            />
             <p className={classes.red}>
               <span className={classes.redHighlight}>Merci de ne pas nous envoyer de colis.</span> Même si l'intention
               est très gentille, nous allons repayer les frais de douane, ce qui pourrait coûter très cher au final.

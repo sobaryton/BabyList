@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import SearchBar from '../../Components/SearchBar';
-import Card from '../../Components/Card';
-import Header from '../../Components/Headers/Header';
-import Navigation from '../../Components/Navigation';
-import { useAppDispatch, useAppSelector } from '../../utils/state';
-import Modal from '../../Components/Modal';
-import { toggleModal } from '../../reducers/modal';
-import FormContent from '../../Components/FormContent';
-import { setGiftList } from '../../reducers/giftList';
 import { getGifts } from '../../api/getGifts';
-import { GiftType, GiftStatus } from '../../reducers/selectedGift';
+import Card from '../../Components/Card';
+import FormContent from '../../Components/FormContent';
+import Header from '../../Components/Headers/Header';
 import Loading from '../../Components/Loading';
+import Modal from '../../Components/Modal';
+import Navigation from '../../Components/Navigation';
+import SearchBar from '../../Components/SearchBar';
+import { setGiftList } from '../../reducers/giftList';
+import { toggleModal } from '../../reducers/modal';
+import { GiftStatus, type GiftType } from '../../reducers/selectedGift';
+import { useAppDispatch, useAppSelector } from '../../utils/state';
 
 const listPageStyles = createUseStyles({
   page: {
@@ -39,6 +39,27 @@ const listPageStyles = createUseStyles({
   },
 });
 
+const giftOrder = (gift: GiftType) => {
+  if (gift.status === GiftStatus.PARTLY_FUNDED) {
+    return 0;
+  } else if (gift.status === GiftStatus.TO_OFFER && !gift.alreadyBought) {
+    return 1;
+  } else if (gift.status === GiftStatus.TO_OFFER) {
+    return 2;
+  } else {
+    return 3;
+  }
+};
+
+const requestSearch = (giftsToFilter: GiftType[], searchedVal: string, setRows: (rows: GiftType[]) => void) => {
+  const filteredRows =
+    searchedVal === ''
+      ? giftsToFilter
+      : giftsToFilter.filter(card => card.title.toLowerCase().includes(searchedVal.toLowerCase()));
+  const sortedRows = [...filteredRows].sort((a, b) => giftOrder(a) - giftOrder(b));
+  setRows(sortedRows);
+};
+
 const ListPage = () => {
   const dispatch = useAppDispatch();
   const classes = listPageStyles();
@@ -59,29 +80,8 @@ const ListPage = () => {
   }, [dispatch, giftList.length]);
 
   useEffect(() => {
-    requestSearch(giftList, searched);
-  }, [giftList, searched]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const giftOrder = (gift: GiftType) => {
-    if (gift.status === GiftStatus.PARTLY_FUNDED) {
-      return 0;
-    } else if (gift.status === GiftStatus.TO_OFFER && !gift.alreadyBought) {
-      return 1;
-    } else if (gift.status === GiftStatus.TO_OFFER) {
-      return 2;
-    } else {
-      return 3;
-    }
-  };
-
-  const requestSearch = (giftsToFilter: GiftType[], searchedVal: string) => {
-    const filteredRows =
-      searchedVal === ''
-        ? giftsToFilter
-        : giftsToFilter.filter(card => card.title.toLowerCase().includes(searchedVal.toLowerCase()));
-    const sortedRows = [...filteredRows].sort((a, b) => giftOrder(a) - giftOrder(b));
-    setRows(sortedRows);
-  };
+    requestSearch(giftList, searched, setRows);
+  }, [giftList, searched]);
 
   return loading ? (
     <Loading />
@@ -112,7 +112,7 @@ const ListPage = () => {
                       status: card.status,
                       remainingAmount: card.remainingAmount,
                       alreadyBought: card.alreadyBought,
-                    })
+                    }),
                   )
                 }
               />

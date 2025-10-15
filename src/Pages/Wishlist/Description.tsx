@@ -1,32 +1,32 @@
-import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { createUseStyles } from 'react-jss';
-import classNames from 'classnames';
+import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import WarningIcon from '@mui/icons-material/Warning';
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import classNames from 'classnames';
+import { useEffect } from 'react';
+import { createUseStyles } from 'react-jss';
+import { useParams } from 'react-router-dom';
+import { getGift } from '../../api/getGift';
+import FormContent from '../../Components/FormContent';
+import Header from '../../Components/Headers/Header';
+import Loading from '../../Components/Loading';
+import Modal from '../../Components/Modal';
+import Navigation from '../../Components/Navigation';
+import { setGiftList } from '../../reducers/giftList';
+import { toggleModal } from '../../reducers/modal';
+import { GiftStatus, type GiftType, selectGift } from '../../reducers/selectedGift';
 import {
-  lightBlue,
   darkBlue,
-  font20,
   darkYellow,
+  font20,
+  font48,
+  green,
+  lightBlue,
   lightYellow,
+  orange,
   red,
   white,
-  green,
-  orange,
-  font48,
 } from '../../utils/constants';
-import Navigation from '../../Components/Navigation';
-import Header from '../../Components/Headers/Header';
 import { useAppDispatch, useAppSelector } from '../../utils/state';
-import Modal from '../../Components/Modal';
-import FormContent from '../../Components/FormContent';
-import { toggleModal } from '../../reducers/modal';
-import { getGift } from '../../api/getGift';
-import { GiftStatus, GiftType, selectGift } from '../../reducers/selectedGift';
-import Loading from '../../Components/Loading';
-import { setGiftList } from '../../reducers/giftList';
 
 const cardStyles = createUseStyles({
   page: {
@@ -226,11 +226,12 @@ const Description = () => {
     dispatch(selectGift(refreshedGift));
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: refreshGift changes on every refresh
   useEffect(() => {
     if (!selectedGift || !transactions || selectedGift.id !== id) {
       void refreshGift(id);
     }
-  }, [id, selectedGift, transactions]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, selectedGift, transactions]);
 
   const labelClass: { [key in GiftStatus]: keyof typeof classes } = {
     [GiftStatus.OFFERED]: 'greenLabel',
@@ -248,6 +249,7 @@ const Description = () => {
     dispatch(toggleModal({ amount, status, remainingAmount, alreadyBought }));
   };
 
+  // biome-ignore lint/correctness/noNestedComponentDefinitions: Unfortunate really
   const Participants = ({ uppercaseFirstLetter }: { uppercaseFirstLetter: boolean }) => {
     const nonAnonymousTransactions = transactions?.filter(transactions => !transactions.anonymous) || [];
     if (nonAnonymousTransactions.length === 0) {
@@ -261,8 +263,9 @@ const Description = () => {
     if (uniqParticipants.length > 0 && anonymousTransactions.length > 0) {
       return (
         <span>
-          {uniqParticipants.map((name, key) => [key > 0 && ', ', <b key={key}>{name}</b>])} et{' '}
-          {anonymousTransactions.length} autre{anonymousTransactions.length > 1 && 's'}
+          {uniqParticipants.map((name, key) => [key > 0 && ', ', <b key={name}>{name}</b>])} et{' '}
+          {anonymousTransactions.length} autre
+          {anonymousTransactions.length > 1 && 's'}
         </span>
       );
     } else if (uniqParticipants.length === 1) {
@@ -272,19 +275,21 @@ const Description = () => {
         <span>
           {uniqParticipants
             .slice(0, uniqParticipants.length - 1)
-            .map((name, key) => [key > 0 && ', ', <b key={key}>{name}</b>])}{' '}
+            .map((name, key) => [key > 0 && ', ', <b key={name}>{name}</b>])}{' '}
           et <b>{uniqParticipants[uniqParticipants.length - 1]}</b>
         </span>
       );
     }
   };
 
+  // biome-ignore lint/correctness/noNestedComponentDefinitions: Unfortunate really
   const GiftStatusBanner = ({ displayStatus }: { displayStatus: GiftStatus }) => (
     <div className={classNames(classes.label, classes[labelClass[displayStatus]])}>
       <p>{statusLabel[displayStatus]}</p>
     </div>
   );
 
+  // biome-ignore lint/correctness/noNestedComponentDefinitions: Unfortunate really
   const GiftStatusMessage = ({
     giftStatus,
     alreadyBought,
@@ -316,6 +321,7 @@ const Description = () => {
     }
   };
 
+  // biome-ignore lint/correctness/noNestedComponentDefinitions: Unfortunate really
   const OfferedGiftStatusMessage = ({ amount }: { amount: number }) => (
     <>
       <p>
@@ -327,6 +333,7 @@ const Description = () => {
     </>
   );
 
+  // biome-ignore lint/correctness/noNestedComponentDefinitions: Unfortunate really
   const ToOfferGiftStatusMessage = ({ amount }: { amount: number }) => (
     <>
       <p>Ce cadeau est à offrir.</p>
@@ -336,6 +343,7 @@ const Description = () => {
     </>
   );
 
+  // biome-ignore lint/correctness/noNestedComponentDefinitions: Unfortunate really
   const ToOfferAlreadyBoughtGiftStatusMessage = ({ amount }: { amount: number }) => (
     <>
       <p>
@@ -351,6 +359,7 @@ const Description = () => {
     </>
   );
 
+  // biome-ignore lint/correctness/noNestedComponentDefinitions: Unfortunate really
   const ToParticipateGiftStatusMessage = ({
     amount,
     remainingAmount,
@@ -364,7 +373,14 @@ const Description = () => {
   }) => (
     <>
       <div className={classes.textWithIcon}>
-        <WarningIcon sx={{ fontSize: font48, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
+        <WarningIcon
+          sx={{
+            fontSize: font48,
+            color: red,
+            marginRight: '1rem',
+            marginBottom: '0.3rem',
+          }}
+        />
         <p>
           <Participants uppercaseFirstLetter={true} /> {participants > 1 ? 'ont' : 'a'} déjà contribué à financer ce
           cadeau.
@@ -420,18 +436,26 @@ const Description = () => {
                   .
                 </p>
                 <div className={classes.buttonWrap}>
-                  <button className={classes.btn} onClick={() => window.open(url)}>
+                  <button type="button" className={classes.btn} onClick={() => window.open(url)}>
                     <OpenInNewIcon className={classes.btnIcon} />
                     Lien
                   </button>
                   {!alreadyBought && status === GiftStatus.TO_OFFER && (
-                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
+                    <button
+                      type="button"
+                      className={classNames(classes.btn, classes.offrirBtn)}
+                      onClick={openTransactionModal}
+                    >
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Offrir
                     </button>
                   )}
                   {((alreadyBought && status === GiftStatus.TO_OFFER) || status === GiftStatus.PARTLY_FUNDED) && (
-                    <button className={classNames(classes.btn, classes.offrirBtn)} onClick={openTransactionModal}>
+                    <button
+                      type="button"
+                      className={classNames(classes.btn, classes.offrirBtn)}
+                      onClick={openTransactionModal}
+                    >
                       <CardGiftcardIcon className={classes.btnIcon} />
                       Participer
                     </button>

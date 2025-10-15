@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { TransactionType } from '../reducers/selectedGift';
-import { TransactionData } from './sendOffer';
+import type { TransactionData } from './sendOffer';
 
 export const participate = async ({
   giftId,
@@ -22,7 +22,7 @@ export const participate = async ({
       currency: 'EUR',
       anonymous,
       giftVersion,
-    }
+    },
   );
 
   return res.data;

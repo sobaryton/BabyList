@@ -1,5 +1,5 @@
-import { AuthProvider, AuthProviderProps } from 'react-oidc-context';
 import { WebStorageStateStore } from 'oidc-client-ts';
+import { AuthProvider, type AuthProviderProps } from 'react-oidc-context';
 import { Outlet } from 'react-router-dom';
 
 const oidcConfig: AuthProviderProps = {

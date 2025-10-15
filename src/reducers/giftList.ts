@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GiftType } from './selectedGift';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import type { GiftType } from './selectedGift';
 
 type GiftListState = {
   gifts: GiftType[];

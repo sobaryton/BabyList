@@ -1,9 +1,8 @@
-import React from 'react';
-import { createUseStyles } from 'react-jss';
-import classNames from 'classnames';
-import WarningIcon from '@mui/icons-material/Warning';
-import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import WarningIcon from '@mui/icons-material/Warning';
+import classNames from 'classnames';
+import { createUseStyles } from 'react-jss';
 import { font24, green, red, white } from '../../utils/constants';
 
 const buyInfoStyles = createUseStyles({
@@ -36,7 +35,14 @@ const BuyInformation = ({ className }: { className?: string }) => {
   return (
     <div className={classNames(classes.information, className)}>
       <div className={classes.iconPara}>
-        <WarningIcon sx={{ fontSize: font24, color: red, marginRight: '1rem', marginBottom: '0.3rem' }} />
+        <WarningIcon
+          sx={{
+            fontSize: font24,
+            color: red,
+            marginRight: '1rem',
+            marginBottom: '0.3rem',
+          }}
+        />
         <p>
           <span className={classes.redHighlight}>Attention</span> nous avons choisi la plupart des articles sur des{' '}
           <span className={classes.red}>sites en anglais</span> et où la{' '}
@@ -44,13 +50,27 @@ const BuyInformation = ({ className }: { className?: string }) => {
         </p>
       </div>
       <p className={classes.iconPara}>
-        <CloseIcon sx={{ fontSize: font24, color: red, marginRight: '0.5rem', marginLeft: '0.5rem' }} />
+        <CloseIcon
+          sx={{
+            fontSize: font24,
+            color: red,
+            marginRight: '0.5rem',
+            marginLeft: '0.5rem',
+          }}
+        />
         Si cela ne vous arrange pas, mais que vous voulez tout de même gâter bébé, merci de choisir "Participer" en haut
         de la page et de faire un don. Comme cela vous pourrez faire un don à 100% en Euros, et nous nous occuperons de
         la livraison si nécessaire.
       </p>
       <p className={classes.iconPara}>
-        <CheckIcon sx={{ fontSize: font24, color: green, marginRight: '0.5rem', marginLeft: '0.5rem' }} />
+        <CheckIcon
+          sx={{
+            fontSize: font24,
+            color: green,
+            marginRight: '0.5rem',
+            marginLeft: '0.5rem',
+          }}
+        />
         Si vous voulez procéder avec l'achat direct, veuillez mettre l'adresse suivante sur le site pour la livraison :
       </p>
       <div className={classes.address}>

@@ -1,24 +1,24 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { createUseStyles } from 'react-jss';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import {
-  TextField,
-  FormControlLabel,
   Checkbox,
-  FormGroup,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
+  type SelectChangeEvent,
+  TextField,
 } from '@mui/material';
-import { darkBlue, font20, font32, green, lightBlue, red } from '../../utils/constants';
-import { useAppDispatch, useAppSelector } from '../../utils/state';
-import { participate } from '../../api/participate';
-import { randomizeGif } from '../../utils/gifRandomizer';
-import { GiftType, selectGift } from '../../reducers/selectedGift';
-import { setGiftList } from '../../reducers/giftList';
+import { type ChangeEvent, type FormEvent, useId, useState } from 'react';
+import { createUseStyles } from 'react-jss';
 import { getGift } from '../../api/getGift';
+import { participate } from '../../api/participate';
+import { setGiftList } from '../../reducers/giftList';
+import { type GiftType, selectGift } from '../../reducers/selectedGift';
+import { darkBlue, font20, font32, green, lightBlue, red } from '../../utils/constants';
+import { randomizeGif } from '../../utils/gifRandomizer';
+import { useAppDispatch, useAppSelector } from '../../utils/state';
 import ParticipateInformation from './ParticipateInformation';
 
 const formStyles = createUseStyles({
@@ -134,7 +134,7 @@ const ParticipateForm = () => {
     const { name, checked } = event.target;
     setFormValues({
       ...formValues,
-      [name]: event.target.checked,
+      [name]: checked,
     });
   };
 
@@ -166,6 +166,8 @@ const ParticipateForm = () => {
     setContent('thanks');
   };
 
+  const currencyLabelId = useId();
+
   return (
     <>
       {content === 'form' ? (
@@ -175,11 +177,10 @@ const ParticipateForm = () => {
             <div className={classes.participation}>
               <div className={classes.participationWrapper}>
                 <FormControl>
-                  <InputLabel id="currency-label">Monnaie</InputLabel>
+                  <InputLabel id={currencyLabelId}>Monnaie</InputLabel>
                   <Select
                     className={classes.currency}
-                    labelId="currency-label"
-                    id="currency"
+                    labelId={currencyLabelId}
                     name="currency"
                     value={formValues.currency}
                     required
@@ -192,7 +193,6 @@ const ParticipateForm = () => {
                   </Select>
                 </FormControl>
                 <TextField
-                  id="amount"
                   label="Montant"
                   name="amount"
                   required
@@ -216,7 +216,6 @@ const ParticipateForm = () => {
             </p>
             <div className={classes.inputWrapper}>
               <TextField
-                id="name"
                 label="Votre nom"
                 name="name"
                 required
@@ -225,7 +224,6 @@ const ParticipateForm = () => {
                 margin="normal"
               />
               <TextField
-                id="email"
                 type="email"
                 label="Votre email"
                 helperText="Nous n'afficherons pas votre email."
@@ -269,7 +267,7 @@ const ParticipateForm = () => {
               .
             </p>
           </div>
-          <div dangerouslySetInnerHTML={{ __html: randomizeGif() }} />
+          <div>{randomizeGif()}</div>
         </div>
       )}
     </>

@@ -1,15 +1,15 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { createUseStyles } from 'react-jss';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import CelebrationIcon from '@mui/icons-material/Celebration';
-import { TextField, FormControlLabel, Checkbox, FormGroup } from '@mui/material';
-import { darkBlue, font20, font32, green, lightBlue, red } from '../../utils/constants';
-import { useAppDispatch, useAppSelector } from '../../utils/state';
-import { sendOffer } from '../../api/sendOffer';
-import { randomizeGif } from '../../utils/gifRandomizer';
-import { GiftType, selectGift } from '../../reducers/selectedGift';
-import { setGiftList } from '../../reducers/giftList';
+import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
+import { createUseStyles } from 'react-jss';
 import { getGift } from '../../api/getGift';
+import { sendOffer } from '../../api/sendOffer';
+import { setGiftList } from '../../reducers/giftList';
+import { type GiftType, selectGift } from '../../reducers/selectedGift';
+import { darkBlue, font20, font32, green, lightBlue, red } from '../../utils/constants';
+import { randomizeGif } from '../../utils/gifRandomizer';
+import { useAppDispatch, useAppSelector } from '../../utils/state';
 import BuyInformation from './BuyInformation';
 
 const formStyles = createUseStyles({
@@ -145,7 +145,6 @@ const BuyForm = () => {
             </p>
             <div className={classes.inputWrapper}>
               <TextField
-                id="name"
                 label="Votre nom"
                 name="name"
                 required
@@ -154,7 +153,6 @@ const BuyForm = () => {
                 margin="normal"
               />
               <TextField
-                id="email"
                 type="email"
                 label="Votre email"
                 helperText="Nous n'afficherons pas votre email."
@@ -198,7 +196,7 @@ const BuyForm = () => {
               .
             </p>
           </div>
-          <div dangerouslySetInnerHTML={{ __html: randomizeGif() }} />
+          <div>{randomizeGif()}</div>
         </div>
       )}
     </>

@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useAuth } from 'react-oidc-context';
 import { Link } from 'react-router-dom';
 import { adminGetTransactions } from '../../api/adminGetTransactions';
 import Header from '../../Components/Headers/Header';
 import Loading from '../../Components/Loading';
-import { TransactionType, Transaction } from '../../reducers/selectedGift';
-import { darkBlue, font14, font16, font20, lightBlue } from '../../utils/constants';
+import { type Transaction, TransactionType } from '../../reducers/selectedGift';
 import { withAuthenticationRequired } from '../../utils/authentication';
-import { useAuth } from 'react-oidc-context';
+import { darkBlue, font14, font16, font20, lightBlue } from '../../utils/constants';
 
 const messagePageStyles = createUseStyles({
   transactions: {
@@ -72,8 +72,9 @@ const Messages = () => {
   const [transactions, setTransactions] = useState([] as Transaction[]);
 
   useEffect(() => {
+    // biome-ignore lint/style/noNonNullAssertion: This is inside a protected route
     adminGetTransactions(auth.user!.access_token).then((transactions: Transaction[]) => setTransactions(transactions));
-  }, []);
+  }, [auth.user]);
 
   const getfFrenchTypes = (type: TransactionType) => {
     return type === TransactionType.ORDER ? 'À commander' : 'Participé';
@@ -87,25 +88,23 @@ const Messages = () => {
           {!transactions ? (
             <Loading />
           ) : (
-            <>
-              {transactions.map((transaction: Transaction) => {
-                return (
-                  <div key={transaction.id} className={classes.transaction}>
-                    <h3>
-                      {transaction.name} - <span className={classes.email}>{transaction.email}</span>
-                    </h3>
-                    <p className={classes.date}>{transaction.createdAt?.toLocaleString()}</p>
-                    <p>
-                      {getfFrenchTypes(transaction.type)} - {transaction.amount}€
-                    </p>
-                    <p className={classes.message}>{transaction.message}</p>
-                    <Link to={`/list/description/${transaction.giftId}`} className={classes.btn}>
-                      Lien du cadeau
-                    </Link>
-                  </div>
-                );
-              })}
-            </>
+            transactions.map((transaction: Transaction) => {
+              return (
+                <div key={transaction.id} className={classes.transaction}>
+                  <h3>
+                    {transaction.name} - <span className={classes.email}>{transaction.email}</span>
+                  </h3>
+                  <p className={classes.date}>{transaction.createdAt?.toLocaleString()}</p>
+                  <p>
+                    {getfFrenchTypes(transaction.type)} - {transaction.amount}€
+                  </p>
+                  <p className={classes.message}>{transaction.message}</p>
+                  <Link to={`/list/description/${transaction.giftId}`} className={classes.btn}>
+                    Lien du cadeau
+                  </Link>
+                </div>
+              );
+            })
           )}
         </div>
       </main>

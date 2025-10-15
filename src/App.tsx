@@ -1,25 +1,26 @@
-import React, { Suspense, lazy } from 'react';
-import { Route, Routes } from 'react-router';
+import { lazy, Suspense } from 'react';
 import { createUseStyles } from 'react-jss';
-import { sansSerif } from './utils/constants';
-import Loading from './Components/Loading';
+import { Route, Routes } from 'react-router';
 import { Navigate } from 'react-router-dom';
-import AuthentikLoginCallback from './Pages/Admin/AuthentikLoginCallback';
+import Loading from './Components/Loading';
+import { sansSerif } from './utils/constants';
 
 // Bundle code into 4 lazily-loaded artifacts: home, not found, lists + gifts, admin.
 const Home = lazy(() => import('./Pages/Home').then(m => ({ default: m.default })));
 const NotFound = lazy(() => import('./Pages/NotFound').then(m => ({ default: m.default })));
 
-const ListPage = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.ListPage })));
 const Description = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.Description })));
+const ListPage = lazy(() => import('./Pages/Wishlist').then(m => ({ default: m.ListPage })));
 
-const Authenticated = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Authenticated })));
-const AdminLogin = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Login })));
 const AdminAddGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AddGift })));
-const AdminUpdateGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AdminUpdateGift })));
 const AdminList = lazy(() => import('./Pages/Admin').then(m => ({ default: m.List })));
+const AdminLogin = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Login })));
 const AdminMessages = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Messages })));
+const AdminUpdateGift = lazy(() => import('./Pages/Admin').then(m => ({ default: m.UpdateGift })));
+const Authenticated = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Authenticated })));
 const AuthentikLogin = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AuthentikLogin })));
+const AuthentikLoginCallback = lazy(() => import('./Pages/Admin').then(m => ({ default: m.AuthentikLoginCallback })));
+const Layout = lazy(() => import('./Pages/Admin').then(m => ({ default: m.Layout })));
 
 const appStyles = createUseStyles({
   '@global': {
@@ -56,7 +57,7 @@ const App = () => {
               <Route path="callback" element={<AuthentikLoginCallback />} />
             </Route>
           </Route>
-          <Route path="list">
+          <Route path="list" element={<Layout />}>
             <Route index element={<AdminList />} />
             <Route path="add" element={<AdminAddGift />} />
             <Route path="messages" element={<AdminMessages />} />

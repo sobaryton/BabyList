@@ -1,11 +1,11 @@
-import classNames from 'classnames';
-import React, { ReactNode } from 'react';
-import { createUseStyles } from 'react-jss';
-import { darkBlue, red, white } from '../utils/constants';
 import CloseIcon from '@mui/icons-material/Close';
-import { useAppDispatch } from '../utils/state';
+import classNames from 'classnames';
+import type { ReactNode } from 'react';
+import { createUseStyles } from 'react-jss';
 import { toggleModal } from '../reducers/modal';
 import { GiftStatus } from '../reducers/selectedGift';
+import { darkBlue, red, white } from '../utils/constants';
+import { useAppDispatch } from '../utils/state';
 
 const modalStyles = createUseStyles({
   modal: {
@@ -90,11 +90,17 @@ const Modal = ({ children }: Props) => {
 
   return (
     <div className={classNames(classes.modal)}>
+      {/** biome-ignore lint/a11y: TODO */}
       <div
         className={classes.overflow}
         onClick={() =>
           dispatch(
-            toggleModal({ amount: 0, status: GiftStatus.TO_OFFER, remainingAmount: undefined, alreadyBought: false })
+            toggleModal({
+              amount: 0,
+              status: GiftStatus.TO_OFFER,
+              remainingAmount: undefined,
+              alreadyBought: false,
+            }),
           )
         }
       />
@@ -102,6 +108,7 @@ const Modal = ({ children }: Props) => {
         <main className={classes.main}>{children}</main>
         <div className={classes.closeBtn}>
           <button
+            type="button"
             onClick={() =>
               dispatch(
                 toggleModal({
@@ -109,7 +116,7 @@ const Modal = ({ children }: Props) => {
                   status: GiftStatus.TO_OFFER,
                   remainingAmount: undefined,
                   alreadyBought: false,
-                })
+                }),
               )
             }
           >

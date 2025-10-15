@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { createUseStyles } from 'react-jss';
 import classNames from 'classnames';
+import { useState } from 'react';
+import { createUseStyles } from 'react-jss';
+import { GiftStatus } from '../reducers/selectedGift';
 import { darkBlue, font20, lightBlue } from '../utils/constants';
-import ParticipateForm from './Participate/ParticipateForm';
 import { useAppSelector } from '../utils/state';
 import BuyForm from './Buy/BuyForm';
-import { GiftStatus } from '../reducers/selectedGift';
+import ParticipateForm from './Participate/ParticipateForm';
 
 const listPageStyles = createUseStyles({
   btnWrap: {
@@ -63,12 +63,14 @@ const FormContent = () => {
       ) : (
         <div className={classes.btnWrap}>
           <button
+            type="button"
             onClick={() => setType(GiftStatus.TO_OFFER)}
             className={classNames(classes.btn, type === GiftStatus.TO_OFFER ? classes.activeBtn : '')}
           >
             Commander
           </button>
           <button
+            type="button"
             onClick={() => setType(GiftStatus.PARTLY_FUNDED)}
             className={classNames(classes.btn, type === GiftStatus.PARTLY_FUNDED ? classes.activeBtn : '')}
           >

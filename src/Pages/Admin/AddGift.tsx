@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { adminAddGift } from '../../api/adminAddGift';
-import GiftForm, { GiftData } from '../../Components/Admin/GiftForm';
-import { withAuthenticationRequired } from '../../utils/authentication';
+import { useState } from 'react';
 import { useAuth } from 'react-oidc-context';
+import { adminAddGift } from '../../api/adminAddGift';
+import GiftForm, { type GiftData } from '../../Components/Admin/GiftForm';
+import { withAuthenticationRequired } from '../../utils/authentication';
 
 export type AddGiftType = {
   title: string;
@@ -34,13 +34,14 @@ const AddGift = () => {
   const auth = useAuth();
 
   const onFormSubmit = (giftData: GiftData) => {
+    // biome-ignore lint/style/noNonNullAssertion: This is inside a protected route
     adminAddGift(giftData, auth.user!.access_token)
       .then(gift => {
         setFormData({ ...defaultFormData });
         setMessage(`Successfully created gift with id ${gift.id}`);
       })
       .catch(exception =>
-        setMessage('Error: ' + (exception?.response?.data?.message || exception?.message || exception))
+        setMessage(`Error: ${exception?.response?.data?.message || exception?.message || exception}`),
       );
   };
 

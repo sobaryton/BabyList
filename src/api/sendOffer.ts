@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Transaction, TransactionType } from '../reducers/selectedGift';
+import { type Transaction, TransactionType } from '../reducers/selectedGift';
 
 export type TransactionData = {
   giftId: string;
@@ -23,7 +23,7 @@ export const sendOffer = async ({ giftId, name, email, message, amount, anonymou
       currency: 'EUR',
       anonymous,
       giftVersion,
-    }
+    },
   );
 
   return res.data;

@@ -1,8 +1,8 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { createUseStyles } from 'react-jss';
 import { FormControlLabel, Switch, TextField } from '@mui/material';
-import { GiftType } from '../../reducers/selectedGift';
-import { AddGiftType } from '../../Pages/Admin/AddGift';
+import { type ChangeEvent, type FormEvent, useEffect, useState } from 'react';
+import { createUseStyles } from 'react-jss';
+import type { AddGiftType } from '../../Pages/Admin/AddGift';
+import type { GiftType } from '../../reducers/selectedGift';
 
 const useStyle = createUseStyles({
   form: {
@@ -118,7 +118,7 @@ const GiftForm = ({ message, onSubmit, gift }: GiftFormType) => {
       onSubmit({
         ...formData,
         image: data,
-      })
+      }),
     );
   };
 

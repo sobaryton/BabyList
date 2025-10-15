@@ -1,21 +1,21 @@
-import React, {
-  ChangeEvent,
-  FocusEvent,
-  KeyboardEvent,
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import Paper from '@mui/material/Paper';
+import classNames from 'classnames';
+import {
+  type ChangeEvent,
+  type FocusEvent,
   forwardRef,
+  type KeyboardEvent,
+  type Ref,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
-  Ref,
 } from 'react';
 import { createUseStyles } from 'react-jss';
-import classNames from 'classnames';
-import IconButton from '@mui/material/IconButton';
-import Input from '@mui/material/Input';
-import Paper from '@mui/material/Paper';
-import ClearIcon from '@mui/icons-material/Clear';
-import SearchIcon from '@mui/icons-material/Search';
 
 const useStyle = createUseStyles({
   root: {
@@ -57,7 +57,7 @@ const SearchBar = (
     className?: string;
     disabled?: boolean;
   },
-  forwardedRef: Ref<Partial<HTMLElement>>
+  forwardedRef: Ref<Partial<HTMLElement>>,
 ) => {
   const classes = useStyle();
   const inputRef = useRef<HTMLInputElement | null>(null);
