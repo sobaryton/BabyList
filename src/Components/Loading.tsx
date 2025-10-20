@@ -1,4 +1,5 @@
 import { createUseStyles } from 'react-jss';
+import Animation from './Animation';
 
 const footerStyles = createUseStyles({
   loadingImage: {
@@ -19,7 +20,12 @@ const Loading = () => {
   const classes = footerStyles();
   return (
     <div className={classes.loadingImage}>
-      <img className={classes.gif} src="/images/hands.gif" alt="gif for loading" />
+      <Animation
+        gif="/images/hands.gif"
+        webm="/images/hands.webm"
+        webp="/images/hands.webp"
+        alt="Animation de chargement avec des mains"
+      />
     </div>
   );
 };

@@ -1,7 +1,17 @@
-const gifs = ['baveux.gif', 'cuillere.gif', 'minion.gif', 'tarzan.gif'];
+import Animation from '../Components/Animation';
+
+const gifs = ['baveux', 'cuillere', 'minion', 'tarzan'];
 
 export const randomizeGif = () =>
   gifs
     .map(value => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => <img key={value} src={`/images/${value}`} alt="gif for thanking" />)[0];
+    .map(({ value }) => (
+      <Animation
+        key={value}
+        gif={`/images/${value}.gif`}
+        webm={`/images/${value}.webm`}
+        webp={`/images/${value}.webp`}
+        alt="GIF de remerciement"
+      />
+    ))[0];

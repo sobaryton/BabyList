@@ -55,3 +55,7 @@ man-in-the-middle attacks since only the real initiator knows the `code_verifier
 necessary to exchange the code for a token.
 
 Because of this, the `react-oidc-context` OIDC package does not check the JWS signature.
+
+# Image compression
+Images and videos are available in their original format (gif, jpeg, ...), and in
+optimised webp / webm for modern browsers.

@@ -28,7 +28,7 @@ const headerStyles = createUseStyles({
 
 type HeaderType = {
   text?: string;
-  background?: string;
+  background?: string[];
   backgroundPosition?: string;
   className?: string;
 };
@@ -39,7 +39,9 @@ const Header = ({ text, background, backgroundPosition, className }: HeaderType)
     <div
       className={classNames(classes.header, className)}
       style={{
-        backgroundImage: `url('${background ? background : '/images/plaid.jpg'}')`,
+        backgroundImage: (background || ['/images/plaid.webp', '/images/plaid.jpg']).map(
+          bg => `url('${bg}')`,
+        ) as unknown as string,
         backgroundPosition,
       }}
     >

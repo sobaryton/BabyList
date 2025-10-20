@@ -7,7 +7,7 @@ const headerStyles = createUseStyles({
   header: {
     width: '100%',
     height: '50vh',
-    backgroundImage: `url('/images/bebe.jpg')`,
+    backgroundImage: [`url('/images/bebe.webp')`, `url('/images/bebe.jpg')`],
     backgroundSize: 'cover',
     display: 'flex',
     justifyContent: 'center',

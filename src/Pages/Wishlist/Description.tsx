@@ -400,7 +400,11 @@ const Description = () => {
   return selectedGift ? (
     <div className={classes.page}>
       <header>
-        <Header background="/images/pieds-bebe.jpg" backgroundPosition="center" className={classes.headerImage} />
+        <Header
+          background={['/images/pieds-bebe.webp', '/images/pieds-bebe.jpg']}
+          backgroundPosition="center"
+          className={classes.headerImage}
+        />
       </header>
       <main className={classes.main}>
         <Navigation className={classes.navigation} link="/list" />
@@ -416,9 +420,11 @@ const Description = () => {
               </div>
             </div>
             <div className={classes.article}>
-              <div className={classes.image}>
-                <img src={image} alt={`${title}`} />
-              </div>
+              {image ? (
+                <div className={classes.image}>
+                  <img src={image} alt={`${title}`} />
+                </div>
+              ) : undefined}
               <div className={classes.articleText}>
                 <p className={classes.nl2br}>{description}</p>
                 <GiftStatusMessage
